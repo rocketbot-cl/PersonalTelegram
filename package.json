@@ -1,0 +1,167 @@
+{
+  "author": "Nicolas Liendro - Danilo Toro",
+  "description": "Connect your PersonalTelegram bot with Rocketbot",
+  "disclaimer": "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
+  "version": "0.1",
+  "license": "MIT",
+  "homepage": "http://rocketbot.co/",
+  "name": "example",
+  "linux": true,
+  "windows": true,
+  "mac": true,
+  "docker": true,
+  "dependencies": {
+    "Telethon": "1.21.1"
+  },
+  "title": {
+    "en": "PersonalTelegram",
+    "es": "PersonalTelegram"
+  },
+  "icon": "data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiBmaWxsPSIjMDM5YmU1IiByPSIxMiIvPjxwYXRoIGQ9Im01LjQ5MSAxMS43NCAxMS41Ny00LjQ2MWMuNTM3LS4xOTQgMS4wMDYuMTMxLjgzMi45NDNsLjAwMS0uMDAxLTEuOTcgOS4yODFjLS4xNDYuNjU4LS41MzcuODE4LTEuMDg0LjUwOGwtMy0yLjIxMS0xLjQ0NyAxLjM5NGMtLjE2LjE2LS4yOTUuMjk1LS42MDUuMjk1bC4yMTMtMy4wNTMgNS41Ni01LjAyM2MuMjQyLS4yMTMtLjA1NC0uMzMzLS4zNzMtLjEyMWwtNi44NzEgNC4zMjYtMi45NjItLjkyNGMtLjY0My0uMjA0LS42NTctLjY0My4xMzYtLjk1M3oiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
+  "children": [
+    {
+      "title": {
+        "en": "Connect",
+        "es": "Conectar"
+      },
+      "description": {
+        "en": "Connect Telegram with Rocketbot",
+        "es": "Conecta Telegram con Rocketbot"
+      },
+      "form": {
+        "css": "modal-lg",
+        "style": "min-width:1024px;",
+        "inputs": [
+          {
+            "type": "input",
+            "placeholder": "12345",
+            "title": {
+              "en": "API ID:",
+              "es": "API ID:"
+            },
+            "id": "api_id",
+            "css": "col-md-12"
+          },
+          {
+            "type": "input",
+            "placeholder": "0123456789abcdef0123456789abcdef",
+            "title": {
+              "en": "API HASH:",
+              "es": "API HASH:"
+            },
+            "id": "api_hash",
+            "css": "col-md-12"
+          }
+        ]
+      },
+      "video_youtube": "",
+      "icon": "data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiBmaWxsPSIjMDM5YmU1IiByPSIxMiIvPjxwYXRoIGQ9Im01LjQ5MSAxMS43NCAxMS41Ny00LjQ2MWMuNTM3LS4xOTQgMS4wMDYuMTMxLjgzMi45NDNsLjAwMS0uMDAxLTEuOTcgOS4yODFjLS4xNDYuNjU4LS41MzcuODE4LTEuMDg0LjUwOGwtMy0yLjIxMS0xLjQ0NyAxLjM5NGMtLjE2LjE2LS4yOTUuMjk1LS42MDUuMjk1bC4yMTMtMy4wNTMgNS41Ni01LjAyM2MuMjQyLS4yMTMtLjA1NC0uMzMzLS4zNzMtLjEyMWwtNi44NzEgNC4zMjYtMi45NjItLjkyNGMtLjY0My0uMjA0LS42NTctLjY0My4xMzYtLjk1M3oiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
+      "module": "connect",
+      "module_name": "PersonalTelegram",
+      "father": "module",
+      "group": "scripts",
+      "linux": true,
+      "windows": true,
+      "mac": true,
+      "docker": false,
+      "visible": true,
+      "options": false
+    },
+    {
+      "title": {
+        "en": "Send Message",
+        "es": "Enviar mensaje"
+      },
+      "description": {
+        "en": "Send a message to a chat",
+        "es": "Envia un mensaje a un chat"
+      },
+      "form": {
+        "css": "modal-lg",
+        "style": "min-width:1024px;",
+        "inputs": [
+          {
+            "type": "input",
+            "placeholder": "El mensaje va aca...",
+            "title": {
+              "en": "Mensaje:",
+              "es": "Mensaje:"
+            },
+            "id": "msg",
+            "css": "col-md-12"
+          },
+          {
+            "type": "input",
+            "placeholder": "chat_id",
+            "title": {
+              "en": "chat_id:",
+              "es": "chat_id:"
+            },
+            "id": "chat_id",
+            "css": "col-md-12"
+          }
+        ]
+      },
+      "video_youtube": "aMV6cXPMMSo",
+      "icon": "data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiBmaWxsPSIjMDM5YmU1IiByPSIxMiIvPjxwYXRoIGQ9Im01LjQ5MSAxMS43NCAxMS41Ny00LjQ2MWMuNTM3LS4xOTQgMS4wMDYuMTMxLjgzMi45NDNsLjAwMS0uMDAxLTEuOTcgOS4yODFjLS4xNDYuNjU4LS41MzcuODE4LTEuMDg0LjUwOGwtMy0yLjIxMS0xLjQ0NyAxLjM5NGMtLjE2LjE2LS4yOTUuMjk1LS42MDUuMjk1bC4yMTMtMy4wNTMgNS41Ni01LjAyM2MuMjQyLS4yMTMtLjA1NC0uMzMzLS4zNzMtLjEyMWwtNi44NzEgNC4zMjYtMi45NjItLjkyNGMtLjY0My0uMjA0LS42NTctLjY0My4xMzYtLjk1M3oiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
+      "module": "send_message",
+      "module_name": "PersonalTelegram",
+      "father": "module",
+      "group": "scripts",
+      "linux": true,
+      "windows": true,
+      "mac": true,
+      "docker": false,
+      "visible": true,
+      "options": false
+    },
+    {
+      "title": {
+        "en": "Read Messages",
+        "es": "Leer mensajes"
+      },
+      "description": {
+        "en": "Read messages from a chat",
+        "es": "Leer mensajes de un chat"
+      },
+      "form": {
+        "css": "modal-lg",
+        "style": "min-width:1024px;",
+        "inputs": [
+          {
+            "type": "input",
+            "placeholder": "username",
+            "title": {
+              "en": "Channel Username:",
+              "es": "Nombre de canal:"
+            },
+            "id": "channel_username",
+            "css": "col-md-12"
+          },
+          {
+            "type": "input",
+            "placeholder": "res",
+            "title": {
+              "en": "Result:",
+              "es": "Resultado:"
+            },
+            "id": "res",
+            "css": "col-md-12"
+          }
+        ]
+      },
+      "video_youtube": "aMV6cXPMMSo",
+      "icon": "data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiBmaWxsPSIjMDM5YmU1IiByPSIxMiIvPjxwYXRoIGQ9Im01LjQ5MSAxMS43NCAxMS41Ny00LjQ2MWMuNTM3LS4xOTQgMS4wMDYuMTMxLjgzMi45NDNsLjAwMS0uMDAxLTEuOTcgOS4yODFjLS4xNDYuNjU4LS41MzcuODE4LTEuMDg0LjUwOGwtMy0yLjIxMS0xLjQ0NyAxLjM5NGMtLjE2LjE2LS4yOTUuMjk1LS42MDUuMjk1bC4yMTMtMy4wNTMgNS41Ni01LjAyM2MuMjQyLS4yMTMtLjA1NC0uMzMzLS4zNzMtLjEyMWwtNi44NzEgNC4zMjYtMi45NjItLjkyNGMtLjY0My0uMjA0LS42NTctLjY0My4xMzYtLjk1M3oiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
+      "module": "read_message",
+      "module_name": "PersonalTelegram",
+      "father": "module",
+      "group": "scripts",
+      "linux": true,
+      "windows": true,
+      "mac": true,
+      "docker": false,
+      "visible": true,
+      "options": false
+    }
+  ]
+}
