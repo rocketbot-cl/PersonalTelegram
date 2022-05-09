@@ -4,16 +4,38 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
-if TYPE_CHECKING:
-    from ...tl.types import TypeAuthorization, TypeAutoDownloadSettings, TypeChat, TypePasswordKdfAlgo, TypePrivacyRule, TypeSecurePasswordKdfAlgo, TypeSecureRequiredType, TypeSecureSecretSettings, TypeSecureValue, TypeSecureValueError, TypeTheme, TypeUser, TypeWallPaper, TypeWebAuthorization
 
+if TYPE_CHECKING:
+    from ...tl.types import (
+        TypeAuthorization,
+        TypeAutoDownloadSettings,
+        TypeChat,
+        TypePasswordKdfAlgo,
+        TypePrivacyRule,
+        TypeSecurePasswordKdfAlgo,
+        TypeSecureRequiredType,
+        TypeSecureSecretSettings,
+        TypeSecureValue,
+        TypeSecureValueError,
+        TypeTheme,
+        TypeUser,
+        TypeWallPaper,
+        TypeWebAuthorization,
+    )
 
 
 class AuthorizationForm(TLObject):
-    CONSTRUCTOR_ID = 0xad2e1cd8
-    SUBCLASS_OF_ID = 0x78049a94
+    CONSTRUCTOR_ID = 0xAD2E1CD8
+    SUBCLASS_OF_ID = 0x78049A94
 
-    def __init__(self, required_types: List['TypeSecureRequiredType'], values: List['TypeSecureValue'], errors: List['TypeSecureValueError'], users: List['TypeUser'], privacy_policy_url: Optional[str]=None):
+    def __init__(
+        self,
+        required_types: List["TypeSecureRequiredType"],
+        values: List["TypeSecureValue"],
+        errors: List["TypeSecureValueError"],
+        users: List["TypeUser"],
+        privacy_policy_url: Optional[str] = None,
+    ):
         """
         Constructor for account.AuthorizationForm: Instance of AuthorizationForm.
         """
@@ -25,24 +47,55 @@ class AuthorizationForm(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'AuthorizationForm',
-            'required_types': [] if self.required_types is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.required_types],
-            'values': [] if self.values is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.values],
-            'errors': [] if self.errors is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.errors],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'privacy_policy_url': self.privacy_policy_url
+            "_": "AuthorizationForm",
+            "required_types": []
+            if self.required_types is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.required_types
+            ],
+            "values": []
+            if self.values is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.values],
+            "errors": []
+            if self.errors is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.errors],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "privacy_policy_url": self.privacy_policy_url,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xd8\x1c.\xad',
-            struct.pack('<I', (0 if self.privacy_policy_url is None or self.privacy_policy_url is False else 1)),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.required_types)),b''.join(x._bytes() for x in self.required_types),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.values)),b''.join(x._bytes() for x in self.values),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.errors)),b''.join(x._bytes() for x in self.errors),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-            b'' if self.privacy_policy_url is None or self.privacy_policy_url is False else (self.serialize_bytes(self.privacy_policy_url)),
-        ))
+        return b"".join(
+            (
+                b"\xd8\x1c.\xad",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.privacy_policy_url is None
+                        or self.privacy_policy_url is False
+                        else 1
+                    ),
+                ),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.required_types)),
+                b"".join(x._bytes() for x in self.required_types),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.values)),
+                b"".join(x._bytes() for x in self.values),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.errors)),
+                b"".join(x._bytes() for x in self.errors),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+                b""
+                if self.privacy_policy_url is None or self.privacy_policy_url is False
+                else (self.serialize_bytes(self.privacy_policy_url)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -76,14 +129,20 @@ class AuthorizationForm(TLObject):
             _privacy_policy_url = reader.tgread_string()
         else:
             _privacy_policy_url = None
-        return cls(required_types=_required_types, values=_values, errors=_errors, users=_users, privacy_policy_url=_privacy_policy_url)
+        return cls(
+            required_types=_required_types,
+            values=_values,
+            errors=_errors,
+            users=_users,
+            privacy_policy_url=_privacy_policy_url,
+        )
 
 
 class Authorizations(TLObject):
-    CONSTRUCTOR_ID = 0x1250abde
-    SUBCLASS_OF_ID = 0xbf5e0ff
+    CONSTRUCTOR_ID = 0x1250ABDE
+    SUBCLASS_OF_ID = 0xBF5E0FF
 
-    def __init__(self, authorizations: List['TypeAuthorization']):
+    def __init__(self, authorizations: List["TypeAuthorization"]):
         """
         Constructor for account.Authorizations: Instance of Authorizations.
         """
@@ -91,15 +150,24 @@ class Authorizations(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Authorizations',
-            'authorizations': [] if self.authorizations is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.authorizations]
+            "_": "Authorizations",
+            "authorizations": []
+            if self.authorizations is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.authorizations
+            ],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xde\xabP\x12',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.authorizations)),b''.join(x._bytes() for x in self.authorizations),
-        ))
+        return b"".join(
+            (
+                b"\xde\xabP\x12",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.authorizations)),
+                b"".join(x._bytes() for x in self.authorizations),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -113,10 +181,15 @@ class Authorizations(TLObject):
 
 
 class AutoDownloadSettings(TLObject):
-    CONSTRUCTOR_ID = 0x63cacf26
-    SUBCLASS_OF_ID = 0x2fb85921
+    CONSTRUCTOR_ID = 0x63CACF26
+    SUBCLASS_OF_ID = 0x2FB85921
 
-    def __init__(self, low: 'TypeAutoDownloadSettings', medium: 'TypeAutoDownloadSettings', high: 'TypeAutoDownloadSettings'):
+    def __init__(
+        self,
+        low: "TypeAutoDownloadSettings",
+        medium: "TypeAutoDownloadSettings",
+        high: "TypeAutoDownloadSettings",
+    ):
         """
         Constructor for account.AutoDownloadSettings: Instance of AutoDownloadSettings.
         """
@@ -126,19 +199,25 @@ class AutoDownloadSettings(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'AutoDownloadSettings',
-            'low': self.low.to_dict() if isinstance(self.low, TLObject) else self.low,
-            'medium': self.medium.to_dict() if isinstance(self.medium, TLObject) else self.medium,
-            'high': self.high.to_dict() if isinstance(self.high, TLObject) else self.high
+            "_": "AutoDownloadSettings",
+            "low": self.low.to_dict() if isinstance(self.low, TLObject) else self.low,
+            "medium": self.medium.to_dict()
+            if isinstance(self.medium, TLObject)
+            else self.medium,
+            "high": self.high.to_dict()
+            if isinstance(self.high, TLObject)
+            else self.high,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'&\xcf\xcac',
-            self.low._bytes(),
-            self.medium._bytes(),
-            self.high._bytes(),
-        ))
+        return b"".join(
+            (
+                b"&\xcf\xcac",
+                self.low._bytes(),
+                self.medium._bytes(),
+                self.high._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -149,10 +228,14 @@ class AutoDownloadSettings(TLObject):
 
 
 class ContentSettings(TLObject):
-    CONSTRUCTOR_ID = 0x57e28221
-    SUBCLASS_OF_ID = 0xae3ff891
+    CONSTRUCTOR_ID = 0x57E28221
+    SUBCLASS_OF_ID = 0xAE3FF891
 
-    def __init__(self, sensitive_enabled: Optional[bool]=None, sensitive_can_change: Optional[bool]=None):
+    def __init__(
+        self,
+        sensitive_enabled: Optional[bool] = None,
+        sensitive_can_change: Optional[bool] = None,
+    ):
         """
         Constructor for account.ContentSettings: Instance of ContentSettings.
         """
@@ -161,16 +244,32 @@ class ContentSettings(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ContentSettings',
-            'sensitive_enabled': self.sensitive_enabled,
-            'sensitive_can_change': self.sensitive_can_change
+            "_": "ContentSettings",
+            "sensitive_enabled": self.sensitive_enabled,
+            "sensitive_can_change": self.sensitive_can_change,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'!\x82\xe2W',
-            struct.pack('<I', (0 if self.sensitive_enabled is None or self.sensitive_enabled is False else 1) | (0 if self.sensitive_can_change is None or self.sensitive_can_change is False else 2)),
-        ))
+        return b"".join(
+            (
+                b"!\x82\xe2W",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.sensitive_enabled is None
+                        or self.sensitive_enabled is False
+                        else 1
+                    )
+                    | (
+                        0
+                        if self.sensitive_can_change is None
+                        or self.sensitive_can_change is False
+                        else 2
+                    ),
+                ),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -178,14 +277,30 @@ class ContentSettings(TLObject):
 
         _sensitive_enabled = bool(flags & 1)
         _sensitive_can_change = bool(flags & 2)
-        return cls(sensitive_enabled=_sensitive_enabled, sensitive_can_change=_sensitive_can_change)
+        return cls(
+            sensitive_enabled=_sensitive_enabled,
+            sensitive_can_change=_sensitive_can_change,
+        )
 
 
 class Password(TLObject):
-    CONSTRUCTOR_ID = 0xad2641f8
-    SUBCLASS_OF_ID = 0x53a211a3
+    CONSTRUCTOR_ID = 0xAD2641F8
+    SUBCLASS_OF_ID = 0x53A211A3
 
-    def __init__(self, new_algo: 'TypePasswordKdfAlgo', new_secure_algo: 'TypeSecurePasswordKdfAlgo', secure_random: bytes, has_recovery: Optional[bool]=None, has_secure_values: Optional[bool]=None, has_password: Optional[bool]=None, current_algo: Optional['TypePasswordKdfAlgo']=None, srp_B: Optional[bytes]=None, srp_id: Optional[int]=None, hint: Optional[str]=None, email_unconfirmed_pattern: Optional[str]=None):
+    def __init__(
+        self,
+        new_algo: "TypePasswordKdfAlgo",
+        new_secure_algo: "TypeSecurePasswordKdfAlgo",
+        secure_random: bytes,
+        has_recovery: Optional[bool] = None,
+        has_secure_values: Optional[bool] = None,
+        has_password: Optional[bool] = None,
+        current_algo: Optional["TypePasswordKdfAlgo"] = None,
+        srp_B: Optional[bytes] = None,
+        srp_id: Optional[int] = None,
+        hint: Optional[str] = None,
+        email_unconfirmed_pattern: Optional[str] = None,
+    ):
         """
         Constructor for account.Password: Instance of Password.
         """
@@ -203,34 +318,95 @@ class Password(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Password',
-            'new_algo': self.new_algo.to_dict() if isinstance(self.new_algo, TLObject) else self.new_algo,
-            'new_secure_algo': self.new_secure_algo.to_dict() if isinstance(self.new_secure_algo, TLObject) else self.new_secure_algo,
-            'secure_random': self.secure_random,
-            'has_recovery': self.has_recovery,
-            'has_secure_values': self.has_secure_values,
-            'has_password': self.has_password,
-            'current_algo': self.current_algo.to_dict() if isinstance(self.current_algo, TLObject) else self.current_algo,
-            'srp_B': self.srp_B,
-            'srp_id': self.srp_id,
-            'hint': self.hint,
-            'email_unconfirmed_pattern': self.email_unconfirmed_pattern
+            "_": "Password",
+            "new_algo": self.new_algo.to_dict()
+            if isinstance(self.new_algo, TLObject)
+            else self.new_algo,
+            "new_secure_algo": self.new_secure_algo.to_dict()
+            if isinstance(self.new_secure_algo, TLObject)
+            else self.new_secure_algo,
+            "secure_random": self.secure_random,
+            "has_recovery": self.has_recovery,
+            "has_secure_values": self.has_secure_values,
+            "has_password": self.has_password,
+            "current_algo": self.current_algo.to_dict()
+            if isinstance(self.current_algo, TLObject)
+            else self.current_algo,
+            "srp_B": self.srp_B,
+            "srp_id": self.srp_id,
+            "hint": self.hint,
+            "email_unconfirmed_pattern": self.email_unconfirmed_pattern,
         }
 
     def _bytes(self):
-        assert ((self.has_password or self.has_password is not None) and (self.current_algo or self.current_algo is not None) and (self.srp_B or self.srp_B is not None) and (self.srp_id or self.srp_id is not None)) or ((self.has_password is None or self.has_password is False) and (self.current_algo is None or self.current_algo is False) and (self.srp_B is None or self.srp_B is False) and (self.srp_id is None or self.srp_id is False)), 'has_password, current_algo, srp_B, srp_id parameters must all be False-y (like None) or all me True-y'
-        return b''.join((
-            b'\xf8A&\xad',
-            struct.pack('<I', (0 if self.has_recovery is None or self.has_recovery is False else 1) | (0 if self.has_secure_values is None or self.has_secure_values is False else 2) | (0 if self.has_password is None or self.has_password is False else 4) | (0 if self.current_algo is None or self.current_algo is False else 4) | (0 if self.srp_B is None or self.srp_B is False else 4) | (0 if self.srp_id is None or self.srp_id is False else 4) | (0 if self.hint is None or self.hint is False else 8) | (0 if self.email_unconfirmed_pattern is None or self.email_unconfirmed_pattern is False else 16)),
-            b'' if self.current_algo is None or self.current_algo is False else (self.current_algo._bytes()),
-            b'' if self.srp_B is None or self.srp_B is False else (self.serialize_bytes(self.srp_B)),
-            b'' if self.srp_id is None or self.srp_id is False else (struct.pack('<q', self.srp_id)),
-            b'' if self.hint is None or self.hint is False else (self.serialize_bytes(self.hint)),
-            b'' if self.email_unconfirmed_pattern is None or self.email_unconfirmed_pattern is False else (self.serialize_bytes(self.email_unconfirmed_pattern)),
-            self.new_algo._bytes(),
-            self.new_secure_algo._bytes(),
-            self.serialize_bytes(self.secure_random),
-        ))
+        assert (
+            (self.has_password or self.has_password is not None)
+            and (self.current_algo or self.current_algo is not None)
+            and (self.srp_B or self.srp_B is not None)
+            and (self.srp_id or self.srp_id is not None)
+        ) or (
+            (self.has_password is None or self.has_password is False)
+            and (self.current_algo is None or self.current_algo is False)
+            and (self.srp_B is None or self.srp_B is False)
+            and (self.srp_id is None or self.srp_id is False)
+        ), "has_password, current_algo, srp_B, srp_id parameters must all be False-y (like None) or all me True-y"
+        return b"".join(
+            (
+                b"\xf8A&\xad",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.has_recovery is None or self.has_recovery is False
+                        else 1
+                    )
+                    | (
+                        0
+                        if self.has_secure_values is None
+                        or self.has_secure_values is False
+                        else 2
+                    )
+                    | (
+                        0
+                        if self.has_password is None or self.has_password is False
+                        else 4
+                    )
+                    | (
+                        0
+                        if self.current_algo is None or self.current_algo is False
+                        else 4
+                    )
+                    | (0 if self.srp_B is None or self.srp_B is False else 4)
+                    | (0 if self.srp_id is None or self.srp_id is False else 4)
+                    | (0 if self.hint is None or self.hint is False else 8)
+                    | (
+                        0
+                        if self.email_unconfirmed_pattern is None
+                        or self.email_unconfirmed_pattern is False
+                        else 16
+                    ),
+                ),
+                b""
+                if self.current_algo is None or self.current_algo is False
+                else (self.current_algo._bytes()),
+                b""
+                if self.srp_B is None or self.srp_B is False
+                else (self.serialize_bytes(self.srp_B)),
+                b""
+                if self.srp_id is None or self.srp_id is False
+                else (struct.pack("<q", self.srp_id)),
+                b""
+                if self.hint is None or self.hint is False
+                else (self.serialize_bytes(self.hint)),
+                b""
+                if self.email_unconfirmed_pattern is None
+                or self.email_unconfirmed_pattern is False
+                else (self.serialize_bytes(self.email_unconfirmed_pattern)),
+                self.new_algo._bytes(),
+                self.new_secure_algo._bytes(),
+                self.serialize_bytes(self.secure_random),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -262,14 +438,33 @@ class Password(TLObject):
         _new_algo = reader.tgread_object()
         _new_secure_algo = reader.tgread_object()
         _secure_random = reader.tgread_bytes()
-        return cls(new_algo=_new_algo, new_secure_algo=_new_secure_algo, secure_random=_secure_random, has_recovery=_has_recovery, has_secure_values=_has_secure_values, has_password=_has_password, current_algo=_current_algo, srp_B=_srp_B, srp_id=_srp_id, hint=_hint, email_unconfirmed_pattern=_email_unconfirmed_pattern)
+        return cls(
+            new_algo=_new_algo,
+            new_secure_algo=_new_secure_algo,
+            secure_random=_secure_random,
+            has_recovery=_has_recovery,
+            has_secure_values=_has_secure_values,
+            has_password=_has_password,
+            current_algo=_current_algo,
+            srp_B=_srp_B,
+            srp_id=_srp_id,
+            hint=_hint,
+            email_unconfirmed_pattern=_email_unconfirmed_pattern,
+        )
 
 
 class PasswordInputSettings(TLObject):
-    CONSTRUCTOR_ID = 0xc23727c9
-    SUBCLASS_OF_ID = 0xc426ca6
+    CONSTRUCTOR_ID = 0xC23727C9
+    SUBCLASS_OF_ID = 0xC426CA6
 
-    def __init__(self, new_algo: Optional['TypePasswordKdfAlgo']=None, new_password_hash: Optional[bytes]=None, hint: Optional[str]=None, email: Optional[str]=None, new_secure_settings: Optional['TypeSecureSecretSettings']=None):
+    def __init__(
+        self,
+        new_algo: Optional["TypePasswordKdfAlgo"] = None,
+        new_password_hash: Optional[bytes] = None,
+        hint: Optional[str] = None,
+        email: Optional[str] = None,
+        new_secure_settings: Optional["TypeSecureSecretSettings"] = None,
+    ):
         """
         Constructor for account.PasswordInputSettings: Instance of PasswordInputSettings.
         """
@@ -281,25 +476,66 @@ class PasswordInputSettings(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'PasswordInputSettings',
-            'new_algo': self.new_algo.to_dict() if isinstance(self.new_algo, TLObject) else self.new_algo,
-            'new_password_hash': self.new_password_hash,
-            'hint': self.hint,
-            'email': self.email,
-            'new_secure_settings': self.new_secure_settings.to_dict() if isinstance(self.new_secure_settings, TLObject) else self.new_secure_settings
+            "_": "PasswordInputSettings",
+            "new_algo": self.new_algo.to_dict()
+            if isinstance(self.new_algo, TLObject)
+            else self.new_algo,
+            "new_password_hash": self.new_password_hash,
+            "hint": self.hint,
+            "email": self.email,
+            "new_secure_settings": self.new_secure_settings.to_dict()
+            if isinstance(self.new_secure_settings, TLObject)
+            else self.new_secure_settings,
         }
 
     def _bytes(self):
-        assert ((self.new_algo or self.new_algo is not None) and (self.new_password_hash or self.new_password_hash is not None) and (self.hint or self.hint is not None)) or ((self.new_algo is None or self.new_algo is False) and (self.new_password_hash is None or self.new_password_hash is False) and (self.hint is None or self.hint is False)), 'new_algo, new_password_hash, hint parameters must all be False-y (like None) or all me True-y'
-        return b''.join((
-            b"\xc9'7\xc2",
-            struct.pack('<I', (0 if self.new_algo is None or self.new_algo is False else 1) | (0 if self.new_password_hash is None or self.new_password_hash is False else 1) | (0 if self.hint is None or self.hint is False else 1) | (0 if self.email is None or self.email is False else 2) | (0 if self.new_secure_settings is None or self.new_secure_settings is False else 4)),
-            b'' if self.new_algo is None or self.new_algo is False else (self.new_algo._bytes()),
-            b'' if self.new_password_hash is None or self.new_password_hash is False else (self.serialize_bytes(self.new_password_hash)),
-            b'' if self.hint is None or self.hint is False else (self.serialize_bytes(self.hint)),
-            b'' if self.email is None or self.email is False else (self.serialize_bytes(self.email)),
-            b'' if self.new_secure_settings is None or self.new_secure_settings is False else (self.new_secure_settings._bytes()),
-        ))
+        assert (
+            (self.new_algo or self.new_algo is not None)
+            and (self.new_password_hash or self.new_password_hash is not None)
+            and (self.hint or self.hint is not None)
+        ) or (
+            (self.new_algo is None or self.new_algo is False)
+            and (self.new_password_hash is None or self.new_password_hash is False)
+            and (self.hint is None or self.hint is False)
+        ), "new_algo, new_password_hash, hint parameters must all be False-y (like None) or all me True-y"
+        return b"".join(
+            (
+                b"\xc9'7\xc2",
+                struct.pack(
+                    "<I",
+                    (0 if self.new_algo is None or self.new_algo is False else 1)
+                    | (
+                        0
+                        if self.new_password_hash is None
+                        or self.new_password_hash is False
+                        else 1
+                    )
+                    | (0 if self.hint is None or self.hint is False else 1)
+                    | (0 if self.email is None or self.email is False else 2)
+                    | (
+                        0
+                        if self.new_secure_settings is None
+                        or self.new_secure_settings is False
+                        else 4
+                    ),
+                ),
+                b""
+                if self.new_algo is None or self.new_algo is False
+                else (self.new_algo._bytes()),
+                b""
+                if self.new_password_hash is None or self.new_password_hash is False
+                else (self.serialize_bytes(self.new_password_hash)),
+                b""
+                if self.hint is None or self.hint is False
+                else (self.serialize_bytes(self.hint)),
+                b""
+                if self.email is None or self.email is False
+                else (self.serialize_bytes(self.email)),
+                b""
+                if self.new_secure_settings is None or self.new_secure_settings is False
+                else (self.new_secure_settings._bytes()),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -325,14 +561,24 @@ class PasswordInputSettings(TLObject):
             _new_secure_settings = reader.tgread_object()
         else:
             _new_secure_settings = None
-        return cls(new_algo=_new_algo, new_password_hash=_new_password_hash, hint=_hint, email=_email, new_secure_settings=_new_secure_settings)
+        return cls(
+            new_algo=_new_algo,
+            new_password_hash=_new_password_hash,
+            hint=_hint,
+            email=_email,
+            new_secure_settings=_new_secure_settings,
+        )
 
 
 class PasswordSettings(TLObject):
-    CONSTRUCTOR_ID = 0x9a5c33e5
-    SUBCLASS_OF_ID = 0xd23fb078
+    CONSTRUCTOR_ID = 0x9A5C33E5
+    SUBCLASS_OF_ID = 0xD23FB078
 
-    def __init__(self, email: Optional[str]=None, secure_settings: Optional['TypeSecureSecretSettings']=None):
+    def __init__(
+        self,
+        email: Optional[str] = None,
+        secure_settings: Optional["TypeSecureSecretSettings"] = None,
+    ):
         """
         Constructor for account.PasswordSettings: Instance of PasswordSettings.
         """
@@ -341,18 +587,34 @@ class PasswordSettings(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'PasswordSettings',
-            'email': self.email,
-            'secure_settings': self.secure_settings.to_dict() if isinstance(self.secure_settings, TLObject) else self.secure_settings
+            "_": "PasswordSettings",
+            "email": self.email,
+            "secure_settings": self.secure_settings.to_dict()
+            if isinstance(self.secure_settings, TLObject)
+            else self.secure_settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xe53\\\x9a',
-            struct.pack('<I', (0 if self.email is None or self.email is False else 1) | (0 if self.secure_settings is None or self.secure_settings is False else 2)),
-            b'' if self.email is None or self.email is False else (self.serialize_bytes(self.email)),
-            b'' if self.secure_settings is None or self.secure_settings is False else (self.secure_settings._bytes()),
-        ))
+        return b"".join(
+            (
+                b"\xe53\\\x9a",
+                struct.pack(
+                    "<I",
+                    (0 if self.email is None or self.email is False else 1)
+                    | (
+                        0
+                        if self.secure_settings is None or self.secure_settings is False
+                        else 2
+                    ),
+                ),
+                b""
+                if self.email is None or self.email is False
+                else (self.serialize_bytes(self.email)),
+                b""
+                if self.secure_settings is None or self.secure_settings is False
+                else (self.secure_settings._bytes()),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -370,10 +632,15 @@ class PasswordSettings(TLObject):
 
 
 class PrivacyRules(TLObject):
-    CONSTRUCTOR_ID = 0x50a04e45
-    SUBCLASS_OF_ID = 0xb55aba82
+    CONSTRUCTOR_ID = 0x50A04E45
+    SUBCLASS_OF_ID = 0xB55ABA82
 
-    def __init__(self, rules: List['TypePrivacyRule'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        rules: List["TypePrivacyRule"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for account.PrivacyRules: Instance of PrivacyRules.
         """
@@ -383,19 +650,33 @@ class PrivacyRules(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'PrivacyRules',
-            'rules': [] if self.rules is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.rules],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "PrivacyRules",
+            "rules": []
+            if self.rules is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.rules],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'EN\xa0P',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.rules)),b''.join(x._bytes() for x in self.rules),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"EN\xa0P",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.rules)),
+                b"".join(x._bytes() for x in self.rules),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -421,8 +702,8 @@ class PrivacyRules(TLObject):
 
 
 class SentEmailCode(TLObject):
-    CONSTRUCTOR_ID = 0x811f854f
-    SUBCLASS_OF_ID = 0x69f3c06e
+    CONSTRUCTOR_ID = 0x811F854F
+    SUBCLASS_OF_ID = 0x69F3C06E
 
     def __init__(self, email_pattern: str, length: int):
         """
@@ -433,17 +714,19 @@ class SentEmailCode(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'SentEmailCode',
-            'email_pattern': self.email_pattern,
-            'length': self.length
+            "_": "SentEmailCode",
+            "email_pattern": self.email_pattern,
+            "length": self.length,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'O\x85\x1f\x81',
-            self.serialize_bytes(self.email_pattern),
-            struct.pack('<i', self.length),
-        ))
+        return b"".join(
+            (
+                b"O\x85\x1f\x81",
+                self.serialize_bytes(self.email_pattern),
+                struct.pack("<i", self.length),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -453,8 +736,8 @@ class SentEmailCode(TLObject):
 
 
 class Takeout(TLObject):
-    CONSTRUCTOR_ID = 0x4dba4501
-    SUBCLASS_OF_ID = 0x843ebe85
+    CONSTRUCTOR_ID = 0x4DBA4501
+    SUBCLASS_OF_ID = 0x843EBE85
 
     # noinspection PyShadowingBuiltins
     def __init__(self, id: int):
@@ -464,16 +747,15 @@ class Takeout(TLObject):
         self.id = id
 
     def to_dict(self):
-        return {
-            '_': 'Takeout',
-            'id': self.id
-        }
+        return {"_": "Takeout", "id": self.id}
 
     def _bytes(self):
-        return b''.join((
-            b'\x01E\xbaM',
-            struct.pack('<q', self.id),
-        ))
+        return b"".join(
+            (
+                b"\x01E\xbaM",
+                struct.pack("<q", self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -482,11 +764,11 @@ class Takeout(TLObject):
 
 
 class Themes(TLObject):
-    CONSTRUCTOR_ID = 0x7f676421
-    SUBCLASS_OF_ID = 0x7fc52204
+    CONSTRUCTOR_ID = 0x7F676421
+    SUBCLASS_OF_ID = 0x7FC52204
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, themes: List['TypeTheme']):
+    def __init__(self, hash: int, themes: List["TypeTheme"]):
         """
         Constructor for account.Themes: Instance of either ThemesNotModified, Themes.
         """
@@ -495,17 +777,23 @@ class Themes(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Themes',
-            'hash': self.hash,
-            'themes': [] if self.themes is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.themes]
+            "_": "Themes",
+            "hash": self.hash,
+            "themes": []
+            if self.themes is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.themes],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'!dg\x7f',
-            struct.pack('<i', self.hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.themes)),b''.join(x._bytes() for x in self.themes),
-        ))
+        return b"".join(
+            (
+                b"!dg\x7f",
+                struct.pack("<i", self.hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.themes)),
+                b"".join(x._bytes() for x in self.themes),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -520,18 +808,14 @@ class Themes(TLObject):
 
 
 class ThemesNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xf41eb622
-    SUBCLASS_OF_ID = 0x7fc52204
+    CONSTRUCTOR_ID = 0xF41EB622
+    SUBCLASS_OF_ID = 0x7FC52204
 
     def to_dict(self):
-        return {
-            '_': 'ThemesNotModified'
-        }
+        return {"_": "ThemesNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'"\xb6\x1e\xf4',
-        ))
+        return b"".join((b'"\xb6\x1e\xf4',))
 
     @classmethod
     def from_reader(cls, reader):
@@ -539,8 +823,8 @@ class ThemesNotModified(TLObject):
 
 
 class TmpPassword(TLObject):
-    CONSTRUCTOR_ID = 0xdb64fd34
-    SUBCLASS_OF_ID = 0xb064992d
+    CONSTRUCTOR_ID = 0xDB64FD34
+    SUBCLASS_OF_ID = 0xB064992D
 
     def __init__(self, tmp_password: bytes, valid_until: Optional[datetime]):
         """
@@ -551,17 +835,19 @@ class TmpPassword(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'TmpPassword',
-            'tmp_password': self.tmp_password,
-            'valid_until': self.valid_until
+            "_": "TmpPassword",
+            "tmp_password": self.tmp_password,
+            "valid_until": self.valid_until,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'4\xfdd\xdb',
-            self.serialize_bytes(self.tmp_password),
-            self.serialize_datetime(self.valid_until),
-        ))
+        return b"".join(
+            (
+                b"4\xfdd\xdb",
+                self.serialize_bytes(self.tmp_password),
+                self.serialize_datetime(self.valid_until),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -571,11 +857,11 @@ class TmpPassword(TLObject):
 
 
 class WallPapers(TLObject):
-    CONSTRUCTOR_ID = 0x702b65a9
-    SUBCLASS_OF_ID = 0xa2c548fd
+    CONSTRUCTOR_ID = 0x702B65A9
+    SUBCLASS_OF_ID = 0xA2C548FD
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, wallpapers: List['TypeWallPaper']):
+    def __init__(self, hash: int, wallpapers: List["TypeWallPaper"]):
         """
         Constructor for account.WallPapers: Instance of either WallPapersNotModified, WallPapers.
         """
@@ -584,17 +870,25 @@ class WallPapers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'WallPapers',
-            'hash': self.hash,
-            'wallpapers': [] if self.wallpapers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.wallpapers]
+            "_": "WallPapers",
+            "hash": self.hash,
+            "wallpapers": []
+            if self.wallpapers is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.wallpapers
+            ],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa9e+p',
-            struct.pack('<i', self.hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.wallpapers)),b''.join(x._bytes() for x in self.wallpapers),
-        ))
+        return b"".join(
+            (
+                b"\xa9e+p",
+                struct.pack("<i", self.hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.wallpapers)),
+                b"".join(x._bytes() for x in self.wallpapers),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -609,18 +903,14 @@ class WallPapers(TLObject):
 
 
 class WallPapersNotModified(TLObject):
-    CONSTRUCTOR_ID = 0x1c199183
-    SUBCLASS_OF_ID = 0xa2c548fd
+    CONSTRUCTOR_ID = 0x1C199183
+    SUBCLASS_OF_ID = 0xA2C548FD
 
     def to_dict(self):
-        return {
-            '_': 'WallPapersNotModified'
-        }
+        return {"_": "WallPapersNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x83\x91\x19\x1c',
-        ))
+        return b"".join((b"\x83\x91\x19\x1c",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -628,10 +918,12 @@ class WallPapersNotModified(TLObject):
 
 
 class WebAuthorizations(TLObject):
-    CONSTRUCTOR_ID = 0xed56c9fc
-    SUBCLASS_OF_ID = 0x9a365b32
+    CONSTRUCTOR_ID = 0xED56C9FC
+    SUBCLASS_OF_ID = 0x9A365B32
 
-    def __init__(self, authorizations: List['TypeWebAuthorization'], users: List['TypeUser']):
+    def __init__(
+        self, authorizations: List["TypeWebAuthorization"], users: List["TypeUser"]
+    ):
         """
         Constructor for account.WebAuthorizations: Instance of WebAuthorizations.
         """
@@ -640,17 +932,30 @@ class WebAuthorizations(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'WebAuthorizations',
-            'authorizations': [] if self.authorizations is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.authorizations],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "WebAuthorizations",
+            "authorizations": []
+            if self.authorizations is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.authorizations
+            ],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xfc\xc9V\xed',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.authorizations)),b''.join(x._bytes() for x in self.authorizations),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xfc\xc9V\xed",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.authorizations)),
+                b"".join(x._bytes() for x in self.authorizations),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -667,4 +972,3 @@ class WebAuthorizations(TLObject):
             _users.append(_x)
 
         return cls(authorizations=_authorizations, users=_users)
-

@@ -4,15 +4,35 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
-    from ...tl.types import TypeBotInlineResult, TypeChat, TypeChatAdminWithInvites, TypeChatFull, TypeChatInviteImporter, TypeDialog, TypeDocument, TypeEncryptedFile, TypeExportedChatInvite, TypeHighScore, TypeInlineBotSwitchPM, TypeMessage, TypeMessageUserVote, TypeMessageViews, TypeMessagesFilter, TypeStickerPack, TypeStickerSet, TypeStickerSetCovered, TypeUser
+    from ...tl.types import (
+        TypeBotInlineResult,
+        TypeChat,
+        TypeChatAdminWithInvites,
+        TypeChatFull,
+        TypeChatInviteImporter,
+        TypeDialog,
+        TypeDocument,
+        TypeEncryptedFile,
+        TypeExportedChatInvite,
+        TypeHighScore,
+        TypeInlineBotSwitchPM,
+        TypeMessage,
+        TypeMessageUserVote,
+        TypeMessageViews,
+        TypeMessagesFilter,
+        TypeStickerPack,
+        TypeStickerSet,
+        TypeStickerSetCovered,
+        TypeUser,
+    )
     from ...tl.types.updates import TypeState
 
 
-
 class AffectedFoundMessages(TLObject):
-    CONSTRUCTOR_ID = 0xef8d3e6c
-    SUBCLASS_OF_ID = 0xf817652e
+    CONSTRUCTOR_ID = 0xEF8D3E6C
+    SUBCLASS_OF_ID = 0xF817652E
 
     def __init__(self, pts: int, pts_count: int, offset: int, messages: List[int]):
         """
@@ -25,21 +45,25 @@ class AffectedFoundMessages(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'AffectedFoundMessages',
-            'pts': self.pts,
-            'pts_count': self.pts_count,
-            'offset': self.offset,
-            'messages': [] if self.messages is None else self.messages[:]
+            "_": "AffectedFoundMessages",
+            "pts": self.pts,
+            "pts_count": self.pts_count,
+            "offset": self.offset,
+            "messages": [] if self.messages is None else self.messages[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'l>\x8d\xef',
-            struct.pack('<i', self.pts),
-            struct.pack('<i', self.pts_count),
-            struct.pack('<i', self.offset),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(struct.pack('<i', x) for x in self.messages),
-        ))
+        return b"".join(
+            (
+                b"l>\x8d\xef",
+                struct.pack("<i", self.pts),
+                struct.pack("<i", self.pts_count),
+                struct.pack("<i", self.offset),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(struct.pack("<i", x) for x in self.messages),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -56,8 +80,8 @@ class AffectedFoundMessages(TLObject):
 
 
 class AffectedHistory(TLObject):
-    CONSTRUCTOR_ID = 0xb45c69d1
-    SUBCLASS_OF_ID = 0x2c49c116
+    CONSTRUCTOR_ID = 0xB45C69D1
+    SUBCLASS_OF_ID = 0x2C49C116
 
     def __init__(self, pts: int, pts_count: int, offset: int):
         """
@@ -69,19 +93,21 @@ class AffectedHistory(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'AffectedHistory',
-            'pts': self.pts,
-            'pts_count': self.pts_count,
-            'offset': self.offset
+            "_": "AffectedHistory",
+            "pts": self.pts,
+            "pts_count": self.pts_count,
+            "offset": self.offset,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xd1i\\\xb4',
-            struct.pack('<i', self.pts),
-            struct.pack('<i', self.pts_count),
-            struct.pack('<i', self.offset),
-        ))
+        return b"".join(
+            (
+                b"\xd1i\\\xb4",
+                struct.pack("<i", self.pts),
+                struct.pack("<i", self.pts_count),
+                struct.pack("<i", self.offset),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -92,8 +118,8 @@ class AffectedHistory(TLObject):
 
 
 class AffectedMessages(TLObject):
-    CONSTRUCTOR_ID = 0x84d19185
-    SUBCLASS_OF_ID = 0xced3c06e
+    CONSTRUCTOR_ID = 0x84D19185
+    SUBCLASS_OF_ID = 0xCED3C06E
 
     def __init__(self, pts: int, pts_count: int):
         """
@@ -103,18 +129,16 @@ class AffectedMessages(TLObject):
         self.pts_count = pts_count
 
     def to_dict(self):
-        return {
-            '_': 'AffectedMessages',
-            'pts': self.pts,
-            'pts_count': self.pts_count
-        }
+        return {"_": "AffectedMessages", "pts": self.pts, "pts_count": self.pts_count}
 
     def _bytes(self):
-        return b''.join((
-            b'\x85\x91\xd1\x84',
-            struct.pack('<i', self.pts),
-            struct.pack('<i', self.pts_count),
-        ))
+        return b"".join(
+            (
+                b"\x85\x91\xd1\x84",
+                struct.pack("<i", self.pts),
+                struct.pack("<i", self.pts_count),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -124,11 +148,11 @@ class AffectedMessages(TLObject):
 
 
 class AllStickers(TLObject):
-    CONSTRUCTOR_ID = 0xedfd405f
+    CONSTRUCTOR_ID = 0xEDFD405F
     SUBCLASS_OF_ID = 0x45834829
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, sets: List['TypeStickerSet']):
+    def __init__(self, hash: int, sets: List["TypeStickerSet"]):
         """
         Constructor for messages.AllStickers: Instance of either AllStickersNotModified, AllStickers.
         """
@@ -137,17 +161,23 @@ class AllStickers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'AllStickers',
-            'hash': self.hash,
-            'sets': [] if self.sets is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets]
+            "_": "AllStickers",
+            "hash": self.hash,
+            "sets": []
+            if self.sets is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'_@\xfd\xed',
-            struct.pack('<i', self.hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.sets)),b''.join(x._bytes() for x in self.sets),
-        ))
+        return b"".join(
+            (
+                b"_@\xfd\xed",
+                struct.pack("<i", self.hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.sets)),
+                b"".join(x._bytes() for x in self.sets),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -162,18 +192,14 @@ class AllStickers(TLObject):
 
 
 class AllStickersNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xe86602c3
+    CONSTRUCTOR_ID = 0xE86602C3
     SUBCLASS_OF_ID = 0x45834829
 
     def to_dict(self):
-        return {
-            '_': 'AllStickersNotModified'
-        }
+        return {"_": "AllStickersNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xc3\x02f\xe8',
-        ))
+        return b"".join((b"\xc3\x02f\xe8",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -181,10 +207,10 @@ class AllStickersNotModified(TLObject):
 
 
 class ArchivedStickers(TLObject):
-    CONSTRUCTOR_ID = 0x4fcba9c8
-    SUBCLASS_OF_ID = 0x7296d771
+    CONSTRUCTOR_ID = 0x4FCBA9C8
+    SUBCLASS_OF_ID = 0x7296D771
 
-    def __init__(self, count: int, sets: List['TypeStickerSetCovered']):
+    def __init__(self, count: int, sets: List["TypeStickerSetCovered"]):
         """
         Constructor for messages.ArchivedStickers: Instance of ArchivedStickers.
         """
@@ -193,17 +219,23 @@ class ArchivedStickers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ArchivedStickers',
-            'count': self.count,
-            'sets': [] if self.sets is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets]
+            "_": "ArchivedStickers",
+            "count": self.count,
+            "sets": []
+            if self.sets is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xc8\xa9\xcbO',
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.sets)),b''.join(x._bytes() for x in self.sets),
-        ))
+        return b"".join(
+            (
+                b"\xc8\xa9\xcbO",
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.sets)),
+                b"".join(x._bytes() for x in self.sets),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -218,10 +250,18 @@ class ArchivedStickers(TLObject):
 
 
 class BotCallbackAnswer(TLObject):
-    CONSTRUCTOR_ID = 0x36585ea4
-    SUBCLASS_OF_ID = 0x6c4dd18c
+    CONSTRUCTOR_ID = 0x36585EA4
+    SUBCLASS_OF_ID = 0x6C4DD18C
 
-    def __init__(self, cache_time: int, alert: Optional[bool]=None, has_url: Optional[bool]=None, native_ui: Optional[bool]=None, message: Optional[str]=None, url: Optional[str]=None):
+    def __init__(
+        self,
+        cache_time: int,
+        alert: Optional[bool] = None,
+        has_url: Optional[bool] = None,
+        native_ui: Optional[bool] = None,
+        message: Optional[str] = None,
+        url: Optional[str] = None,
+    ):
         """
         Constructor for messages.BotCallbackAnswer: Instance of BotCallbackAnswer.
         """
@@ -234,23 +274,36 @@ class BotCallbackAnswer(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'BotCallbackAnswer',
-            'cache_time': self.cache_time,
-            'alert': self.alert,
-            'has_url': self.has_url,
-            'native_ui': self.native_ui,
-            'message': self.message,
-            'url': self.url
+            "_": "BotCallbackAnswer",
+            "cache_time": self.cache_time,
+            "alert": self.alert,
+            "has_url": self.has_url,
+            "native_ui": self.native_ui,
+            "message": self.message,
+            "url": self.url,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa4^X6',
-            struct.pack('<I', (0 if self.alert is None or self.alert is False else 2) | (0 if self.has_url is None or self.has_url is False else 8) | (0 if self.native_ui is None or self.native_ui is False else 16) | (0 if self.message is None or self.message is False else 1) | (0 if self.url is None or self.url is False else 4)),
-            b'' if self.message is None or self.message is False else (self.serialize_bytes(self.message)),
-            b'' if self.url is None or self.url is False else (self.serialize_bytes(self.url)),
-            struct.pack('<i', self.cache_time),
-        ))
+        return b"".join(
+            (
+                b"\xa4^X6",
+                struct.pack(
+                    "<I",
+                    (0 if self.alert is None or self.alert is False else 2)
+                    | (0 if self.has_url is None or self.has_url is False else 8)
+                    | (0 if self.native_ui is None or self.native_ui is False else 16)
+                    | (0 if self.message is None or self.message is False else 1)
+                    | (0 if self.url is None or self.url is False else 4),
+                ),
+                b""
+                if self.message is None or self.message is False
+                else (self.serialize_bytes(self.message)),
+                b""
+                if self.url is None or self.url is False
+                else (self.serialize_bytes(self.url)),
+                struct.pack("<i", self.cache_time),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -268,14 +321,30 @@ class BotCallbackAnswer(TLObject):
         else:
             _url = None
         _cache_time = reader.read_int()
-        return cls(cache_time=_cache_time, alert=_alert, has_url=_has_url, native_ui=_native_ui, message=_message, url=_url)
+        return cls(
+            cache_time=_cache_time,
+            alert=_alert,
+            has_url=_has_url,
+            native_ui=_native_ui,
+            message=_message,
+            url=_url,
+        )
 
 
 class BotResults(TLObject):
-    CONSTRUCTOR_ID = 0x947ca848
-    SUBCLASS_OF_ID = 0x3ed4d9c9
+    CONSTRUCTOR_ID = 0x947CA848
+    SUBCLASS_OF_ID = 0x3ED4D9C9
 
-    def __init__(self, query_id: int, results: List['TypeBotInlineResult'], cache_time: int, users: List['TypeUser'], gallery: Optional[bool]=None, next_offset: Optional[str]=None, switch_pm: Optional['TypeInlineBotSwitchPM']=None):
+    def __init__(
+        self,
+        query_id: int,
+        results: List["TypeBotInlineResult"],
+        cache_time: int,
+        users: List["TypeUser"],
+        gallery: Optional[bool] = None,
+        next_offset: Optional[str] = None,
+        switch_pm: Optional["TypeInlineBotSwitchPM"] = None,
+    ):
         """
         Constructor for messages.BotResults: Instance of BotResults.
         """
@@ -289,27 +358,52 @@ class BotResults(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'BotResults',
-            'query_id': self.query_id,
-            'results': [] if self.results is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.results],
-            'cache_time': self.cache_time,
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'gallery': self.gallery,
-            'next_offset': self.next_offset,
-            'switch_pm': self.switch_pm.to_dict() if isinstance(self.switch_pm, TLObject) else self.switch_pm
+            "_": "BotResults",
+            "query_id": self.query_id,
+            "results": []
+            if self.results is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.results],
+            "cache_time": self.cache_time,
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "gallery": self.gallery,
+            "next_offset": self.next_offset,
+            "switch_pm": self.switch_pm.to_dict()
+            if isinstance(self.switch_pm, TLObject)
+            else self.switch_pm,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'H\xa8|\x94',
-            struct.pack('<I', (0 if self.gallery is None or self.gallery is False else 1) | (0 if self.next_offset is None or self.next_offset is False else 2) | (0 if self.switch_pm is None or self.switch_pm is False else 4)),
-            struct.pack('<q', self.query_id),
-            b'' if self.next_offset is None or self.next_offset is False else (self.serialize_bytes(self.next_offset)),
-            b'' if self.switch_pm is None or self.switch_pm is False else (self.switch_pm._bytes()),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.results)),b''.join(x._bytes() for x in self.results),
-            struct.pack('<i', self.cache_time),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"H\xa8|\x94",
+                struct.pack(
+                    "<I",
+                    (0 if self.gallery is None or self.gallery is False else 1)
+                    | (
+                        0
+                        if self.next_offset is None or self.next_offset is False
+                        else 2
+                    )
+                    | (0 if self.switch_pm is None or self.switch_pm is False else 4),
+                ),
+                struct.pack("<q", self.query_id),
+                b""
+                if self.next_offset is None or self.next_offset is False
+                else (self.serialize_bytes(self.next_offset)),
+                b""
+                if self.switch_pm is None or self.switch_pm is False
+                else (self.switch_pm._bytes()),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.results)),
+                b"".join(x._bytes() for x in self.results),
+                struct.pack("<i", self.cache_time),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -338,14 +432,31 @@ class BotResults(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(query_id=_query_id, results=_results, cache_time=_cache_time, users=_users, gallery=_gallery, next_offset=_next_offset, switch_pm=_switch_pm)
+        return cls(
+            query_id=_query_id,
+            results=_results,
+            cache_time=_cache_time,
+            users=_users,
+            gallery=_gallery,
+            next_offset=_next_offset,
+            switch_pm=_switch_pm,
+        )
 
 
 class ChannelMessages(TLObject):
     CONSTRUCTOR_ID = 0x64479808
-    SUBCLASS_OF_ID = 0xd4b40b5e
+    SUBCLASS_OF_ID = 0xD4B40B5E
 
-    def __init__(self, pts: int, count: int, messages: List['TypeMessage'], chats: List['TypeChat'], users: List['TypeUser'], inexact: Optional[bool]=None, offset_id_offset: Optional[int]=None):
+    def __init__(
+        self,
+        pts: int,
+        count: int,
+        messages: List["TypeMessage"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        inexact: Optional[bool] = None,
+        offset_id_offset: Optional[int] = None,
+    ):
         """
         Constructor for messages.Messages: Instance of either Messages, MessagesSlice, ChannelMessages, MessagesNotModified.
         """
@@ -359,27 +470,52 @@ class ChannelMessages(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ChannelMessages',
-            'pts': self.pts,
-            'count': self.count,
-            'messages': [] if self.messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'inexact': self.inexact,
-            'offset_id_offset': self.offset_id_offset
+            "_": "ChannelMessages",
+            "pts": self.pts,
+            "count": self.count,
+            "messages": []
+            if self.messages is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "inexact": self.inexact,
+            "offset_id_offset": self.offset_id_offset,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x08\x98Gd',
-            struct.pack('<I', (0 if self.inexact is None or self.inexact is False else 2) | (0 if self.offset_id_offset is None or self.offset_id_offset is False else 4)),
-            struct.pack('<i', self.pts),
-            struct.pack('<i', self.count),
-            b'' if self.offset_id_offset is None or self.offset_id_offset is False else (struct.pack('<i', self.offset_id_offset)),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(x._bytes() for x in self.messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\x08\x98Gd",
+                struct.pack(
+                    "<I",
+                    (0 if self.inexact is None or self.inexact is False else 2)
+                    | (
+                        0
+                        if self.offset_id_offset is None
+                        or self.offset_id_offset is False
+                        else 4
+                    ),
+                ),
+                struct.pack("<i", self.pts),
+                struct.pack("<i", self.count),
+                b""
+                if self.offset_id_offset is None or self.offset_id_offset is False
+                else (struct.pack("<i", self.offset_id_offset)),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(x._bytes() for x in self.messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -410,14 +546,24 @@ class ChannelMessages(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(pts=_pts, count=_count, messages=_messages, chats=_chats, users=_users, inexact=_inexact, offset_id_offset=_offset_id_offset)
+        return cls(
+            pts=_pts,
+            count=_count,
+            messages=_messages,
+            chats=_chats,
+            users=_users,
+            inexact=_inexact,
+            offset_id_offset=_offset_id_offset,
+        )
 
 
 class ChatAdminsWithInvites(TLObject):
-    CONSTRUCTOR_ID = 0xb69b72d7
-    SUBCLASS_OF_ID = 0x8f5bad2b
+    CONSTRUCTOR_ID = 0xB69B72D7
+    SUBCLASS_OF_ID = 0x8F5BAD2B
 
-    def __init__(self, admins: List['TypeChatAdminWithInvites'], users: List['TypeUser']):
+    def __init__(
+        self, admins: List["TypeChatAdminWithInvites"], users: List["TypeUser"]
+    ):
         """
         Constructor for messages.ChatAdminsWithInvites: Instance of ChatAdminsWithInvites.
         """
@@ -426,17 +572,27 @@ class ChatAdminsWithInvites(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ChatAdminsWithInvites',
-            'admins': [] if self.admins is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.admins],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "ChatAdminsWithInvites",
+            "admins": []
+            if self.admins is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.admins],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xd7r\x9b\xb6',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.admins)),b''.join(x._bytes() for x in self.admins),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xd7r\x9b\xb6",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.admins)),
+                b"".join(x._bytes() for x in self.admins),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -456,10 +612,15 @@ class ChatAdminsWithInvites(TLObject):
 
 
 class ChatFull(TLObject):
-    CONSTRUCTOR_ID = 0xe5d7d19c
-    SUBCLASS_OF_ID = 0x225a5109
+    CONSTRUCTOR_ID = 0xE5D7D19C
+    SUBCLASS_OF_ID = 0x225A5109
 
-    def __init__(self, full_chat: 'TypeChatFull', chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        full_chat: "TypeChatFull",
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for messages.ChatFull: Instance of ChatFull.
         """
@@ -469,19 +630,31 @@ class ChatFull(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ChatFull',
-            'full_chat': self.full_chat.to_dict() if isinstance(self.full_chat, TLObject) else self.full_chat,
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "ChatFull",
+            "full_chat": self.full_chat.to_dict()
+            if isinstance(self.full_chat, TLObject)
+            else self.full_chat,
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x9c\xd1\xd7\xe5',
-            self.full_chat._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\x9c\xd1\xd7\xe5",
+                self.full_chat._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -502,10 +675,15 @@ class ChatFull(TLObject):
 
 
 class ChatInviteImporters(TLObject):
-    CONSTRUCTOR_ID = 0x81b6b00a
-    SUBCLASS_OF_ID = 0xd9bc8aa6
+    CONSTRUCTOR_ID = 0x81B6B00A
+    SUBCLASS_OF_ID = 0xD9BC8AA6
 
-    def __init__(self, count: int, importers: List['TypeChatInviteImporter'], users: List['TypeUser']):
+    def __init__(
+        self,
+        count: int,
+        importers: List["TypeChatInviteImporter"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for messages.ChatInviteImporters: Instance of ChatInviteImporters.
         """
@@ -515,19 +693,31 @@ class ChatInviteImporters(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ChatInviteImporters',
-            'count': self.count,
-            'importers': [] if self.importers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.importers],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "ChatInviteImporters",
+            "count": self.count,
+            "importers": []
+            if self.importers is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.importers
+            ],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\n\xb0\xb6\x81',
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.importers)),b''.join(x._bytes() for x in self.importers),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\n\xb0\xb6\x81",
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.importers)),
+                b"".join(x._bytes() for x in self.importers),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -548,10 +738,10 @@ class ChatInviteImporters(TLObject):
 
 
 class Chats(TLObject):
-    CONSTRUCTOR_ID = 0x64ff9fd5
-    SUBCLASS_OF_ID = 0x99d5cb14
+    CONSTRUCTOR_ID = 0x64FF9FD5
+    SUBCLASS_OF_ID = 0x99D5CB14
 
-    def __init__(self, chats: List['TypeChat']):
+    def __init__(self, chats: List["TypeChat"]):
         """
         Constructor for messages.Chats: Instance of either Chats, ChatsSlice.
         """
@@ -559,15 +749,21 @@ class Chats(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Chats',
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats]
+            "_": "Chats",
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xd5\x9f\xffd',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-        ))
+        return b"".join(
+            (
+                b"\xd5\x9f\xffd",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -581,10 +777,10 @@ class Chats(TLObject):
 
 
 class ChatsSlice(TLObject):
-    CONSTRUCTOR_ID = 0x9cd81144
-    SUBCLASS_OF_ID = 0x99d5cb14
+    CONSTRUCTOR_ID = 0x9CD81144
+    SUBCLASS_OF_ID = 0x99D5CB14
 
-    def __init__(self, count: int, chats: List['TypeChat']):
+    def __init__(self, count: int, chats: List["TypeChat"]):
         """
         Constructor for messages.Chats: Instance of either Chats, ChatsSlice.
         """
@@ -593,17 +789,23 @@ class ChatsSlice(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ChatsSlice',
-            'count': self.count,
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats]
+            "_": "ChatsSlice",
+            "count": self.count,
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'D\x11\xd8\x9c',
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-        ))
+        return b"".join(
+            (
+                b"D\x11\xd8\x9c",
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -618,8 +820,8 @@ class ChatsSlice(TLObject):
 
 
 class CheckedHistoryImportPeer(TLObject):
-    CONSTRUCTOR_ID = 0xa24de717
-    SUBCLASS_OF_ID = 0xb84bb337
+    CONSTRUCTOR_ID = 0xA24DE717
+    SUBCLASS_OF_ID = 0xB84BB337
 
     def __init__(self, confirm_text: str):
         """
@@ -628,16 +830,15 @@ class CheckedHistoryImportPeer(TLObject):
         self.confirm_text = confirm_text
 
     def to_dict(self):
-        return {
-            '_': 'CheckedHistoryImportPeer',
-            'confirm_text': self.confirm_text
-        }
+        return {"_": "CheckedHistoryImportPeer", "confirm_text": self.confirm_text}
 
     def _bytes(self):
-        return b''.join((
-            b'\x17\xe7M\xa2',
-            self.serialize_bytes(self.confirm_text),
-        ))
+        return b"".join(
+            (
+                b"\x17\xe7M\xa2",
+                self.serialize_bytes(self.confirm_text),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -646,8 +847,8 @@ class CheckedHistoryImportPeer(TLObject):
 
 
 class DhConfig(TLObject):
-    CONSTRUCTOR_ID = 0x2c221edd
-    SUBCLASS_OF_ID = 0xe488ed8b
+    CONSTRUCTOR_ID = 0x2C221EDD
+    SUBCLASS_OF_ID = 0xE488ED8B
 
     def __init__(self, g: int, p: bytes, version: int, random: bytes):
         """
@@ -660,21 +861,23 @@ class DhConfig(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'DhConfig',
-            'g': self.g,
-            'p': self.p,
-            'version': self.version,
-            'random': self.random
+            "_": "DhConfig",
+            "g": self.g,
+            "p": self.p,
+            "version": self.version,
+            "random": self.random,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xdd\x1e",',
-            struct.pack('<i', self.g),
-            self.serialize_bytes(self.p),
-            struct.pack('<i', self.version),
-            self.serialize_bytes(self.random),
-        ))
+        return b"".join(
+            (
+                b'\xdd\x1e",',
+                struct.pack("<i", self.g),
+                self.serialize_bytes(self.p),
+                struct.pack("<i", self.version),
+                self.serialize_bytes(self.random),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -686,8 +889,8 @@ class DhConfig(TLObject):
 
 
 class DhConfigNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xc0e24635
-    SUBCLASS_OF_ID = 0xe488ed8b
+    CONSTRUCTOR_ID = 0xC0E24635
+    SUBCLASS_OF_ID = 0xE488ED8B
 
     def __init__(self, random: bytes):
         """
@@ -696,16 +899,15 @@ class DhConfigNotModified(TLObject):
         self.random = random
 
     def to_dict(self):
-        return {
-            '_': 'DhConfigNotModified',
-            'random': self.random
-        }
+        return {"_": "DhConfigNotModified", "random": self.random}
 
     def _bytes(self):
-        return b''.join((
-            b'5F\xe2\xc0',
-            self.serialize_bytes(self.random),
-        ))
+        return b"".join(
+            (
+                b"5F\xe2\xc0",
+                self.serialize_bytes(self.random),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -714,10 +916,16 @@ class DhConfigNotModified(TLObject):
 
 
 class Dialogs(TLObject):
-    CONSTRUCTOR_ID = 0x15ba6c40
-    SUBCLASS_OF_ID = 0xe1b52ee
+    CONSTRUCTOR_ID = 0x15BA6C40
+    SUBCLASS_OF_ID = 0xE1B52EE
 
-    def __init__(self, dialogs: List['TypeDialog'], messages: List['TypeMessage'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        dialogs: List["TypeDialog"],
+        messages: List["TypeMessage"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for messages.Dialogs: Instance of either Dialogs, DialogsSlice, DialogsNotModified.
         """
@@ -728,21 +936,39 @@ class Dialogs(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Dialogs',
-            'dialogs': [] if self.dialogs is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.dialogs],
-            'messages': [] if self.messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "Dialogs",
+            "dialogs": []
+            if self.dialogs is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.dialogs],
+            "messages": []
+            if self.messages is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'@l\xba\x15',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.dialogs)),b''.join(x._bytes() for x in self.dialogs),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(x._bytes() for x in self.messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"@l\xba\x15",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.dialogs)),
+                b"".join(x._bytes() for x in self.dialogs),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(x._bytes() for x in self.messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -774,8 +1000,8 @@ class Dialogs(TLObject):
 
 
 class DialogsNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xf0e3e596
-    SUBCLASS_OF_ID = 0xe1b52ee
+    CONSTRUCTOR_ID = 0xF0E3E596
+    SUBCLASS_OF_ID = 0xE1B52EE
 
     def __init__(self, count: int):
         """
@@ -784,16 +1010,15 @@ class DialogsNotModified(TLObject):
         self.count = count
 
     def to_dict(self):
-        return {
-            '_': 'DialogsNotModified',
-            'count': self.count
-        }
+        return {"_": "DialogsNotModified", "count": self.count}
 
     def _bytes(self):
-        return b''.join((
-            b'\x96\xe5\xe3\xf0',
-            struct.pack('<i', self.count),
-        ))
+        return b"".join(
+            (
+                b"\x96\xe5\xe3\xf0",
+                struct.pack("<i", self.count),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -802,10 +1027,17 @@ class DialogsNotModified(TLObject):
 
 
 class DialogsSlice(TLObject):
-    CONSTRUCTOR_ID = 0x71e094f3
-    SUBCLASS_OF_ID = 0xe1b52ee
+    CONSTRUCTOR_ID = 0x71E094F3
+    SUBCLASS_OF_ID = 0xE1B52EE
 
-    def __init__(self, count: int, dialogs: List['TypeDialog'], messages: List['TypeMessage'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        count: int,
+        dialogs: List["TypeDialog"],
+        messages: List["TypeMessage"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for messages.Dialogs: Instance of either Dialogs, DialogsSlice, DialogsNotModified.
         """
@@ -817,23 +1049,41 @@ class DialogsSlice(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'DialogsSlice',
-            'count': self.count,
-            'dialogs': [] if self.dialogs is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.dialogs],
-            'messages': [] if self.messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "DialogsSlice",
+            "count": self.count,
+            "dialogs": []
+            if self.dialogs is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.dialogs],
+            "messages": []
+            if self.messages is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf3\x94\xe0q',
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.dialogs)),b''.join(x._bytes() for x in self.dialogs),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(x._bytes() for x in self.messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xf3\x94\xe0q",
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.dialogs)),
+                b"".join(x._bytes() for x in self.dialogs),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(x._bytes() for x in self.messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -862,14 +1112,28 @@ class DialogsSlice(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(count=_count, dialogs=_dialogs, messages=_messages, chats=_chats, users=_users)
+        return cls(
+            count=_count,
+            dialogs=_dialogs,
+            messages=_messages,
+            chats=_chats,
+            users=_users,
+        )
 
 
 class DiscussionMessage(TLObject):
-    CONSTRUCTOR_ID = 0xf5dd8f9d
-    SUBCLASS_OF_ID = 0x53f8e3e8
+    CONSTRUCTOR_ID = 0xF5DD8F9D
+    SUBCLASS_OF_ID = 0x53F8E3E8
 
-    def __init__(self, messages: List['TypeMessage'], chats: List['TypeChat'], users: List['TypeUser'], max_id: Optional[int]=None, read_inbox_max_id: Optional[int]=None, read_outbox_max_id: Optional[int]=None):
+    def __init__(
+        self,
+        messages: List["TypeMessage"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        max_id: Optional[int] = None,
+        read_inbox_max_id: Optional[int] = None,
+        read_outbox_max_id: Optional[int] = None,
+    ):
         """
         Constructor for messages.DiscussionMessage: Instance of DiscussionMessage.
         """
@@ -882,26 +1146,61 @@ class DiscussionMessage(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'DiscussionMessage',
-            'messages': [] if self.messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'max_id': self.max_id,
-            'read_inbox_max_id': self.read_inbox_max_id,
-            'read_outbox_max_id': self.read_outbox_max_id
+            "_": "DiscussionMessage",
+            "messages": []
+            if self.messages is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "max_id": self.max_id,
+            "read_inbox_max_id": self.read_inbox_max_id,
+            "read_outbox_max_id": self.read_outbox_max_id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x9d\x8f\xdd\xf5',
-            struct.pack('<I', (0 if self.max_id is None or self.max_id is False else 1) | (0 if self.read_inbox_max_id is None or self.read_inbox_max_id is False else 2) | (0 if self.read_outbox_max_id is None or self.read_outbox_max_id is False else 4)),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(x._bytes() for x in self.messages),
-            b'' if self.max_id is None or self.max_id is False else (struct.pack('<i', self.max_id)),
-            b'' if self.read_inbox_max_id is None or self.read_inbox_max_id is False else (struct.pack('<i', self.read_inbox_max_id)),
-            b'' if self.read_outbox_max_id is None or self.read_outbox_max_id is False else (struct.pack('<i', self.read_outbox_max_id)),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\x9d\x8f\xdd\xf5",
+                struct.pack(
+                    "<I",
+                    (0 if self.max_id is None or self.max_id is False else 1)
+                    | (
+                        0
+                        if self.read_inbox_max_id is None
+                        or self.read_inbox_max_id is False
+                        else 2
+                    )
+                    | (
+                        0
+                        if self.read_outbox_max_id is None
+                        or self.read_outbox_max_id is False
+                        else 4
+                    ),
+                ),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(x._bytes() for x in self.messages),
+                b""
+                if self.max_id is None or self.max_id is False
+                else (struct.pack("<i", self.max_id)),
+                b""
+                if self.read_inbox_max_id is None or self.read_inbox_max_id is False
+                else (struct.pack("<i", self.read_inbox_max_id)),
+                b""
+                if self.read_outbox_max_id is None or self.read_outbox_max_id is False
+                else (struct.pack("<i", self.read_outbox_max_id)),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -937,14 +1236,21 @@ class DiscussionMessage(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(messages=_messages, chats=_chats, users=_users, max_id=_max_id, read_inbox_max_id=_read_inbox_max_id, read_outbox_max_id=_read_outbox_max_id)
+        return cls(
+            messages=_messages,
+            chats=_chats,
+            users=_users,
+            max_id=_max_id,
+            read_inbox_max_id=_read_inbox_max_id,
+            read_outbox_max_id=_read_outbox_max_id,
+        )
 
 
 class ExportedChatInvite(TLObject):
-    CONSTRUCTOR_ID = 0x1871be50
-    SUBCLASS_OF_ID = 0x82dcd4ca
+    CONSTRUCTOR_ID = 0x1871BE50
+    SUBCLASS_OF_ID = 0x82DCD4CA
 
-    def __init__(self, invite: 'TypeExportedChatInvite', users: List['TypeUser']):
+    def __init__(self, invite: "TypeExportedChatInvite", users: List["TypeUser"]):
         """
         Constructor for messages.ExportedChatInvite: Instance of either ExportedChatInvite, ExportedChatInviteReplaced.
         """
@@ -953,17 +1259,25 @@ class ExportedChatInvite(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ExportedChatInvite',
-            'invite': self.invite.to_dict() if isinstance(self.invite, TLObject) else self.invite,
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "ExportedChatInvite",
+            "invite": self.invite.to_dict()
+            if isinstance(self.invite, TLObject)
+            else self.invite,
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'P\xbeq\x18',
-            self.invite._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"P\xbeq\x18",
+                self.invite._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -978,10 +1292,15 @@ class ExportedChatInvite(TLObject):
 
 
 class ExportedChatInviteReplaced(TLObject):
-    CONSTRUCTOR_ID = 0x222600ef
-    SUBCLASS_OF_ID = 0x82dcd4ca
+    CONSTRUCTOR_ID = 0x222600EF
+    SUBCLASS_OF_ID = 0x82DCD4CA
 
-    def __init__(self, invite: 'TypeExportedChatInvite', new_invite: 'TypeExportedChatInvite', users: List['TypeUser']):
+    def __init__(
+        self,
+        invite: "TypeExportedChatInvite",
+        new_invite: "TypeExportedChatInvite",
+        users: List["TypeUser"],
+    ):
         """
         Constructor for messages.ExportedChatInvite: Instance of either ExportedChatInvite, ExportedChatInviteReplaced.
         """
@@ -991,19 +1310,29 @@ class ExportedChatInviteReplaced(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ExportedChatInviteReplaced',
-            'invite': self.invite.to_dict() if isinstance(self.invite, TLObject) else self.invite,
-            'new_invite': self.new_invite.to_dict() if isinstance(self.new_invite, TLObject) else self.new_invite,
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "ExportedChatInviteReplaced",
+            "invite": self.invite.to_dict()
+            if isinstance(self.invite, TLObject)
+            else self.invite,
+            "new_invite": self.new_invite.to_dict()
+            if isinstance(self.new_invite, TLObject)
+            else self.new_invite,
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xef\x00&"',
-            self.invite._bytes(),
-            self.new_invite._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b'\xef\x00&"',
+                self.invite._bytes(),
+                self.new_invite._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1019,10 +1348,15 @@ class ExportedChatInviteReplaced(TLObject):
 
 
 class ExportedChatInvites(TLObject):
-    CONSTRUCTOR_ID = 0xbdc62dcc
-    SUBCLASS_OF_ID = 0x603d3871
+    CONSTRUCTOR_ID = 0xBDC62DCC
+    SUBCLASS_OF_ID = 0x603D3871
 
-    def __init__(self, count: int, invites: List['TypeExportedChatInvite'], users: List['TypeUser']):
+    def __init__(
+        self,
+        count: int,
+        invites: List["TypeExportedChatInvite"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for messages.ExportedChatInvites: Instance of ExportedChatInvites.
         """
@@ -1032,19 +1366,29 @@ class ExportedChatInvites(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ExportedChatInvites',
-            'count': self.count,
-            'invites': [] if self.invites is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.invites],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "ExportedChatInvites",
+            "count": self.count,
+            "invites": []
+            if self.invites is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.invites],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xcc-\xc6\xbd',
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.invites)),b''.join(x._bytes() for x in self.invites),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xcc-\xc6\xbd",
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.invites)),
+                b"".join(x._bytes() for x in self.invites),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1065,11 +1409,13 @@ class ExportedChatInvites(TLObject):
 
 
 class FavedStickers(TLObject):
-    CONSTRUCTOR_ID = 0xf37f2f16
-    SUBCLASS_OF_ID = 0x8e736fb9
+    CONSTRUCTOR_ID = 0xF37F2F16
+    SUBCLASS_OF_ID = 0x8E736FB9
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, packs: List['TypeStickerPack'], stickers: List['TypeDocument']):
+    def __init__(
+        self, hash: int, packs: List["TypeStickerPack"], stickers: List["TypeDocument"]
+    ):
         """
         Constructor for messages.FavedStickers: Instance of either FavedStickersNotModified, FavedStickers.
         """
@@ -1079,19 +1425,29 @@ class FavedStickers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'FavedStickers',
-            'hash': self.hash,
-            'packs': [] if self.packs is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.packs],
-            'stickers': [] if self.stickers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.stickers]
+            "_": "FavedStickers",
+            "hash": self.hash,
+            "packs": []
+            if self.packs is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.packs],
+            "stickers": []
+            if self.stickers is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.stickers],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x16/\x7f\xf3',
-            struct.pack('<i', self.hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.packs)),b''.join(x._bytes() for x in self.packs),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.stickers)),b''.join(x._bytes() for x in self.stickers),
-        ))
+        return b"".join(
+            (
+                b"\x16/\x7f\xf3",
+                struct.pack("<i", self.hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.packs)),
+                b"".join(x._bytes() for x in self.packs),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.stickers)),
+                b"".join(x._bytes() for x in self.stickers),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1112,18 +1468,14 @@ class FavedStickers(TLObject):
 
 
 class FavedStickersNotModified(TLObject):
-    CONSTRUCTOR_ID = 0x9e8fa6d3
-    SUBCLASS_OF_ID = 0x8e736fb9
+    CONSTRUCTOR_ID = 0x9E8FA6D3
+    SUBCLASS_OF_ID = 0x8E736FB9
 
     def to_dict(self):
-        return {
-            '_': 'FavedStickersNotModified'
-        }
+        return {"_": "FavedStickersNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xd3\xa6\x8f\x9e',
-        ))
+        return b"".join((b"\xd3\xa6\x8f\x9e",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -1131,11 +1483,17 @@ class FavedStickersNotModified(TLObject):
 
 
 class FeaturedStickers(TLObject):
-    CONSTRUCTOR_ID = 0xb6abc341
-    SUBCLASS_OF_ID = 0x2614b722
+    CONSTRUCTOR_ID = 0xB6ABC341
+    SUBCLASS_OF_ID = 0x2614B722
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, count: int, sets: List['TypeStickerSetCovered'], unread: List[int]):
+    def __init__(
+        self,
+        hash: int,
+        count: int,
+        sets: List["TypeStickerSetCovered"],
+        unread: List[int],
+    ):
         """
         Constructor for messages.FeaturedStickers: Instance of either FeaturedStickersNotModified, FeaturedStickers.
         """
@@ -1146,21 +1504,29 @@ class FeaturedStickers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'FeaturedStickers',
-            'hash': self.hash,
-            'count': self.count,
-            'sets': [] if self.sets is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets],
-            'unread': [] if self.unread is None else self.unread[:]
+            "_": "FeaturedStickers",
+            "hash": self.hash,
+            "count": self.count,
+            "sets": []
+            if self.sets is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets],
+            "unread": [] if self.unread is None else self.unread[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'A\xc3\xab\xb6',
-            struct.pack('<i', self.hash),
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.sets)),b''.join(x._bytes() for x in self.sets),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.unread)),b''.join(struct.pack('<q', x) for x in self.unread),
-        ))
+        return b"".join(
+            (
+                b"A\xc3\xab\xb6",
+                struct.pack("<i", self.hash),
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.sets)),
+                b"".join(x._bytes() for x in self.sets),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.unread)),
+                b"".join(struct.pack("<q", x) for x in self.unread),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1182,8 +1548,8 @@ class FeaturedStickers(TLObject):
 
 
 class FeaturedStickersNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xc6dc0c66
-    SUBCLASS_OF_ID = 0x2614b722
+    CONSTRUCTOR_ID = 0xC6DC0C66
+    SUBCLASS_OF_ID = 0x2614B722
 
     def __init__(self, count: int):
         """
@@ -1192,16 +1558,15 @@ class FeaturedStickersNotModified(TLObject):
         self.count = count
 
     def to_dict(self):
-        return {
-            '_': 'FeaturedStickersNotModified',
-            'count': self.count
-        }
+        return {"_": "FeaturedStickersNotModified", "count": self.count}
 
     def _bytes(self):
-        return b''.join((
-            b'f\x0c\xdc\xc6',
-            struct.pack('<i', self.count),
-        ))
+        return b"".join(
+            (
+                b"f\x0c\xdc\xc6",
+                struct.pack("<i", self.count),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1210,11 +1575,11 @@ class FeaturedStickersNotModified(TLObject):
 
 
 class FoundStickerSets(TLObject):
-    CONSTRUCTOR_ID = 0x5108d648
-    SUBCLASS_OF_ID = 0x40df361
+    CONSTRUCTOR_ID = 0x5108D648
+    SUBCLASS_OF_ID = 0x40DF361
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, sets: List['TypeStickerSetCovered']):
+    def __init__(self, hash: int, sets: List["TypeStickerSetCovered"]):
         """
         Constructor for messages.FoundStickerSets: Instance of either FoundStickerSetsNotModified, FoundStickerSets.
         """
@@ -1223,17 +1588,23 @@ class FoundStickerSets(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'FoundStickerSets',
-            'hash': self.hash,
-            'sets': [] if self.sets is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets]
+            "_": "FoundStickerSets",
+            "hash": self.hash,
+            "sets": []
+            if self.sets is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'H\xd6\x08Q',
-            struct.pack('<i', self.hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.sets)),b''.join(x._bytes() for x in self.sets),
-        ))
+        return b"".join(
+            (
+                b"H\xd6\x08Q",
+                struct.pack("<i", self.hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.sets)),
+                b"".join(x._bytes() for x in self.sets),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1248,18 +1619,14 @@ class FoundStickerSets(TLObject):
 
 
 class FoundStickerSetsNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xd54b65d
-    SUBCLASS_OF_ID = 0x40df361
+    CONSTRUCTOR_ID = 0xD54B65D
+    SUBCLASS_OF_ID = 0x40DF361
 
     def to_dict(self):
-        return {
-            '_': 'FoundStickerSetsNotModified'
-        }
+        return {"_": "FoundStickerSetsNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b']\xb6T\r',
-        ))
+        return b"".join((b"]\xb6T\r",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -1267,10 +1634,10 @@ class FoundStickerSetsNotModified(TLObject):
 
 
 class HighScores(TLObject):
-    CONSTRUCTOR_ID = 0x9a3bfd99
-    SUBCLASS_OF_ID = 0x6ccd95fd
+    CONSTRUCTOR_ID = 0x9A3BFD99
+    SUBCLASS_OF_ID = 0x6CCD95FD
 
-    def __init__(self, scores: List['TypeHighScore'], users: List['TypeUser']):
+    def __init__(self, scores: List["TypeHighScore"], users: List["TypeUser"]):
         """
         Constructor for messages.HighScores: Instance of HighScores.
         """
@@ -1279,17 +1646,27 @@ class HighScores(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'HighScores',
-            'scores': [] if self.scores is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.scores],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "HighScores",
+            "scores": []
+            if self.scores is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.scores],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x99\xfd;\x9a',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.scores)),b''.join(x._bytes() for x in self.scores),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\x99\xfd;\x9a",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.scores)),
+                b"".join(x._bytes() for x in self.scores),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1309,8 +1686,8 @@ class HighScores(TLObject):
 
 
 class HistoryImport(TLObject):
-    CONSTRUCTOR_ID = 0x1662af0b
-    SUBCLASS_OF_ID = 0xb18bb50a
+    CONSTRUCTOR_ID = 0x1662AF0B
+    SUBCLASS_OF_ID = 0xB18BB50A
 
     # noinspection PyShadowingBuiltins
     def __init__(self, id: int):
@@ -1320,16 +1697,15 @@ class HistoryImport(TLObject):
         self.id = id
 
     def to_dict(self):
-        return {
-            '_': 'HistoryImport',
-            'id': self.id
-        }
+        return {"_": "HistoryImport", "id": self.id}
 
     def _bytes(self):
-        return b''.join((
-            b'\x0b\xafb\x16',
-            struct.pack('<q', self.id),
-        ))
+        return b"".join(
+            (
+                b"\x0b\xafb\x16",
+                struct.pack("<q", self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1338,10 +1714,15 @@ class HistoryImport(TLObject):
 
 
 class HistoryImportParsed(TLObject):
-    CONSTRUCTOR_ID = 0x5e0fb7b9
-    SUBCLASS_OF_ID = 0x5bb2720b
+    CONSTRUCTOR_ID = 0x5E0FB7B9
+    SUBCLASS_OF_ID = 0x5BB2720B
 
-    def __init__(self, pm: Optional[bool]=None, group: Optional[bool]=None, title: Optional[str]=None):
+    def __init__(
+        self,
+        pm: Optional[bool] = None,
+        group: Optional[bool] = None,
+        title: Optional[str] = None,
+    ):
         """
         Constructor for messages.HistoryImportParsed: Instance of HistoryImportParsed.
         """
@@ -1351,18 +1732,27 @@ class HistoryImportParsed(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'HistoryImportParsed',
-            'pm': self.pm,
-            'group': self.group,
-            'title': self.title
+            "_": "HistoryImportParsed",
+            "pm": self.pm,
+            "group": self.group,
+            "title": self.title,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xb9\xb7\x0f^',
-            struct.pack('<I', (0 if self.pm is None or self.pm is False else 1) | (0 if self.group is None or self.group is False else 2) | (0 if self.title is None or self.title is False else 4)),
-            b'' if self.title is None or self.title is False else (self.serialize_bytes(self.title)),
-        ))
+        return b"".join(
+            (
+                b"\xb9\xb7\x0f^",
+                struct.pack(
+                    "<I",
+                    (0 if self.pm is None or self.pm is False else 1)
+                    | (0 if self.group is None or self.group is False else 2)
+                    | (0 if self.title is None or self.title is False else 4),
+                ),
+                b""
+                if self.title is None or self.title is False
+                else (self.serialize_bytes(self.title)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1378,10 +1768,12 @@ class HistoryImportParsed(TLObject):
 
 
 class InactiveChats(TLObject):
-    CONSTRUCTOR_ID = 0xa927fec5
-    SUBCLASS_OF_ID = 0x8bf3d7d4
+    CONSTRUCTOR_ID = 0xA927FEC5
+    SUBCLASS_OF_ID = 0x8BF3D7D4
 
-    def __init__(self, dates: List[int], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self, dates: List[int], chats: List["TypeChat"], users: List["TypeUser"]
+    ):
         """
         Constructor for messages.InactiveChats: Instance of InactiveChats.
         """
@@ -1391,19 +1783,31 @@ class InactiveChats(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'InactiveChats',
-            'dates': [] if self.dates is None else self.dates[:],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "InactiveChats",
+            "dates": [] if self.dates is None else self.dates[:],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b"\xc5\xfe'\xa9",
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.dates)),b''.join(struct.pack('<i', x) for x in self.dates),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xc5\xfe'\xa9",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.dates)),
+                b"".join(struct.pack("<i", x) for x in self.dates),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1429,26 +1833,27 @@ class InactiveChats(TLObject):
 
 
 class MessageEditData(TLObject):
-    CONSTRUCTOR_ID = 0x26b5dde6
-    SUBCLASS_OF_ID = 0xfb47949d
+    CONSTRUCTOR_ID = 0x26B5DDE6
+    SUBCLASS_OF_ID = 0xFB47949D
 
-    def __init__(self, caption: Optional[bool]=None):
+    def __init__(self, caption: Optional[bool] = None):
         """
         Constructor for messages.MessageEditData: Instance of MessageEditData.
         """
         self.caption = caption
 
     def to_dict(self):
-        return {
-            '_': 'MessageEditData',
-            'caption': self.caption
-        }
+        return {"_": "MessageEditData", "caption": self.caption}
 
     def _bytes(self):
-        return b''.join((
-            b'\xe6\xdd\xb5&',
-            struct.pack('<I', (0 if self.caption is None or self.caption is False else 1)),
-        ))
+        return b"".join(
+            (
+                b"\xe6\xdd\xb5&",
+                struct.pack(
+                    "<I", (0 if self.caption is None or self.caption is False else 1)
+                ),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1459,10 +1864,15 @@ class MessageEditData(TLObject):
 
 
 class MessageViews(TLObject):
-    CONSTRUCTOR_ID = 0xb6c4f543
-    SUBCLASS_OF_ID = 0xafb5eb9c
+    CONSTRUCTOR_ID = 0xB6C4F543
+    SUBCLASS_OF_ID = 0xAFB5EB9C
 
-    def __init__(self, views: List['TypeMessageViews'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        views: List["TypeMessageViews"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for messages.MessageViews: Instance of MessageViews.
         """
@@ -1472,19 +1882,33 @@ class MessageViews(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'MessageViews',
-            'views': [] if self.views is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.views],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "MessageViews",
+            "views": []
+            if self.views is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.views],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'C\xf5\xc4\xb6',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.views)),b''.join(x._bytes() for x in self.views),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"C\xf5\xc4\xb6",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.views)),
+                b"".join(x._bytes() for x in self.views),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1510,10 +1934,15 @@ class MessageViews(TLObject):
 
 
 class Messages(TLObject):
-    CONSTRUCTOR_ID = 0x8c718e87
-    SUBCLASS_OF_ID = 0xd4b40b5e
+    CONSTRUCTOR_ID = 0x8C718E87
+    SUBCLASS_OF_ID = 0xD4B40B5E
 
-    def __init__(self, messages: List['TypeMessage'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        messages: List["TypeMessage"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for messages.Messages: Instance of either Messages, MessagesSlice, ChannelMessages, MessagesNotModified.
         """
@@ -1523,19 +1952,33 @@ class Messages(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Messages',
-            'messages': [] if self.messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "Messages",
+            "messages": []
+            if self.messages is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x87\x8eq\x8c',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(x._bytes() for x in self.messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\x87\x8eq\x8c",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(x._bytes() for x in self.messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1561,8 +2004,8 @@ class Messages(TLObject):
 
 
 class MessagesNotModified(TLObject):
-    CONSTRUCTOR_ID = 0x74535f21
-    SUBCLASS_OF_ID = 0xd4b40b5e
+    CONSTRUCTOR_ID = 0x74535F21
+    SUBCLASS_OF_ID = 0xD4B40B5E
 
     def __init__(self, count: int):
         """
@@ -1571,16 +2014,15 @@ class MessagesNotModified(TLObject):
         self.count = count
 
     def to_dict(self):
-        return {
-            '_': 'MessagesNotModified',
-            'count': self.count
-        }
+        return {"_": "MessagesNotModified", "count": self.count}
 
     def _bytes(self):
-        return b''.join((
-            b'!_St',
-            struct.pack('<i', self.count),
-        ))
+        return b"".join(
+            (
+                b"!_St",
+                struct.pack("<i", self.count),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1589,10 +2031,19 @@ class MessagesNotModified(TLObject):
 
 
 class MessagesSlice(TLObject):
-    CONSTRUCTOR_ID = 0x3a54685e
-    SUBCLASS_OF_ID = 0xd4b40b5e
+    CONSTRUCTOR_ID = 0x3A54685E
+    SUBCLASS_OF_ID = 0xD4B40B5E
 
-    def __init__(self, count: int, messages: List['TypeMessage'], chats: List['TypeChat'], users: List['TypeUser'], inexact: Optional[bool]=None, next_rate: Optional[int]=None, offset_id_offset: Optional[int]=None):
+    def __init__(
+        self,
+        count: int,
+        messages: List["TypeMessage"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        inexact: Optional[bool] = None,
+        next_rate: Optional[int] = None,
+        offset_id_offset: Optional[int] = None,
+    ):
         """
         Constructor for messages.Messages: Instance of either Messages, MessagesSlice, ChannelMessages, MessagesNotModified.
         """
@@ -1606,27 +2057,55 @@ class MessagesSlice(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'MessagesSlice',
-            'count': self.count,
-            'messages': [] if self.messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'inexact': self.inexact,
-            'next_rate': self.next_rate,
-            'offset_id_offset': self.offset_id_offset
+            "_": "MessagesSlice",
+            "count": self.count,
+            "messages": []
+            if self.messages is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "inexact": self.inexact,
+            "next_rate": self.next_rate,
+            "offset_id_offset": self.offset_id_offset,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'^hT:',
-            struct.pack('<I', (0 if self.inexact is None or self.inexact is False else 2) | (0 if self.next_rate is None or self.next_rate is False else 1) | (0 if self.offset_id_offset is None or self.offset_id_offset is False else 4)),
-            struct.pack('<i', self.count),
-            b'' if self.next_rate is None or self.next_rate is False else (struct.pack('<i', self.next_rate)),
-            b'' if self.offset_id_offset is None or self.offset_id_offset is False else (struct.pack('<i', self.offset_id_offset)),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(x._bytes() for x in self.messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"^hT:",
+                struct.pack(
+                    "<I",
+                    (0 if self.inexact is None or self.inexact is False else 2)
+                    | (0 if self.next_rate is None or self.next_rate is False else 1)
+                    | (
+                        0
+                        if self.offset_id_offset is None
+                        or self.offset_id_offset is False
+                        else 4
+                    ),
+                ),
+                struct.pack("<i", self.count),
+                b""
+                if self.next_rate is None or self.next_rate is False
+                else (struct.pack("<i", self.next_rate)),
+                b""
+                if self.offset_id_offset is None or self.offset_id_offset is False
+                else (struct.pack("<i", self.offset_id_offset)),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(x._bytes() for x in self.messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1660,14 +2139,29 @@ class MessagesSlice(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(count=_count, messages=_messages, chats=_chats, users=_users, inexact=_inexact, next_rate=_next_rate, offset_id_offset=_offset_id_offset)
+        return cls(
+            count=_count,
+            messages=_messages,
+            chats=_chats,
+            users=_users,
+            inexact=_inexact,
+            next_rate=_next_rate,
+            offset_id_offset=_offset_id_offset,
+        )
 
 
 class PeerDialogs(TLObject):
-    CONSTRUCTOR_ID = 0x3371c354
-    SUBCLASS_OF_ID = 0x3ac70132
+    CONSTRUCTOR_ID = 0x3371C354
+    SUBCLASS_OF_ID = 0x3AC70132
 
-    def __init__(self, dialogs: List['TypeDialog'], messages: List['TypeMessage'], chats: List['TypeChat'], users: List['TypeUser'], state: 'TypeState'):
+    def __init__(
+        self,
+        dialogs: List["TypeDialog"],
+        messages: List["TypeMessage"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        state: "TypeState",
+    ):
         """
         Constructor for messages.PeerDialogs: Instance of PeerDialogs.
         """
@@ -1679,23 +2173,43 @@ class PeerDialogs(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'PeerDialogs',
-            'dialogs': [] if self.dialogs is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.dialogs],
-            'messages': [] if self.messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'state': self.state.to_dict() if isinstance(self.state, TLObject) else self.state
+            "_": "PeerDialogs",
+            "dialogs": []
+            if self.dialogs is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.dialogs],
+            "messages": []
+            if self.messages is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "state": self.state.to_dict()
+            if isinstance(self.state, TLObject)
+            else self.state,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'T\xc3q3',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.dialogs)),b''.join(x._bytes() for x in self.dialogs),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(x._bytes() for x in self.messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-            self.state._bytes(),
-        ))
+        return b"".join(
+            (
+                b"T\xc3q3",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.dialogs)),
+                b"".join(x._bytes() for x in self.dialogs),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(x._bytes() for x in self.messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+                self.state._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1724,15 +2238,27 @@ class PeerDialogs(TLObject):
             _users.append(_x)
 
         _state = reader.tgread_object()
-        return cls(dialogs=_dialogs, messages=_messages, chats=_chats, users=_users, state=_state)
+        return cls(
+            dialogs=_dialogs,
+            messages=_messages,
+            chats=_chats,
+            users=_users,
+            state=_state,
+        )
 
 
 class RecentStickers(TLObject):
-    CONSTRUCTOR_ID = 0x22f3afb3
-    SUBCLASS_OF_ID = 0xf76f8683
+    CONSTRUCTOR_ID = 0x22F3AFB3
+    SUBCLASS_OF_ID = 0xF76F8683
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, packs: List['TypeStickerPack'], stickers: List['TypeDocument'], dates: List[int]):
+    def __init__(
+        self,
+        hash: int,
+        packs: List["TypeStickerPack"],
+        stickers: List["TypeDocument"],
+        dates: List[int],
+    ):
         """
         Constructor for messages.RecentStickers: Instance of either RecentStickersNotModified, RecentStickers.
         """
@@ -1743,21 +2269,33 @@ class RecentStickers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'RecentStickers',
-            'hash': self.hash,
-            'packs': [] if self.packs is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.packs],
-            'stickers': [] if self.stickers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.stickers],
-            'dates': [] if self.dates is None else self.dates[:]
+            "_": "RecentStickers",
+            "hash": self.hash,
+            "packs": []
+            if self.packs is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.packs],
+            "stickers": []
+            if self.stickers is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.stickers],
+            "dates": [] if self.dates is None else self.dates[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xb3\xaf\xf3"',
-            struct.pack('<i', self.hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.packs)),b''.join(x._bytes() for x in self.packs),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.stickers)),b''.join(x._bytes() for x in self.stickers),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.dates)),b''.join(struct.pack('<i', x) for x in self.dates),
-        ))
+        return b"".join(
+            (
+                b'\xb3\xaf\xf3"',
+                struct.pack("<i", self.hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.packs)),
+                b"".join(x._bytes() for x in self.packs),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.stickers)),
+                b"".join(x._bytes() for x in self.stickers),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.dates)),
+                b"".join(struct.pack("<i", x) for x in self.dates),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1784,18 +2322,14 @@ class RecentStickers(TLObject):
 
 
 class RecentStickersNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xb17f890
-    SUBCLASS_OF_ID = 0xf76f8683
+    CONSTRUCTOR_ID = 0xB17F890
+    SUBCLASS_OF_ID = 0xF76F8683
 
     def to_dict(self):
-        return {
-            '_': 'RecentStickersNotModified'
-        }
+        return {"_": "RecentStickersNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x90\xf8\x17\x0b',
-        ))
+        return b"".join((b"\x90\xf8\x17\x0b",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -1803,11 +2337,11 @@ class RecentStickersNotModified(TLObject):
 
 
 class SavedGifs(TLObject):
-    CONSTRUCTOR_ID = 0x2e0709a5
-    SUBCLASS_OF_ID = 0xa68b61f5
+    CONSTRUCTOR_ID = 0x2E0709A5
+    SUBCLASS_OF_ID = 0xA68B61F5
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, gifs: List['TypeDocument']):
+    def __init__(self, hash: int, gifs: List["TypeDocument"]):
         """
         Constructor for messages.SavedGifs: Instance of either SavedGifsNotModified, SavedGifs.
         """
@@ -1816,17 +2350,23 @@ class SavedGifs(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'SavedGifs',
-            'hash': self.hash,
-            'gifs': [] if self.gifs is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.gifs]
+            "_": "SavedGifs",
+            "hash": self.hash,
+            "gifs": []
+            if self.gifs is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.gifs],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa5\t\x07.',
-            struct.pack('<i', self.hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.gifs)),b''.join(x._bytes() for x in self.gifs),
-        ))
+        return b"".join(
+            (
+                b"\xa5\t\x07.",
+                struct.pack("<i", self.hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.gifs)),
+                b"".join(x._bytes() for x in self.gifs),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1841,18 +2381,14 @@ class SavedGifs(TLObject):
 
 
 class SavedGifsNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xe8025ca2
-    SUBCLASS_OF_ID = 0xa68b61f5
+    CONSTRUCTOR_ID = 0xE8025CA2
+    SUBCLASS_OF_ID = 0xA68B61F5
 
     def to_dict(self):
-        return {
-            '_': 'SavedGifsNotModified'
-        }
+        return {"_": "SavedGifsNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xa2\\\x02\xe8',
-        ))
+        return b"".join((b"\xa2\\\x02\xe8",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -1860,11 +2396,13 @@ class SavedGifsNotModified(TLObject):
 
 
 class SearchCounter(TLObject):
-    CONSTRUCTOR_ID = 0xe844ebff
-    SUBCLASS_OF_ID = 0xd6a7bfa2
+    CONSTRUCTOR_ID = 0xE844EBFF
+    SUBCLASS_OF_ID = 0xD6A7BFA2
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, filter: 'TypeMessagesFilter', count: int, inexact: Optional[bool]=None):
+    def __init__(
+        self, filter: "TypeMessagesFilter", count: int, inexact: Optional[bool] = None
+    ):
         """
         Constructor for messages.SearchCounter: Instance of SearchCounter.
         """
@@ -1874,19 +2412,25 @@ class SearchCounter(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'SearchCounter',
-            'filter': self.filter.to_dict() if isinstance(self.filter, TLObject) else self.filter,
-            'count': self.count,
-            'inexact': self.inexact
+            "_": "SearchCounter",
+            "filter": self.filter.to_dict()
+            if isinstance(self.filter, TLObject)
+            else self.filter,
+            "count": self.count,
+            "inexact": self.inexact,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xff\xebD\xe8',
-            struct.pack('<I', (0 if self.inexact is None or self.inexact is False else 2)),
-            self.filter._bytes(),
-            struct.pack('<i', self.count),
-        ))
+        return b"".join(
+            (
+                b"\xff\xebD\xe8",
+                struct.pack(
+                    "<I", (0 if self.inexact is None or self.inexact is False else 2)
+                ),
+                self.filter._bytes(),
+                struct.pack("<i", self.count),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1899,10 +2443,10 @@ class SearchCounter(TLObject):
 
 
 class SentEncryptedFile(TLObject):
-    CONSTRUCTOR_ID = 0x9493ff32
-    SUBCLASS_OF_ID = 0xc99e3e50
+    CONSTRUCTOR_ID = 0x9493FF32
+    SUBCLASS_OF_ID = 0xC99E3E50
 
-    def __init__(self, date: Optional[datetime], file: 'TypeEncryptedFile'):
+    def __init__(self, date: Optional[datetime], file: "TypeEncryptedFile"):
         """
         Constructor for messages.SentEncryptedMessage: Instance of either SentEncryptedMessage, SentEncryptedFile.
         """
@@ -1911,17 +2455,21 @@ class SentEncryptedFile(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'SentEncryptedFile',
-            'date': self.date,
-            'file': self.file.to_dict() if isinstance(self.file, TLObject) else self.file
+            "_": "SentEncryptedFile",
+            "date": self.date,
+            "file": self.file.to_dict()
+            if isinstance(self.file, TLObject)
+            else self.file,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'2\xff\x93\x94',
-            self.serialize_datetime(self.date),
-            self.file._bytes(),
-        ))
+        return b"".join(
+            (
+                b"2\xff\x93\x94",
+                self.serialize_datetime(self.date),
+                self.file._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1931,8 +2479,8 @@ class SentEncryptedFile(TLObject):
 
 
 class SentEncryptedMessage(TLObject):
-    CONSTRUCTOR_ID = 0x560f8935
-    SUBCLASS_OF_ID = 0xc99e3e50
+    CONSTRUCTOR_ID = 0x560F8935
+    SUBCLASS_OF_ID = 0xC99E3E50
 
     def __init__(self, date: Optional[datetime]):
         """
@@ -1941,16 +2489,15 @@ class SentEncryptedMessage(TLObject):
         self.date = date
 
     def to_dict(self):
-        return {
-            '_': 'SentEncryptedMessage',
-            'date': self.date
-        }
+        return {"_": "SentEncryptedMessage", "date": self.date}
 
     def _bytes(self):
-        return b''.join((
-            b'5\x89\x0fV',
-            self.serialize_datetime(self.date),
-        ))
+        return b"".join(
+            (
+                b"5\x89\x0fV",
+                self.serialize_datetime(self.date),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1959,11 +2506,16 @@ class SentEncryptedMessage(TLObject):
 
 
 class StickerSet(TLObject):
-    CONSTRUCTOR_ID = 0xb60a24a6
-    SUBCLASS_OF_ID = 0x9b704a5a
+    CONSTRUCTOR_ID = 0xB60A24A6
+    SUBCLASS_OF_ID = 0x9B704A5A
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, set: 'TypeStickerSet', packs: List['TypeStickerPack'], documents: List['TypeDocument']):
+    def __init__(
+        self,
+        set: "TypeStickerSet",
+        packs: List["TypeStickerPack"],
+        documents: List["TypeDocument"],
+    ):
         """
         Constructor for messages.StickerSet: Instance of StickerSet.
         """
@@ -1973,19 +2525,31 @@ class StickerSet(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'StickerSet',
-            'set': self.set.to_dict() if isinstance(self.set, TLObject) else self.set,
-            'packs': [] if self.packs is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.packs],
-            'documents': [] if self.documents is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.documents]
+            "_": "StickerSet",
+            "set": self.set.to_dict() if isinstance(self.set, TLObject) else self.set,
+            "packs": []
+            if self.packs is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.packs],
+            "documents": []
+            if self.documents is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.documents
+            ],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa6$\n\xb6',
-            self.set._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.packs)),b''.join(x._bytes() for x in self.packs),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.documents)),b''.join(x._bytes() for x in self.documents),
-        ))
+        return b"".join(
+            (
+                b"\xa6$\n\xb6",
+                self.set._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.packs)),
+                b"".join(x._bytes() for x in self.packs),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.documents)),
+                b"".join(x._bytes() for x in self.documents),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2006,10 +2570,10 @@ class StickerSet(TLObject):
 
 
 class StickerSetInstallResultArchive(TLObject):
-    CONSTRUCTOR_ID = 0x35e410a8
-    SUBCLASS_OF_ID = 0x67cb3fe8
+    CONSTRUCTOR_ID = 0x35E410A8
+    SUBCLASS_OF_ID = 0x67CB3FE8
 
-    def __init__(self, sets: List['TypeStickerSetCovered']):
+    def __init__(self, sets: List["TypeStickerSetCovered"]):
         """
         Constructor for messages.StickerSetInstallResult: Instance of either StickerSetInstallResultSuccess, StickerSetInstallResultArchive.
         """
@@ -2017,15 +2581,21 @@ class StickerSetInstallResultArchive(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'StickerSetInstallResultArchive',
-            'sets': [] if self.sets is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets]
+            "_": "StickerSetInstallResultArchive",
+            "sets": []
+            if self.sets is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.sets],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa8\x10\xe45',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.sets)),b''.join(x._bytes() for x in self.sets),
-        ))
+        return b"".join(
+            (
+                b"\xa8\x10\xe45",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.sets)),
+                b"".join(x._bytes() for x in self.sets),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2040,17 +2610,13 @@ class StickerSetInstallResultArchive(TLObject):
 
 class StickerSetInstallResultSuccess(TLObject):
     CONSTRUCTOR_ID = 0x38641628
-    SUBCLASS_OF_ID = 0x67cb3fe8
+    SUBCLASS_OF_ID = 0x67CB3FE8
 
     def to_dict(self):
-        return {
-            '_': 'StickerSetInstallResultSuccess'
-        }
+        return {"_": "StickerSetInstallResultSuccess"}
 
     def _bytes(self):
-        return b''.join((
-            b'(\x16d8',
-        ))
+        return b"".join((b"(\x16d8",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -2058,11 +2624,11 @@ class StickerSetInstallResultSuccess(TLObject):
 
 
 class Stickers(TLObject):
-    CONSTRUCTOR_ID = 0xe4599bbd
-    SUBCLASS_OF_ID = 0xd73bb9de
+    CONSTRUCTOR_ID = 0xE4599BBD
+    SUBCLASS_OF_ID = 0xD73BB9DE
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: int, stickers: List['TypeDocument']):
+    def __init__(self, hash: int, stickers: List["TypeDocument"]):
         """
         Constructor for messages.Stickers: Instance of either StickersNotModified, Stickers.
         """
@@ -2071,17 +2637,23 @@ class Stickers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Stickers',
-            'hash': self.hash,
-            'stickers': [] if self.stickers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.stickers]
+            "_": "Stickers",
+            "hash": self.hash,
+            "stickers": []
+            if self.stickers is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.stickers],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xbd\x9bY\xe4',
-            struct.pack('<i', self.hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.stickers)),b''.join(x._bytes() for x in self.stickers),
-        ))
+        return b"".join(
+            (
+                b"\xbd\x9bY\xe4",
+                struct.pack("<i", self.hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.stickers)),
+                b"".join(x._bytes() for x in self.stickers),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2096,18 +2668,14 @@ class Stickers(TLObject):
 
 
 class StickersNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xf1749a22
-    SUBCLASS_OF_ID = 0xd73bb9de
+    CONSTRUCTOR_ID = 0xF1749A22
+    SUBCLASS_OF_ID = 0xD73BB9DE
 
     def to_dict(self):
-        return {
-            '_': 'StickersNotModified'
-        }
+        return {"_": "StickersNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'"\x9at\xf1',
-        ))
+        return b"".join((b'"\x9at\xf1',))
 
     @classmethod
     def from_reader(cls, reader):
@@ -2115,10 +2683,16 @@ class StickersNotModified(TLObject):
 
 
 class VotesList(TLObject):
-    CONSTRUCTOR_ID = 0x823f649
-    SUBCLASS_OF_ID = 0xc2199885
+    CONSTRUCTOR_ID = 0x823F649
+    SUBCLASS_OF_ID = 0xC2199885
 
-    def __init__(self, count: int, votes: List['TypeMessageUserVote'], users: List['TypeUser'], next_offset: Optional[str]=None):
+    def __init__(
+        self,
+        count: int,
+        votes: List["TypeMessageUserVote"],
+        users: List["TypeUser"],
+        next_offset: Optional[str] = None,
+    ):
         """
         Constructor for messages.VotesList: Instance of VotesList.
         """
@@ -2129,22 +2703,37 @@ class VotesList(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'VotesList',
-            'count': self.count,
-            'votes': [] if self.votes is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.votes],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'next_offset': self.next_offset
+            "_": "VotesList",
+            "count": self.count,
+            "votes": []
+            if self.votes is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.votes],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "next_offset": self.next_offset,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'I\xf6#\x08',
-            struct.pack('<I', (0 if self.next_offset is None or self.next_offset is False else 1)),
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.votes)),b''.join(x._bytes() for x in self.votes),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-            b'' if self.next_offset is None or self.next_offset is False else (self.serialize_bytes(self.next_offset)),
-        ))
+        return b"".join(
+            (
+                b"I\xf6#\x08",
+                struct.pack(
+                    "<I",
+                    (0 if self.next_offset is None or self.next_offset is False else 1),
+                ),
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.votes)),
+                b"".join(x._bytes() for x in self.votes),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+                b""
+                if self.next_offset is None or self.next_offset is False
+                else (self.serialize_bytes(self.next_offset)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2168,4 +2757,3 @@ class VotesList(TLObject):
         else:
             _next_offset = None
         return cls(count=_count, votes=_votes, users=_users, next_offset=_next_offset)
-

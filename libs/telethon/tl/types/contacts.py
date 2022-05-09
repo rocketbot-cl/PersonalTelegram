@@ -4,16 +4,30 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
-if TYPE_CHECKING:
-    from ...tl.types import TypeChat, TypeContact, TypeImportedContact, TypePeer, TypePeerBlocked, TypePopularContact, TypeTopPeerCategoryPeers, TypeUser
 
+if TYPE_CHECKING:
+    from ...tl.types import (
+        TypeChat,
+        TypeContact,
+        TypeImportedContact,
+        TypePeer,
+        TypePeerBlocked,
+        TypePopularContact,
+        TypeTopPeerCategoryPeers,
+        TypeUser,
+    )
 
 
 class Blocked(TLObject):
-    CONSTRUCTOR_ID = 0xade1591
-    SUBCLASS_OF_ID = 0xffba4f4f
+    CONSTRUCTOR_ID = 0xADE1591
+    SUBCLASS_OF_ID = 0xFFBA4F4F
 
-    def __init__(self, blocked: List['TypePeerBlocked'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        blocked: List["TypePeerBlocked"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for contacts.Blocked: Instance of either Blocked, BlockedSlice.
         """
@@ -23,19 +37,33 @@ class Blocked(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Blocked',
-            'blocked': [] if self.blocked is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.blocked],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "Blocked",
+            "blocked": []
+            if self.blocked is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.blocked],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x91\x15\xde\n',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.blocked)),b''.join(x._bytes() for x in self.blocked),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\x91\x15\xde\n",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.blocked)),
+                b"".join(x._bytes() for x in self.blocked),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -61,10 +89,16 @@ class Blocked(TLObject):
 
 
 class BlockedSlice(TLObject):
-    CONSTRUCTOR_ID = 0xe1664194
-    SUBCLASS_OF_ID = 0xffba4f4f
+    CONSTRUCTOR_ID = 0xE1664194
+    SUBCLASS_OF_ID = 0xFFBA4F4F
 
-    def __init__(self, count: int, blocked: List['TypePeerBlocked'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        count: int,
+        blocked: List["TypePeerBlocked"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for contacts.Blocked: Instance of either Blocked, BlockedSlice.
         """
@@ -75,21 +109,35 @@ class BlockedSlice(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'BlockedSlice',
-            'count': self.count,
-            'blocked': [] if self.blocked is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.blocked],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "BlockedSlice",
+            "count": self.count,
+            "blocked": []
+            if self.blocked is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.blocked],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x94Af\xe1',
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.blocked)),b''.join(x._bytes() for x in self.blocked),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\x94Af\xe1",
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.blocked)),
+                b"".join(x._bytes() for x in self.blocked),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -116,10 +164,12 @@ class BlockedSlice(TLObject):
 
 
 class Contacts(TLObject):
-    CONSTRUCTOR_ID = 0xeae87e42
-    SUBCLASS_OF_ID = 0x38be25f6
+    CONSTRUCTOR_ID = 0xEAE87E42
+    SUBCLASS_OF_ID = 0x38BE25F6
 
-    def __init__(self, contacts: List['TypeContact'], saved_count: int, users: List['TypeUser']):
+    def __init__(
+        self, contacts: List["TypeContact"], saved_count: int, users: List["TypeUser"]
+    ):
         """
         Constructor for contacts.Contacts: Instance of either ContactsNotModified, Contacts.
         """
@@ -129,19 +179,29 @@ class Contacts(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Contacts',
-            'contacts': [] if self.contacts is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.contacts],
-            'saved_count': self.saved_count,
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "Contacts",
+            "contacts": []
+            if self.contacts is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.contacts],
+            "saved_count": self.saved_count,
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'B~\xe8\xea',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.contacts)),b''.join(x._bytes() for x in self.contacts),
-            struct.pack('<i', self.saved_count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"B~\xe8\xea",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.contacts)),
+                b"".join(x._bytes() for x in self.contacts),
+                struct.pack("<i", self.saved_count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -162,18 +222,14 @@ class Contacts(TLObject):
 
 
 class ContactsNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xb74ba9d2
-    SUBCLASS_OF_ID = 0x38be25f6
+    CONSTRUCTOR_ID = 0xB74BA9D2
+    SUBCLASS_OF_ID = 0x38BE25F6
 
     def to_dict(self):
-        return {
-            '_': 'ContactsNotModified'
-        }
+        return {"_": "ContactsNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xd2\xa9K\xb7',
-        ))
+        return b"".join((b"\xd2\xa9K\xb7",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -181,10 +237,16 @@ class ContactsNotModified(TLObject):
 
 
 class Found(TLObject):
-    CONSTRUCTOR_ID = 0xb3134d9d
-    SUBCLASS_OF_ID = 0x4386a2e3
+    CONSTRUCTOR_ID = 0xB3134D9D
+    SUBCLASS_OF_ID = 0x4386A2E3
 
-    def __init__(self, my_results: List['TypePeer'], results: List['TypePeer'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        my_results: List["TypePeer"],
+        results: List["TypePeer"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for contacts.Found: Instance of Found.
         """
@@ -195,21 +257,41 @@ class Found(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Found',
-            'my_results': [] if self.my_results is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.my_results],
-            'results': [] if self.results is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.results],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "Found",
+            "my_results": []
+            if self.my_results is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.my_results
+            ],
+            "results": []
+            if self.results is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.results],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x9dM\x13\xb3',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.my_results)),b''.join(x._bytes() for x in self.my_results),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.results)),b''.join(x._bytes() for x in self.results),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\x9dM\x13\xb3",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.my_results)),
+                b"".join(x._bytes() for x in self.my_results),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.results)),
+                b"".join(x._bytes() for x in self.results),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -241,10 +323,16 @@ class Found(TLObject):
 
 
 class ImportedContacts(TLObject):
-    CONSTRUCTOR_ID = 0x77d01c3b
-    SUBCLASS_OF_ID = 0x8172ad93
+    CONSTRUCTOR_ID = 0x77D01C3B
+    SUBCLASS_OF_ID = 0x8172AD93
 
-    def __init__(self, imported: List['TypeImportedContact'], popular_invites: List['TypePopularContact'], retry_contacts: List[int], users: List['TypeUser']):
+    def __init__(
+        self,
+        imported: List["TypeImportedContact"],
+        popular_invites: List["TypePopularContact"],
+        retry_contacts: List[int],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for contacts.ImportedContacts: Instance of ImportedContacts.
         """
@@ -255,21 +343,42 @@ class ImportedContacts(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ImportedContacts',
-            'imported': [] if self.imported is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.imported],
-            'popular_invites': [] if self.popular_invites is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.popular_invites],
-            'retry_contacts': [] if self.retry_contacts is None else self.retry_contacts[:],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "ImportedContacts",
+            "imported": []
+            if self.imported is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.imported],
+            "popular_invites": []
+            if self.popular_invites is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.popular_invites
+            ],
+            "retry_contacts": []
+            if self.retry_contacts is None
+            else self.retry_contacts[:],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b';\x1c\xd0w',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.imported)),b''.join(x._bytes() for x in self.imported),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.popular_invites)),b''.join(x._bytes() for x in self.popular_invites),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.retry_contacts)),b''.join(struct.pack('<q', x) for x in self.retry_contacts),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b";\x1c\xd0w",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.imported)),
+                b"".join(x._bytes() for x in self.imported),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.popular_invites)),
+                b"".join(x._bytes() for x in self.popular_invites),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.retry_contacts)),
+                b"".join(struct.pack("<q", x) for x in self.retry_contacts),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -297,14 +406,21 @@ class ImportedContacts(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(imported=_imported, popular_invites=_popular_invites, retry_contacts=_retry_contacts, users=_users)
+        return cls(
+            imported=_imported,
+            popular_invites=_popular_invites,
+            retry_contacts=_retry_contacts,
+            users=_users,
+        )
 
 
 class ResolvedPeer(TLObject):
-    CONSTRUCTOR_ID = 0x7f077ad9
-    SUBCLASS_OF_ID = 0xf065b3a8
+    CONSTRUCTOR_ID = 0x7F077AD9
+    SUBCLASS_OF_ID = 0xF065B3A8
 
-    def __init__(self, peer: 'TypePeer', chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self, peer: "TypePeer", chats: List["TypeChat"], users: List["TypeUser"]
+    ):
         """
         Constructor for contacts.ResolvedPeer: Instance of ResolvedPeer.
         """
@@ -314,19 +430,31 @@ class ResolvedPeer(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ResolvedPeer',
-            'peer': self.peer.to_dict() if isinstance(self.peer, TLObject) else self.peer,
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "ResolvedPeer",
+            "peer": self.peer.to_dict()
+            if isinstance(self.peer, TLObject)
+            else self.peer,
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xd9z\x07\x7f',
-            self.peer._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xd9z\x07\x7f",
+                self.peer._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -347,10 +475,15 @@ class ResolvedPeer(TLObject):
 
 
 class TopPeers(TLObject):
-    CONSTRUCTOR_ID = 0x70b772a8
-    SUBCLASS_OF_ID = 0x9ee8bb88
+    CONSTRUCTOR_ID = 0x70B772A8
+    SUBCLASS_OF_ID = 0x9EE8BB88
 
-    def __init__(self, categories: List['TypeTopPeerCategoryPeers'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        categories: List["TypeTopPeerCategoryPeers"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for contacts.TopPeers: Instance of either TopPeersNotModified, TopPeers, TopPeersDisabled.
         """
@@ -360,19 +493,35 @@ class TopPeers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'TopPeers',
-            'categories': [] if self.categories is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.categories],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "TopPeers",
+            "categories": []
+            if self.categories is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.categories
+            ],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa8r\xb7p',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.categories)),b''.join(x._bytes() for x in self.categories),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xa8r\xb7p",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.categories)),
+                b"".join(x._bytes() for x in self.categories),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -398,18 +547,14 @@ class TopPeers(TLObject):
 
 
 class TopPeersDisabled(TLObject):
-    CONSTRUCTOR_ID = 0xb52c939d
-    SUBCLASS_OF_ID = 0x9ee8bb88
+    CONSTRUCTOR_ID = 0xB52C939D
+    SUBCLASS_OF_ID = 0x9EE8BB88
 
     def to_dict(self):
-        return {
-            '_': 'TopPeersDisabled'
-        }
+        return {"_": "TopPeersDisabled"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x9d\x93,\xb5',
-        ))
+        return b"".join((b"\x9d\x93,\xb5",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -417,20 +562,15 @@ class TopPeersDisabled(TLObject):
 
 
 class TopPeersNotModified(TLObject):
-    CONSTRUCTOR_ID = 0xde266ef5
-    SUBCLASS_OF_ID = 0x9ee8bb88
+    CONSTRUCTOR_ID = 0xDE266EF5
+    SUBCLASS_OF_ID = 0x9EE8BB88
 
     def to_dict(self):
-        return {
-            '_': 'TopPeersNotModified'
-        }
+        return {"_": "TopPeersNotModified"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xf5n&\xde',
-        ))
+        return b"".join((b"\xf5n&\xde",))
 
     @classmethod
     def from_reader(cls, reader):
         return cls()
-

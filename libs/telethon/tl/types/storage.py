@@ -7,18 +7,14 @@ from datetime import datetime
 
 
 class FileGif(TLObject):
-    CONSTRUCTOR_ID = 0xcae1aadf
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0xCAE1AADF
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FileGif'
-        }
+        return {"_": "FileGif"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xdf\xaa\xe1\xca',
-        ))
+        return b"".join((b"\xdf\xaa\xe1\xca",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -26,18 +22,14 @@ class FileGif(TLObject):
 
 
 class FileJpeg(TLObject):
-    CONSTRUCTOR_ID = 0x7efe0e
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0x7EFE0E
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FileJpeg'
-        }
+        return {"_": "FileJpeg"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x0e\xfe~\x00',
-        ))
+        return b"".join((b"\x0e\xfe~\x00",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -45,18 +37,14 @@ class FileJpeg(TLObject):
 
 
 class FileMov(TLObject):
-    CONSTRUCTOR_ID = 0x4b09ebbc
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0x4B09EBBC
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FileMov'
-        }
+        return {"_": "FileMov"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xbc\xeb\tK',
-        ))
+        return b"".join((b"\xbc\xeb\tK",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -64,18 +52,14 @@ class FileMov(TLObject):
 
 
 class FileMp3(TLObject):
-    CONSTRUCTOR_ID = 0x528a0677
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0x528A0677
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FileMp3'
-        }
+        return {"_": "FileMp3"}
 
     def _bytes(self):
-        return b''.join((
-            b'w\x06\x8aR',
-        ))
+        return b"".join((b"w\x06\x8aR",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -83,18 +67,14 @@ class FileMp3(TLObject):
 
 
 class FileMp4(TLObject):
-    CONSTRUCTOR_ID = 0xb3cea0e4
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0xB3CEA0E4
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FileMp4'
-        }
+        return {"_": "FileMp4"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xe4\xa0\xce\xb3',
-        ))
+        return b"".join((b"\xe4\xa0\xce\xb3",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -102,18 +82,14 @@ class FileMp4(TLObject):
 
 
 class FilePartial(TLObject):
-    CONSTRUCTOR_ID = 0x40bc6f52
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0x40BC6F52
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FilePartial'
-        }
+        return {"_": "FilePartial"}
 
     def _bytes(self):
-        return b''.join((
-            b'Ro\xbc@',
-        ))
+        return b"".join((b"Ro\xbc@",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -121,18 +97,14 @@ class FilePartial(TLObject):
 
 
 class FilePdf(TLObject):
-    CONSTRUCTOR_ID = 0xae1e508d
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0xAE1E508D
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FilePdf'
-        }
+        return {"_": "FilePdf"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x8dP\x1e\xae',
-        ))
+        return b"".join((b"\x8dP\x1e\xae",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -140,18 +112,14 @@ class FilePdf(TLObject):
 
 
 class FilePng(TLObject):
-    CONSTRUCTOR_ID = 0xa4f63c0
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0xA4F63C0
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FilePng'
-        }
+        return {"_": "FilePng"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xc0cO\n',
-        ))
+        return b"".join((b"\xc0cO\n",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -159,18 +127,14 @@ class FilePng(TLObject):
 
 
 class FileUnknown(TLObject):
-    CONSTRUCTOR_ID = 0xaa963b05
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0xAA963B05
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FileUnknown'
-        }
+        return {"_": "FileUnknown"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x05;\x96\xaa',
-        ))
+        return b"".join((b"\x05;\x96\xaa",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -178,20 +142,15 @@ class FileUnknown(TLObject):
 
 
 class FileWebp(TLObject):
-    CONSTRUCTOR_ID = 0x1081464c
-    SUBCLASS_OF_ID = 0xf3a1e6f3
+    CONSTRUCTOR_ID = 0x1081464C
+    SUBCLASS_OF_ID = 0xF3A1E6F3
 
     def to_dict(self):
-        return {
-            '_': 'FileWebp'
-        }
+        return {"_": "FileWebp"}
 
     def _bytes(self):
-        return b''.join((
-            b'LF\x81\x10',
-        ))
+        return b"".join((b"LF\x81\x10",))
 
     @classmethod
     def from_reader(cls, reader):
         return cls()
-

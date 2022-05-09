@@ -25,39 +25,39 @@ Para instalar librerias se debe ingresar por terminal a la carpeta "libs"
 """
 
 
-base_path = tmp_global_obj["basepath"]
+base_path = tmp_global_obj["basepath"]  # type: ignore
 cur_path = (
-    base_path + "modules" + os.sep + "PersonalTelegram" + os.sep + "libs" + os.sep
+    base_path + "modules" + os.sep + "PersonalTelegram" + os.sep + "libs" + os.sep  # type: ignore
 )
-if cur_path not in sys.path:
-    sys.path.append(cur_path)
+if cur_path not in sys.path:  # type: ignore
+    sys.path.append(cur_path)  # type: ignore
 
-import telethon
-from telethon.tl.functions.messages import GetHistoryRequest
-from telethon import TelegramClient
+import telethon  # type: ignore
+from telethon.tl.functions.messages import GetHistoryRequest  # type: ignore
+from telethon import TelegramClient  # type: ignore
 
 global api_id, api_hash, client
 
-module = GetParams("module")
+module = GetParams("module")  # type: ignore
 
 if module == "connect":
-    api_id = GetParams("api_id")
-    api_hash = GetParams("api_hash")
-    phone_number = GetParams("phone_number")
+    api_id = GetParams("api_id")  # type: ignore
+    api_hash = GetParams("api_hash")  # type: ignore
+    phone_number = GetParams("phone_number")  # type: ignore
 
     try:
         client = TelegramClient("session_file", api_id=api_id, api_hash=api_hash)
         client.start(phone=phone_number)
 
     except Exception as e:
-        print("\x1B[" + "31;40mAn error occurred\x1B[" + "0m")
-        PrintException()
+        PrintException()  # type: ignore
         raise e
 
 if module == "get_chats_ids":
-    result = GetParams("result")
+    result = GetParams("result")  # type: ignore
 
     try:
+
         async def get_chats_ids():
             global mylist
             mylist = []
@@ -65,27 +65,25 @@ if module == "get_chats_ids":
                 contact = dialog.name + " has ID " + str(dialog.id)
                 print(contact)
                 mylist.append(contact)
-                
 
         client.loop.run_until_complete(get_chats_ids())
-        SetVar(result, mylist)
+        SetVar(result, mylist)  # type: ignore
 
     except Exception as e:
-        print("\x1B[" + "31;40mAn error occurred\x1B[" + "0m")
-        PrintException()
+        PrintException()  # type: ignore
         raise e
 
 
 if module == "send_message":
-    msg = GetParams("msg")
+    msg = GetParams("msg")  # type: ignore
     # el chat id se convierte a int para que funcione
-    chat_id = int(GetParams("chat_id"))
-    
+    chat_id = int(GetParams("chat_id"))  # type: ignore
+
     try:
-        from telethon.tl.functions.contacts import ResolveUsernameRequest
-        from telethon import TelegramClient, events, sync
-        from telethon.tl.functions.messages import GetHistoryRequest
-        from telethon.tl.types import InputPeerUser
+        from telethon.tl.functions.contacts import ResolveUsernameRequest  # type: ignore
+        from telethon import TelegramClient, events, sync  # type: ignore
+        from telethon.tl.functions.messages import GetHistoryRequest  # type: ignore
+        from telethon.tl.types import InputPeerUser  # type: ignore
 
         with TelegramClient("session_file", api_id, api_hash) as client:
             client.start()
@@ -94,17 +92,20 @@ if module == "send_message":
             client.send_message(entity=entity, message=msg)
 
     except Exception as e:
-        print("\x1B[" + "31;40mAn error occurred\x1B[" + "0m")
-        PrintException()
+        PrintException()  # type: ignore
         raise e
 
 
 if module == "read_message":
-    channel_username = GetParams("channel_username")
-    res = GetParams("res")
+    channel_id = int(GetParams("channel_id"))  # type: ignore
+    res = GetParams("res")  # type: ignore
+    option = GetParams("option_")  # type: ignore
+
+    from telethon import sync  # type: ignore
+
     try:
-        channel_entity = client.get_entity(channel_username)
-        posts = client(
+        channel_entity = client.get_entity(channel_id)
+        history = client(
             GetHistoryRequest(
                 peer=channel_entity,
                 limit=100,
@@ -116,13 +117,22 @@ if module == "read_message":
                 hash=0,
             )
         )
-        posts = posts.to_dict()
-        list_messages = posts["messages"]
-        all_msgs = []
-        for msg in list_messages:
-            all_msgs.append(msg["message"])
-        SetVar(res, all_msgs)
+        all_messages = []
+        messages = history.messages
+        for message in messages:
+            all_messages.append(message.to_dict())
+
+        msg_returned = []
+
+        if option == "messages_only":
+            for element in all_messages:
+                msg_returned.append(element["message"])
+        elif option == "all_metadata":
+            msg_returned = all_messages
+        else:
+            raise Exception(f"Option: {option} wasn t parsed")
+
+        SetVar(res, msg_returned)  # type: ignore
     except Exception as e:
-        print("\x1B[" + "31;40mAn error occurred\x1B[" + "0m")
-        PrintException()
+        PrintException()  # type: ignore
         raise e

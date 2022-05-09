@@ -5,16 +5,28 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
-if TYPE_CHECKING:
-    from ...tl.types import TypeChannelAdminLogEventsFilter, TypeChannelParticipantsFilter, TypeChatAdminRights, TypeChatBannedRights, TypeInputChannel, TypeInputChatPhoto, TypeInputCheckPasswordSRP, TypeInputGeoPoint, TypeInputMessage, TypeInputStickerSet, TypeInputUser
 
+if TYPE_CHECKING:
+    from ...tl.types import (
+        TypeChannelAdminLogEventsFilter,
+        TypeChannelParticipantsFilter,
+        TypeChatAdminRights,
+        TypeChatBannedRights,
+        TypeInputChannel,
+        TypeInputChatPhoto,
+        TypeInputCheckPasswordSRP,
+        TypeInputGeoPoint,
+        TypeInputMessage,
+        TypeInputStickerSet,
+        TypeInputUser,
+    )
 
 
 class CheckUsernameRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x10e6bd2c
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x10E6BD2C
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, channel: 'TypeInputChannel', username: str):
+    def __init__(self, channel: "TypeInputChannel", username: str):
         """
         :returns Bool: This type has no constructors.
         """
@@ -22,21 +34,27 @@ class CheckUsernameRequest(TLRequest):
         self.username = username
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'CheckUsernameRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'username': self.username
+            "_": "CheckUsernameRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "username": self.username,
         }
 
     def _bytes(self):
-        return b''.join((
-            b',\xbd\xe6\x10',
-            self.channel._bytes(),
-            self.serialize_bytes(self.username),
-        ))
+        return b"".join(
+            (
+                b",\xbd\xe6\x10",
+                self.channel._bytes(),
+                self.serialize_bytes(self.username),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -46,29 +64,35 @@ class CheckUsernameRequest(TLRequest):
 
 
 class ConvertToGigagroupRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xb290c69
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0xB290C69
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel'):
+    def __init__(self, channel: "TypeInputChannel"):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
         self.channel = channel
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'ConvertToGigagroupRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel
+            "_": "ConvertToGigagroupRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'i\x0c)\x0b',
-            self.channel._bytes(),
-        ))
+        return b"".join(
+            (
+                b"i\x0c)\x0b",
+                self.channel._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -77,10 +101,19 @@ class ConvertToGigagroupRequest(TLRequest):
 
 
 class CreateChannelRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x3d5fb10f
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0x3D5FB10F
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, title: str, about: str, broadcast: Optional[bool]=None, megagroup: Optional[bool]=None, for_import: Optional[bool]=None, geo_point: Optional['TypeInputGeoPoint']=None, address: Optional[str]=None):
+    def __init__(
+        self,
+        title: str,
+        about: str,
+        broadcast: Optional[bool] = None,
+        megagroup: Optional[bool] = None,
+        for_import: Optional[bool] = None,
+        geo_point: Optional["TypeInputGeoPoint"] = None,
+        address: Optional[str] = None,
+    ):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -94,26 +127,47 @@ class CreateChannelRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'CreateChannelRequest',
-            'title': self.title,
-            'about': self.about,
-            'broadcast': self.broadcast,
-            'megagroup': self.megagroup,
-            'for_import': self.for_import,
-            'geo_point': self.geo_point.to_dict() if isinstance(self.geo_point, TLObject) else self.geo_point,
-            'address': self.address
+            "_": "CreateChannelRequest",
+            "title": self.title,
+            "about": self.about,
+            "broadcast": self.broadcast,
+            "megagroup": self.megagroup,
+            "for_import": self.for_import,
+            "geo_point": self.geo_point.to_dict()
+            if isinstance(self.geo_point, TLObject)
+            else self.geo_point,
+            "address": self.address,
         }
 
     def _bytes(self):
-        assert ((self.geo_point or self.geo_point is not None) and (self.address or self.address is not None)) or ((self.geo_point is None or self.geo_point is False) and (self.address is None or self.address is False)), 'geo_point, address parameters must all be False-y (like None) or all me True-y'
-        return b''.join((
-            b'\x0f\xb1_=',
-            struct.pack('<I', (0 if self.broadcast is None or self.broadcast is False else 1) | (0 if self.megagroup is None or self.megagroup is False else 2) | (0 if self.for_import is None or self.for_import is False else 8) | (0 if self.geo_point is None or self.geo_point is False else 4) | (0 if self.address is None or self.address is False else 4)),
-            self.serialize_bytes(self.title),
-            self.serialize_bytes(self.about),
-            b'' if self.geo_point is None or self.geo_point is False else (self.geo_point._bytes()),
-            b'' if self.address is None or self.address is False else (self.serialize_bytes(self.address)),
-        ))
+        assert (
+            (self.geo_point or self.geo_point is not None)
+            and (self.address or self.address is not None)
+        ) or (
+            (self.geo_point is None or self.geo_point is False)
+            and (self.address is None or self.address is False)
+        ), "geo_point, address parameters must all be False-y (like None) or all me True-y"
+        return b"".join(
+            (
+                b"\x0f\xb1_=",
+                struct.pack(
+                    "<I",
+                    (0 if self.broadcast is None or self.broadcast is False else 1)
+                    | (0 if self.megagroup is None or self.megagroup is False else 2)
+                    | (0 if self.for_import is None or self.for_import is False else 8)
+                    | (0 if self.geo_point is None or self.geo_point is False else 4)
+                    | (0 if self.address is None or self.address is False else 4),
+                ),
+                self.serialize_bytes(self.title),
+                self.serialize_bytes(self.about),
+                b""
+                if self.geo_point is None or self.geo_point is False
+                else (self.geo_point._bytes()),
+                b""
+                if self.address is None or self.address is False
+                else (self.serialize_bytes(self.address)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -132,33 +186,47 @@ class CreateChannelRequest(TLRequest):
             _address = reader.tgread_string()
         else:
             _address = None
-        return cls(title=_title, about=_about, broadcast=_broadcast, megagroup=_megagroup, for_import=_for_import, geo_point=_geo_point, address=_address)
+        return cls(
+            title=_title,
+            about=_about,
+            broadcast=_broadcast,
+            megagroup=_megagroup,
+            for_import=_for_import,
+            geo_point=_geo_point,
+            address=_address,
+        )
 
 
 class DeleteChannelRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xc0111fe3
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0xC0111FE3
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel'):
+    def __init__(self, channel: "TypeInputChannel"):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
         self.channel = channel
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'DeleteChannelRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel
+            "_": "DeleteChannelRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xe3\x1f\x11\xc0',
-            self.channel._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xe3\x1f\x11\xc0",
+                self.channel._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -167,10 +235,10 @@ class DeleteChannelRequest(TLRequest):
 
 
 class DeleteHistoryRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xaf369d42
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xAF369D42
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, channel: 'TypeInputChannel', max_id: int):
+    def __init__(self, channel: "TypeInputChannel", max_id: int):
         """
         :returns Bool: This type has no constructors.
         """
@@ -178,21 +246,27 @@ class DeleteHistoryRequest(TLRequest):
         self.max_id = max_id
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'DeleteHistoryRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'max_id': self.max_id
+            "_": "DeleteHistoryRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "max_id": self.max_id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'B\x9d6\xaf',
-            self.channel._bytes(),
-            struct.pack('<i', self.max_id),
-        ))
+        return b"".join(
+            (
+                b"B\x9d6\xaf",
+                self.channel._bytes(),
+                struct.pack("<i", self.max_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -202,11 +276,11 @@ class DeleteHistoryRequest(TLRequest):
 
 
 class DeleteMessagesRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x84c1fd4e
-    SUBCLASS_OF_ID = 0xced3c06e
+    CONSTRUCTOR_ID = 0x84C1FD4E
+    SUBCLASS_OF_ID = 0xCED3C06E
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, channel: 'TypeInputChannel', id: List[int]):
+    def __init__(self, channel: "TypeInputChannel", id: List[int]):
         """
         :returns messages.AffectedMessages: Instance of AffectedMessages.
         """
@@ -214,21 +288,29 @@ class DeleteMessagesRequest(TLRequest):
         self.id = id
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'DeleteMessagesRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'id': [] if self.id is None else self.id[:]
+            "_": "DeleteMessagesRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "id": [] if self.id is None else self.id[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'N\xfd\xc1\x84',
-            self.channel._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.id)),b''.join(struct.pack('<i', x) for x in self.id),
-        ))
+        return b"".join(
+            (
+                b"N\xfd\xc1\x84",
+                self.channel._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.id)),
+                b"".join(struct.pack("<i", x) for x in self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -243,10 +325,10 @@ class DeleteMessagesRequest(TLRequest):
 
 
 class DeleteUserHistoryRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xd10dd71b
-    SUBCLASS_OF_ID = 0x2c49c116
+    CONSTRUCTOR_ID = 0xD10DD71B
+    SUBCLASS_OF_ID = 0x2C49C116
 
-    def __init__(self, channel: 'TypeInputChannel', user_id: 'TypeInputUser'):
+    def __init__(self, channel: "TypeInputChannel", user_id: "TypeInputUser"):
         """
         :returns messages.AffectedHistory: Instance of AffectedHistory.
         """
@@ -254,22 +336,30 @@ class DeleteUserHistoryRequest(TLRequest):
         self.user_id = user_id
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         self.user_id = utils.get_input_user(await client.get_input_entity(self.user_id))
 
     def to_dict(self):
         return {
-            '_': 'DeleteUserHistoryRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'user_id': self.user_id.to_dict() if isinstance(self.user_id, TLObject) else self.user_id
+            "_": "DeleteUserHistoryRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "user_id": self.user_id.to_dict()
+            if isinstance(self.user_id, TLObject)
+            else self.user_id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x1b\xd7\r\xd1',
-            self.channel._bytes(),
-            self.user_id._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x1b\xd7\r\xd1",
+                self.channel._bytes(),
+                self.user_id._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -279,10 +369,16 @@ class DeleteUserHistoryRequest(TLRequest):
 
 
 class EditAdminRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xd33c8902
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0xD33C8902
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', user_id: 'TypeInputUser', admin_rights: 'TypeChatAdminRights', rank: str):
+    def __init__(
+        self,
+        channel: "TypeInputChannel",
+        user_id: "TypeInputUser",
+        admin_rights: "TypeChatAdminRights",
+        rank: str,
+    ):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -292,26 +388,36 @@ class EditAdminRequest(TLRequest):
         self.rank = rank
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         self.user_id = utils.get_input_user(await client.get_input_entity(self.user_id))
 
     def to_dict(self):
         return {
-            '_': 'EditAdminRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'user_id': self.user_id.to_dict() if isinstance(self.user_id, TLObject) else self.user_id,
-            'admin_rights': self.admin_rights.to_dict() if isinstance(self.admin_rights, TLObject) else self.admin_rights,
-            'rank': self.rank
+            "_": "EditAdminRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "user_id": self.user_id.to_dict()
+            if isinstance(self.user_id, TLObject)
+            else self.user_id,
+            "admin_rights": self.admin_rights.to_dict()
+            if isinstance(self.admin_rights, TLObject)
+            else self.admin_rights,
+            "rank": self.rank,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x02\x89<\xd3',
-            self.channel._bytes(),
-            self.user_id._bytes(),
-            self.admin_rights._bytes(),
-            self.serialize_bytes(self.rank),
-        ))
+        return b"".join(
+            (
+                b"\x02\x89<\xd3",
+                self.channel._bytes(),
+                self.user_id._bytes(),
+                self.admin_rights._bytes(),
+                self.serialize_bytes(self.rank),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -319,14 +425,21 @@ class EditAdminRequest(TLRequest):
         _user_id = reader.tgread_object()
         _admin_rights = reader.tgread_object()
         _rank = reader.tgread_string()
-        return cls(channel=_channel, user_id=_user_id, admin_rights=_admin_rights, rank=_rank)
+        return cls(
+            channel=_channel, user_id=_user_id, admin_rights=_admin_rights, rank=_rank
+        )
 
 
 class EditBannedRequest(TLRequest):
     CONSTRUCTOR_ID = 0x72796912
-    SUBCLASS_OF_ID = 0x8af52aac
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', user_id: 'TypeInputUser', banned_rights: 'TypeChatBannedRights'):
+    def __init__(
+        self,
+        channel: "TypeInputChannel",
+        user_id: "TypeInputUser",
+        banned_rights: "TypeChatBannedRights",
+    ):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -335,24 +448,34 @@ class EditBannedRequest(TLRequest):
         self.banned_rights = banned_rights
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         self.user_id = utils.get_input_user(await client.get_input_entity(self.user_id))
 
     def to_dict(self):
         return {
-            '_': 'EditBannedRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'user_id': self.user_id.to_dict() if isinstance(self.user_id, TLObject) else self.user_id,
-            'banned_rights': self.banned_rights.to_dict() if isinstance(self.banned_rights, TLObject) else self.banned_rights
+            "_": "EditBannedRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "user_id": self.user_id.to_dict()
+            if isinstance(self.user_id, TLObject)
+            else self.user_id,
+            "banned_rights": self.banned_rights.to_dict()
+            if isinstance(self.banned_rights, TLObject)
+            else self.banned_rights,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x12iyr',
-            self.channel._bytes(),
-            self.user_id._bytes(),
-            self.banned_rights._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x12iyr",
+                self.channel._bytes(),
+                self.user_id._bytes(),
+                self.banned_rights._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -363,10 +486,15 @@ class EditBannedRequest(TLRequest):
 
 
 class EditCreatorRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8f38cd1f
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0x8F38CD1F
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', user_id: 'TypeInputUser', password: 'TypeInputCheckPasswordSRP'):
+    def __init__(
+        self,
+        channel: "TypeInputChannel",
+        user_id: "TypeInputUser",
+        password: "TypeInputCheckPasswordSRP",
+    ):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -375,24 +503,34 @@ class EditCreatorRequest(TLRequest):
         self.password = password
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         self.user_id = utils.get_input_user(await client.get_input_entity(self.user_id))
 
     def to_dict(self):
         return {
-            '_': 'EditCreatorRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'user_id': self.user_id.to_dict() if isinstance(self.user_id, TLObject) else self.user_id,
-            'password': self.password.to_dict() if isinstance(self.password, TLObject) else self.password
+            "_": "EditCreatorRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "user_id": self.user_id.to_dict()
+            if isinstance(self.user_id, TLObject)
+            else self.user_id,
+            "password": self.password.to_dict()
+            if isinstance(self.password, TLObject)
+            else self.password,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x1f\xcd8\x8f',
-            self.channel._bytes(),
-            self.user_id._bytes(),
-            self.password._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x1f\xcd8\x8f",
+                self.channel._bytes(),
+                self.user_id._bytes(),
+                self.password._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -403,10 +541,12 @@ class EditCreatorRequest(TLRequest):
 
 
 class EditLocationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x58e63f6d
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x58E63F6D
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, channel: 'TypeInputChannel', geo_point: 'TypeInputGeoPoint', address: str):
+    def __init__(
+        self, channel: "TypeInputChannel", geo_point: "TypeInputGeoPoint", address: str
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -415,23 +555,31 @@ class EditLocationRequest(TLRequest):
         self.address = address
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'EditLocationRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'geo_point': self.geo_point.to_dict() if isinstance(self.geo_point, TLObject) else self.geo_point,
-            'address': self.address
+            "_": "EditLocationRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "geo_point": self.geo_point.to_dict()
+            if isinstance(self.geo_point, TLObject)
+            else self.geo_point,
+            "address": self.address,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'm?\xe6X',
-            self.channel._bytes(),
-            self.geo_point._bytes(),
-            self.serialize_bytes(self.address),
-        ))
+        return b"".join(
+            (
+                b"m?\xe6X",
+                self.channel._bytes(),
+                self.geo_point._bytes(),
+                self.serialize_bytes(self.address),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -442,10 +590,10 @@ class EditLocationRequest(TLRequest):
 
 
 class EditPhotoRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf12e57c9
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0xF12E57C9
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', photo: 'TypeInputChatPhoto'):
+    def __init__(self, channel: "TypeInputChannel", photo: "TypeInputChatPhoto"):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -453,22 +601,30 @@ class EditPhotoRequest(TLRequest):
         self.photo = photo
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         self.photo = utils.get_input_chat_photo(self.photo)
 
     def to_dict(self):
         return {
-            '_': 'EditPhotoRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'photo': self.photo.to_dict() if isinstance(self.photo, TLObject) else self.photo
+            "_": "EditPhotoRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "photo": self.photo.to_dict()
+            if isinstance(self.photo, TLObject)
+            else self.photo,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xc9W.\xf1',
-            self.channel._bytes(),
-            self.photo._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xc9W.\xf1",
+                self.channel._bytes(),
+                self.photo._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -478,10 +634,10 @@ class EditPhotoRequest(TLRequest):
 
 
 class EditTitleRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x566decd0
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0x566DECD0
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', title: str):
+    def __init__(self, channel: "TypeInputChannel", title: str):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -489,21 +645,27 @@ class EditTitleRequest(TLRequest):
         self.title = title
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'EditTitleRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'title': self.title
+            "_": "EditTitleRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "title": self.title,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xd0\xecmV',
-            self.channel._bytes(),
-            self.serialize_bytes(self.title),
-        ))
+        return b"".join(
+            (
+                b"\xd0\xecmV",
+                self.channel._bytes(),
+                self.serialize_bytes(self.title),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -513,11 +675,17 @@ class EditTitleRequest(TLRequest):
 
 
 class ExportMessageLinkRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xe63fadeb
-    SUBCLASS_OF_ID = 0xdee644cc
+    CONSTRUCTOR_ID = 0xE63FADEB
+    SUBCLASS_OF_ID = 0xDEE644CC
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, channel: 'TypeInputChannel', id: int, grouped: Optional[bool]=None, thread: Optional[bool]=None):
+    def __init__(
+        self,
+        channel: "TypeInputChannel",
+        id: int,
+        grouped: Optional[bool] = None,
+        thread: Optional[bool] = None,
+    ):
         """
         :returns ExportedMessageLink: Instance of ExportedMessageLink.
         """
@@ -527,24 +695,34 @@ class ExportMessageLinkRequest(TLRequest):
         self.thread = thread
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'ExportMessageLinkRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'id': self.id,
-            'grouped': self.grouped,
-            'thread': self.thread
+            "_": "ExportMessageLinkRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "id": self.id,
+            "grouped": self.grouped,
+            "thread": self.thread,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xeb\xad?\xe6',
-            struct.pack('<I', (0 if self.grouped is None or self.grouped is False else 1) | (0 if self.thread is None or self.thread is False else 2)),
-            self.channel._bytes(),
-            struct.pack('<i', self.id),
-        ))
+        return b"".join(
+            (
+                b"\xeb\xad?\xe6",
+                struct.pack(
+                    "<I",
+                    (0 if self.grouped is None or self.grouped is False else 1)
+                    | (0 if self.thread is None or self.thread is False else 2),
+                ),
+                self.channel._bytes(),
+                struct.pack("<i", self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -558,10 +736,19 @@ class ExportMessageLinkRequest(TLRequest):
 
 
 class GetAdminLogRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x33ddf480
-    SUBCLASS_OF_ID = 0x51f076bc
+    CONSTRUCTOR_ID = 0x33DDF480
+    SUBCLASS_OF_ID = 0x51F076BC
 
-    def __init__(self, channel: 'TypeInputChannel', q: str, max_id: int, min_id: int, limit: int, events_filter: Optional['TypeChannelAdminLogEventsFilter']=None, admins: Optional[List['TypeInputUser']]=None):
+    def __init__(
+        self,
+        channel: "TypeInputChannel",
+        q: str,
+        max_id: int,
+        min_id: int,
+        limit: int,
+        events_filter: Optional["TypeChannelAdminLogEventsFilter"] = None,
+        admins: Optional[List["TypeInputUser"]] = None,
+    ):
         """
         :returns channels.AdminLogResults: Instance of AdminLogResults.
         """
@@ -574,7 +761,9 @@ class GetAdminLogRequest(TLRequest):
         self.admins = admins
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         if self.admins:
             _tmp = []
             for _x in self.admins:
@@ -584,28 +773,54 @@ class GetAdminLogRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetAdminLogRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'q': self.q,
-            'max_id': self.max_id,
-            'min_id': self.min_id,
-            'limit': self.limit,
-            'events_filter': self.events_filter.to_dict() if isinstance(self.events_filter, TLObject) else self.events_filter,
-            'admins': [] if self.admins is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.admins]
+            "_": "GetAdminLogRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "q": self.q,
+            "max_id": self.max_id,
+            "min_id": self.min_id,
+            "limit": self.limit,
+            "events_filter": self.events_filter.to_dict()
+            if isinstance(self.events_filter, TLObject)
+            else self.events_filter,
+            "admins": []
+            if self.admins is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.admins],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x80\xf4\xdd3',
-            struct.pack('<I', (0 if self.events_filter is None or self.events_filter is False else 1) | (0 if self.admins is None or self.admins is False else 2)),
-            self.channel._bytes(),
-            self.serialize_bytes(self.q),
-            b'' if self.events_filter is None or self.events_filter is False else (self.events_filter._bytes()),
-            b'' if self.admins is None or self.admins is False else b''.join((b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.admins)),b''.join(x._bytes() for x in self.admins))),
-            struct.pack('<q', self.max_id),
-            struct.pack('<q', self.min_id),
-            struct.pack('<i', self.limit),
-        ))
+        return b"".join(
+            (
+                b"\x80\xf4\xdd3",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.events_filter is None or self.events_filter is False
+                        else 1
+                    )
+                    | (0 if self.admins is None or self.admins is False else 2),
+                ),
+                self.channel._bytes(),
+                self.serialize_bytes(self.q),
+                b""
+                if self.events_filter is None or self.events_filter is False
+                else (self.events_filter._bytes()),
+                b""
+                if self.admins is None or self.admins is False
+                else b"".join(
+                    (
+                        b"\x15\xc4\xb5\x1c",
+                        struct.pack("<i", len(self.admins)),
+                        b"".join(x._bytes() for x in self.admins),
+                    )
+                ),
+                struct.pack("<q", self.max_id),
+                struct.pack("<q", self.min_id),
+                struct.pack("<i", self.limit),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -629,14 +844,27 @@ class GetAdminLogRequest(TLRequest):
         _max_id = reader.read_long()
         _min_id = reader.read_long()
         _limit = reader.read_int()
-        return cls(channel=_channel, q=_q, max_id=_max_id, min_id=_min_id, limit=_limit, events_filter=_events_filter, admins=_admins)
+        return cls(
+            channel=_channel,
+            q=_q,
+            max_id=_max_id,
+            min_id=_min_id,
+            limit=_limit,
+            events_filter=_events_filter,
+            admins=_admins,
+        )
 
 
 class GetAdminedPublicChannelsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf8b036af
-    SUBCLASS_OF_ID = 0x99d5cb14
+    CONSTRUCTOR_ID = 0xF8B036AF
+    SUBCLASS_OF_ID = 0x99D5CB14
 
-    def __init__(self, by_location: Optional[bool]=None, check_limit: Optional[bool]=None, for_groupcall: Optional[bool]=None):
+    def __init__(
+        self,
+        by_location: Optional[bool] = None,
+        check_limit: Optional[bool] = None,
+        for_groupcall: Optional[bool] = None,
+    ):
         """
         :returns messages.Chats: Instance of either Chats, ChatsSlice.
         """
@@ -646,17 +874,32 @@ class GetAdminedPublicChannelsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetAdminedPublicChannelsRequest',
-            'by_location': self.by_location,
-            'check_limit': self.check_limit,
-            'for_groupcall': self.for_groupcall
+            "_": "GetAdminedPublicChannelsRequest",
+            "by_location": self.by_location,
+            "check_limit": self.check_limit,
+            "for_groupcall": self.for_groupcall,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xaf6\xb0\xf8',
-            struct.pack('<I', (0 if self.by_location is None or self.by_location is False else 1) | (0 if self.check_limit is None or self.check_limit is False else 2) | (0 if self.for_groupcall is None or self.for_groupcall is False else 4)),
-        ))
+        return b"".join(
+            (
+                b"\xaf6\xb0\xf8",
+                struct.pack(
+                    "<I",
+                    (0 if self.by_location is None or self.by_location is False else 1)
+                    | (
+                        0
+                        if self.check_limit is None or self.check_limit is False
+                        else 2
+                    )
+                    | (
+                        0
+                        if self.for_groupcall is None or self.for_groupcall is False
+                        else 4
+                    ),
+                ),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -665,15 +908,19 @@ class GetAdminedPublicChannelsRequest(TLRequest):
         _by_location = bool(flags & 1)
         _check_limit = bool(flags & 2)
         _for_groupcall = bool(flags & 4)
-        return cls(by_location=_by_location, check_limit=_check_limit, for_groupcall=_for_groupcall)
+        return cls(
+            by_location=_by_location,
+            check_limit=_check_limit,
+            for_groupcall=_for_groupcall,
+        )
 
 
 class GetChannelsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xa7f6bbb
-    SUBCLASS_OF_ID = 0x99d5cb14
+    CONSTRUCTOR_ID = 0xA7F6BBB
+    SUBCLASS_OF_ID = 0x99D5CB14
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, id: List['TypeInputChannel']):
+    def __init__(self, id: List["TypeInputChannel"]):
         """
         :returns messages.Chats: Instance of either Chats, ChatsSlice.
         """
@@ -688,15 +935,21 @@ class GetChannelsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetChannelsRequest',
-            'id': [] if self.id is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.id]
+            "_": "GetChannelsRequest",
+            "id": []
+            if self.id is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.id],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xbbk\x7f\n',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.id)),b''.join(x._bytes() for x in self.id),
-        ))
+        return b"".join(
+            (
+                b"\xbbk\x7f\n",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.id)),
+                b"".join(x._bytes() for x in self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -710,29 +963,35 @@ class GetChannelsRequest(TLRequest):
 
 
 class GetFullChannelRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8736a09
-    SUBCLASS_OF_ID = 0x225a5109
+    CONSTRUCTOR_ID = 0x8736A09
+    SUBCLASS_OF_ID = 0x225A5109
 
-    def __init__(self, channel: 'TypeInputChannel'):
+    def __init__(self, channel: "TypeInputChannel"):
         """
         :returns messages.ChatFull: Instance of ChatFull.
         """
         self.channel = channel
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'GetFullChannelRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel
+            "_": "GetFullChannelRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\tjs\x08',
-            self.channel._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\tjs\x08",
+                self.channel._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -741,18 +1000,14 @@ class GetFullChannelRequest(TLRequest):
 
 
 class GetGroupsForDiscussionRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf5dad378
-    SUBCLASS_OF_ID = 0x99d5cb14
+    CONSTRUCTOR_ID = 0xF5DAD378
+    SUBCLASS_OF_ID = 0x99D5CB14
 
     def to_dict(self):
-        return {
-            '_': 'GetGroupsForDiscussionRequest'
-        }
+        return {"_": "GetGroupsForDiscussionRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'x\xd3\xda\xf5',
-        ))
+        return b"".join((b"x\xd3\xda\xf5",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -760,18 +1015,14 @@ class GetGroupsForDiscussionRequest(TLRequest):
 
 
 class GetInactiveChannelsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x11e831ee
-    SUBCLASS_OF_ID = 0x8bf3d7d4
+    CONSTRUCTOR_ID = 0x11E831EE
+    SUBCLASS_OF_ID = 0x8BF3D7D4
 
     def to_dict(self):
-        return {
-            '_': 'GetInactiveChannelsRequest'
-        }
+        return {"_": "GetInactiveChannelsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xee1\xe8\x11',
-        ))
+        return b"".join((b"\xee1\xe8\x11",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -779,8 +1030,8 @@ class GetInactiveChannelsRequest(TLRequest):
 
 
 class GetLeftChannelsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8341ecc0
-    SUBCLASS_OF_ID = 0x99d5cb14
+    CONSTRUCTOR_ID = 0x8341ECC0
+    SUBCLASS_OF_ID = 0x99D5CB14
 
     def __init__(self, offset: int):
         """
@@ -789,16 +1040,15 @@ class GetLeftChannelsRequest(TLRequest):
         self.offset = offset
 
     def to_dict(self):
-        return {
-            '_': 'GetLeftChannelsRequest',
-            'offset': self.offset
-        }
+        return {"_": "GetLeftChannelsRequest", "offset": self.offset}
 
     def _bytes(self):
-        return b''.join((
-            b'\xc0\xecA\x83',
-            struct.pack('<i', self.offset),
-        ))
+        return b"".join(
+            (
+                b"\xc0\xecA\x83",
+                struct.pack("<i", self.offset),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -807,11 +1057,11 @@ class GetLeftChannelsRequest(TLRequest):
 
 
 class GetMessagesRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xad8c9a23
-    SUBCLASS_OF_ID = 0xd4b40b5e
+    CONSTRUCTOR_ID = 0xAD8C9A23
+    SUBCLASS_OF_ID = 0xD4B40B5E
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, channel: 'TypeInputChannel', id: List['TypeInputMessage']):
+    def __init__(self, channel: "TypeInputChannel", id: List["TypeInputMessage"]):
         """
         :returns messages.Messages: Instance of either Messages, MessagesSlice, ChannelMessages, MessagesNotModified.
         """
@@ -819,7 +1069,9 @@ class GetMessagesRequest(TLRequest):
         self.id = id
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         _tmp = []
         for _x in self.id:
             _tmp.append(utils.get_input_message(_x))
@@ -828,17 +1080,25 @@ class GetMessagesRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetMessagesRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'id': [] if self.id is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.id]
+            "_": "GetMessagesRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "id": []
+            if self.id is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.id],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'#\x9a\x8c\xad',
-            self.channel._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.id)),b''.join(x._bytes() for x in self.id),
-        ))
+        return b"".join(
+            (
+                b"#\x9a\x8c\xad",
+                self.channel._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.id)),
+                b"".join(x._bytes() for x in self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -853,10 +1113,10 @@ class GetMessagesRequest(TLRequest):
 
 
 class GetParticipantRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x546dd7a6
-    SUBCLASS_OF_ID = 0x6658151a
+    CONSTRUCTOR_ID = 0x546DD7A6
+    SUBCLASS_OF_ID = 0x6658151A
 
-    def __init__(self, channel: 'TypeInputChannel', user_id: 'TypeInputUser'):
+    def __init__(self, channel: "TypeInputChannel", user_id: "TypeInputUser"):
         """
         :returns channels.ChannelParticipant: Instance of ChannelParticipant.
         """
@@ -864,22 +1124,30 @@ class GetParticipantRequest(TLRequest):
         self.user_id = user_id
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         self.user_id = utils.get_input_user(await client.get_input_entity(self.user_id))
 
     def to_dict(self):
         return {
-            '_': 'GetParticipantRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'user_id': self.user_id.to_dict() if isinstance(self.user_id, TLObject) else self.user_id
+            "_": "GetParticipantRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "user_id": self.user_id.to_dict()
+            if isinstance(self.user_id, TLObject)
+            else self.user_id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa6\xd7mT',
-            self.channel._bytes(),
-            self.user_id._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xa6\xd7mT",
+                self.channel._bytes(),
+                self.user_id._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -889,11 +1157,18 @@ class GetParticipantRequest(TLRequest):
 
 
 class GetParticipantsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x123e05e9
-    SUBCLASS_OF_ID = 0xe60a6e64
+    CONSTRUCTOR_ID = 0x123E05E9
+    SUBCLASS_OF_ID = 0xE60A6E64
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, channel: 'TypeInputChannel', filter: 'TypeChannelParticipantsFilter', offset: int, limit: int, hash: int):
+    def __init__(
+        self,
+        channel: "TypeInputChannel",
+        filter: "TypeChannelParticipantsFilter",
+        offset: int,
+        limit: int,
+        hash: int,
+    ):
         """
         :returns channels.ChannelParticipants: Instance of either ChannelParticipants, ChannelParticipantsNotModified.
         """
@@ -904,27 +1179,35 @@ class GetParticipantsRequest(TLRequest):
         self.hash = hash
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'GetParticipantsRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'filter': self.filter.to_dict() if isinstance(self.filter, TLObject) else self.filter,
-            'offset': self.offset,
-            'limit': self.limit,
-            'hash': self.hash
+            "_": "GetParticipantsRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "filter": self.filter.to_dict()
+            if isinstance(self.filter, TLObject)
+            else self.filter,
+            "offset": self.offset,
+            "limit": self.limit,
+            "hash": self.hash,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xe9\x05>\x12',
-            self.channel._bytes(),
-            self.filter._bytes(),
-            struct.pack('<i', self.offset),
-            struct.pack('<i', self.limit),
-            struct.pack('<i', self.hash),
-        ))
+        return b"".join(
+            (
+                b"\xe9\x05>\x12",
+                self.channel._bytes(),
+                self.filter._bytes(),
+                struct.pack("<i", self.offset),
+                struct.pack("<i", self.limit),
+                struct.pack("<i", self.hash),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -933,14 +1216,16 @@ class GetParticipantsRequest(TLRequest):
         _offset = reader.read_int()
         _limit = reader.read_int()
         _hash = reader.read_int()
-        return cls(channel=_channel, filter=_filter, offset=_offset, limit=_limit, hash=_hash)
+        return cls(
+            channel=_channel, filter=_filter, offset=_offset, limit=_limit, hash=_hash
+        )
 
 
 class InviteToChannelRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x199f3a6c
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0x199F3A6C
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', users: List['TypeInputUser']):
+    def __init__(self, channel: "TypeInputChannel", users: List["TypeInputUser"]):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -948,7 +1233,9 @@ class InviteToChannelRequest(TLRequest):
         self.users = users
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         _tmp = []
         for _x in self.users:
             _tmp.append(utils.get_input_user(await client.get_input_entity(_x)))
@@ -957,17 +1244,25 @@ class InviteToChannelRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InviteToChannelRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "InviteToChannelRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'l:\x9f\x19',
-            self.channel._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"l:\x9f\x19",
+                self.channel._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -982,29 +1277,35 @@ class InviteToChannelRequest(TLRequest):
 
 
 class JoinChannelRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x24b524c5
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0x24B524C5
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel'):
+    def __init__(self, channel: "TypeInputChannel"):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
         self.channel = channel
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'JoinChannelRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel
+            "_": "JoinChannelRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xc5$\xb5$',
-            self.channel._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xc5$\xb5$",
+                self.channel._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1013,29 +1314,35 @@ class JoinChannelRequest(TLRequest):
 
 
 class LeaveChannelRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf836aa95
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0xF836AA95
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel'):
+    def __init__(self, channel: "TypeInputChannel"):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
         self.channel = channel
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'LeaveChannelRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel
+            "_": "LeaveChannelRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x95\xaa6\xf8',
-            self.channel._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x95\xaa6\xf8",
+                self.channel._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1044,10 +1351,10 @@ class LeaveChannelRequest(TLRequest):
 
 
 class ReadHistoryRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xcc104937
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xCC104937
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, channel: 'TypeInputChannel', max_id: int):
+    def __init__(self, channel: "TypeInputChannel", max_id: int):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1055,21 +1362,27 @@ class ReadHistoryRequest(TLRequest):
         self.max_id = max_id
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'ReadHistoryRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'max_id': self.max_id
+            "_": "ReadHistoryRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "max_id": self.max_id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'7I\x10\xcc',
-            self.channel._bytes(),
-            struct.pack('<i', self.max_id),
-        ))
+        return b"".join(
+            (
+                b"7I\x10\xcc",
+                self.channel._bytes(),
+                struct.pack("<i", self.max_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1079,11 +1392,11 @@ class ReadHistoryRequest(TLRequest):
 
 
 class ReadMessageContentsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xeab5dc38
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xEAB5DC38
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, channel: 'TypeInputChannel', id: List[int]):
+    def __init__(self, channel: "TypeInputChannel", id: List[int]):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1091,21 +1404,29 @@ class ReadMessageContentsRequest(TLRequest):
         self.id = id
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'ReadMessageContentsRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'id': [] if self.id is None else self.id[:]
+            "_": "ReadMessageContentsRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "id": [] if self.id is None else self.id[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'8\xdc\xb5\xea',
-            self.channel._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.id)),b''.join(struct.pack('<i', x) for x in self.id),
-        ))
+        return b"".join(
+            (
+                b"8\xdc\xb5\xea",
+                self.channel._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.id)),
+                b"".join(struct.pack("<i", x) for x in self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1120,11 +1441,13 @@ class ReadMessageContentsRequest(TLRequest):
 
 
 class ReportSpamRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xfe087810
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xFE087810
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, channel: 'TypeInputChannel', user_id: 'TypeInputUser', id: List[int]):
+    def __init__(
+        self, channel: "TypeInputChannel", user_id: "TypeInputUser", id: List[int]
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1133,24 +1456,34 @@ class ReportSpamRequest(TLRequest):
         self.id = id
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
         self.user_id = utils.get_input_user(await client.get_input_entity(self.user_id))
 
     def to_dict(self):
         return {
-            '_': 'ReportSpamRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'user_id': self.user_id.to_dict() if isinstance(self.user_id, TLObject) else self.user_id,
-            'id': [] if self.id is None else self.id[:]
+            "_": "ReportSpamRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "user_id": self.user_id.to_dict()
+            if isinstance(self.user_id, TLObject)
+            else self.user_id,
+            "id": [] if self.id is None else self.id[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x10x\x08\xfe',
-            self.channel._bytes(),
-            self.user_id._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.id)),b''.join(struct.pack('<i', x) for x in self.id),
-        ))
+        return b"".join(
+            (
+                b"\x10x\x08\xfe",
+                self.channel._bytes(),
+                self.user_id._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.id)),
+                b"".join(struct.pack("<i", x) for x in self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1166,10 +1499,10 @@ class ReportSpamRequest(TLRequest):
 
 
 class SetDiscussionGroupRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x40582bb2
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x40582BB2
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, broadcast: 'TypeInputChannel', group: 'TypeInputChannel'):
+    def __init__(self, broadcast: "TypeInputChannel", group: "TypeInputChannel"):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1177,22 +1510,30 @@ class SetDiscussionGroupRequest(TLRequest):
         self.group = group
 
     async def resolve(self, client, utils):
-        self.broadcast = utils.get_input_channel(await client.get_input_entity(self.broadcast))
+        self.broadcast = utils.get_input_channel(
+            await client.get_input_entity(self.broadcast)
+        )
         self.group = utils.get_input_channel(await client.get_input_entity(self.group))
 
     def to_dict(self):
         return {
-            '_': 'SetDiscussionGroupRequest',
-            'broadcast': self.broadcast.to_dict() if isinstance(self.broadcast, TLObject) else self.broadcast,
-            'group': self.group.to_dict() if isinstance(self.group, TLObject) else self.group
+            "_": "SetDiscussionGroupRequest",
+            "broadcast": self.broadcast.to_dict()
+            if isinstance(self.broadcast, TLObject)
+            else self.broadcast,
+            "group": self.group.to_dict()
+            if isinstance(self.group, TLObject)
+            else self.group,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xb2+X@',
-            self.broadcast._bytes(),
-            self.group._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xb2+X@",
+                self.broadcast._bytes(),
+                self.group._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1202,10 +1543,10 @@ class SetDiscussionGroupRequest(TLRequest):
 
 
 class SetStickersRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xea8ca4f9
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xEA8CA4F9
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, channel: 'TypeInputChannel', stickerset: 'TypeInputStickerSet'):
+    def __init__(self, channel: "TypeInputChannel", stickerset: "TypeInputStickerSet"):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1213,21 +1554,29 @@ class SetStickersRequest(TLRequest):
         self.stickerset = stickerset
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'SetStickersRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'stickerset': self.stickerset.to_dict() if isinstance(self.stickerset, TLObject) else self.stickerset
+            "_": "SetStickersRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "stickerset": self.stickerset.to_dict()
+            if isinstance(self.stickerset, TLObject)
+            else self.stickerset,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf9\xa4\x8c\xea',
-            self.channel._bytes(),
-            self.stickerset._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xf9\xa4\x8c\xea",
+                self.channel._bytes(),
+                self.stickerset._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1237,10 +1586,10 @@ class SetStickersRequest(TLRequest):
 
 
 class TogglePreHistoryHiddenRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xeabbb94c
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0xEABBB94C
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', enabled: bool):
+    def __init__(self, channel: "TypeInputChannel", enabled: bool):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -1248,21 +1597,27 @@ class TogglePreHistoryHiddenRequest(TLRequest):
         self.enabled = enabled
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'TogglePreHistoryHiddenRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'enabled': self.enabled
+            "_": "TogglePreHistoryHiddenRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "enabled": self.enabled,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'L\xb9\xbb\xea',
-            self.channel._bytes(),
-            b'\xb5ur\x99' if self.enabled else b'7\x97y\xbc',
-        ))
+        return b"".join(
+            (
+                b"L\xb9\xbb\xea",
+                self.channel._bytes(),
+                b"\xb5ur\x99" if self.enabled else b"7\x97y\xbc",
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1272,10 +1627,10 @@ class TogglePreHistoryHiddenRequest(TLRequest):
 
 
 class ToggleSignaturesRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x1f69b606
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0x1F69B606
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', enabled: bool):
+    def __init__(self, channel: "TypeInputChannel", enabled: bool):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -1283,21 +1638,27 @@ class ToggleSignaturesRequest(TLRequest):
         self.enabled = enabled
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'ToggleSignaturesRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'enabled': self.enabled
+            "_": "ToggleSignaturesRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "enabled": self.enabled,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x06\xb6i\x1f',
-            self.channel._bytes(),
-            b'\xb5ur\x99' if self.enabled else b'7\x97y\xbc',
-        ))
+        return b"".join(
+            (
+                b"\x06\xb6i\x1f",
+                self.channel._bytes(),
+                b"\xb5ur\x99" if self.enabled else b"7\x97y\xbc",
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1307,10 +1668,10 @@ class ToggleSignaturesRequest(TLRequest):
 
 
 class ToggleSlowModeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xedd49ef0
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0xEDD49EF0
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, channel: 'TypeInputChannel', seconds: int):
+    def __init__(self, channel: "TypeInputChannel", seconds: int):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -1318,21 +1679,27 @@ class ToggleSlowModeRequest(TLRequest):
         self.seconds = seconds
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'ToggleSlowModeRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'seconds': self.seconds
+            "_": "ToggleSlowModeRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "seconds": self.seconds,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf0\x9e\xd4\xed',
-            self.channel._bytes(),
-            struct.pack('<i', self.seconds),
-        ))
+        return b"".join(
+            (
+                b"\xf0\x9e\xd4\xed",
+                self.channel._bytes(),
+                struct.pack("<i", self.seconds),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1342,10 +1709,10 @@ class ToggleSlowModeRequest(TLRequest):
 
 
 class UpdateUsernameRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x3514b3de
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x3514B3DE
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, channel: 'TypeInputChannel', username: str):
+    def __init__(self, channel: "TypeInputChannel", username: str):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1353,25 +1720,30 @@ class UpdateUsernameRequest(TLRequest):
         self.username = username
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'UpdateUsernameRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'username': self.username
+            "_": "UpdateUsernameRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "username": self.username,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xde\xb3\x145',
-            self.channel._bytes(),
-            self.serialize_bytes(self.username),
-        ))
+        return b"".join(
+            (
+                b"\xde\xb3\x145",
+                self.channel._bytes(),
+                self.serialize_bytes(self.username),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
         _channel = reader.tgread_object()
         _username = reader.tgread_string()
         return cls(channel=_channel, username=_username)
-

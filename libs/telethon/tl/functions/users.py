@@ -5,17 +5,17 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
     from ...tl.types import TypeInputUser, TypeSecureValueError
 
 
-
 class GetFullUserRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xca30a5b1
-    SUBCLASS_OF_ID = 0x1f4661b9
+    CONSTRUCTOR_ID = 0xCA30A5B1
+    SUBCLASS_OF_ID = 0x1F4661B9
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, id: 'TypeInputUser'):
+    def __init__(self, id: "TypeInputUser"):
         """
         :returns UserFull: Instance of UserFull.
         """
@@ -26,15 +26,17 @@ class GetFullUserRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetFullUserRequest',
-            'id': self.id.to_dict() if isinstance(self.id, TLObject) else self.id
+            "_": "GetFullUserRequest",
+            "id": self.id.to_dict() if isinstance(self.id, TLObject) else self.id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xb1\xa50\xca',
-            self.id._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xb1\xa50\xca",
+                self.id._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -43,11 +45,11 @@ class GetFullUserRequest(TLRequest):
 
 
 class GetUsersRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xd91a548
-    SUBCLASS_OF_ID = 0x406da4d
+    CONSTRUCTOR_ID = 0xD91A548
+    SUBCLASS_OF_ID = 0x406DA4D
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, id: List['TypeInputUser']):
+    def __init__(self, id: List["TypeInputUser"]):
         """
         :returns Vector<User>: This type has no constructors.
         """
@@ -62,15 +64,21 @@ class GetUsersRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetUsersRequest',
-            'id': [] if self.id is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.id]
+            "_": "GetUsersRequest",
+            "id": []
+            if self.id is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.id],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'H\xa5\x91\r',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.id)),b''.join(x._bytes() for x in self.id),
-        ))
+        return b"".join(
+            (
+                b"H\xa5\x91\r",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.id)),
+                b"".join(x._bytes() for x in self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -84,11 +92,11 @@ class GetUsersRequest(TLRequest):
 
 
 class SetSecureValueErrorsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x90c894b5
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x90C894B5
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, id: 'TypeInputUser', errors: List['TypeSecureValueError']):
+    def __init__(self, id: "TypeInputUser", errors: List["TypeSecureValueError"]):
         """
         :returns Bool: This type has no constructors.
         """
@@ -100,17 +108,23 @@ class SetSecureValueErrorsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SetSecureValueErrorsRequest',
-            'id': self.id.to_dict() if isinstance(self.id, TLObject) else self.id,
-            'errors': [] if self.errors is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.errors]
+            "_": "SetSecureValueErrorsRequest",
+            "id": self.id.to_dict() if isinstance(self.id, TLObject) else self.id,
+            "errors": []
+            if self.errors is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.errors],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xb5\x94\xc8\x90',
-            self.id._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.errors)),b''.join(x._bytes() for x in self.errors),
-        ))
+        return b"".join(
+            (
+                b"\xb5\x94\xc8\x90",
+                self.id._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.errors)),
+                b"".join(x._bytes() for x in self.errors),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -122,4 +136,3 @@ class SetSecureValueErrorsRequest(TLRequest):
             _errors.append(_x)
 
         return cls(id=_id, errors=_errors)
-

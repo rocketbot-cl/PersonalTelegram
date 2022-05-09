@@ -4,18 +4,18 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
     from ...tl.types import TypeUser
     from ...tl.types.help import TypeTermsOfService
     from ...tl.types.auth import TypeAuthorization, TypeCodeType, TypeSentCodeType
 
 
-
 class Authorization(TLObject):
-    CONSTRUCTOR_ID = 0xcd050916
-    SUBCLASS_OF_ID = 0xb9e04e39
+    CONSTRUCTOR_ID = 0xCD050916
+    SUBCLASS_OF_ID = 0xB9E04E39
 
-    def __init__(self, user: 'TypeUser', tmp_sessions: Optional[int]=None):
+    def __init__(self, user: "TypeUser", tmp_sessions: Optional[int] = None):
         """
         Constructor for auth.Authorization: Instance of either Authorization, AuthorizationSignUpRequired.
         """
@@ -24,18 +24,31 @@ class Authorization(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Authorization',
-            'user': self.user.to_dict() if isinstance(self.user, TLObject) else self.user,
-            'tmp_sessions': self.tmp_sessions
+            "_": "Authorization",
+            "user": self.user.to_dict()
+            if isinstance(self.user, TLObject)
+            else self.user,
+            "tmp_sessions": self.tmp_sessions,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x16\t\x05\xcd',
-            struct.pack('<I', (0 if self.tmp_sessions is None or self.tmp_sessions is False else 1)),
-            b'' if self.tmp_sessions is None or self.tmp_sessions is False else (struct.pack('<i', self.tmp_sessions)),
-            self.user._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x16\t\x05\xcd",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.tmp_sessions is None or self.tmp_sessions is False
+                        else 1
+                    ),
+                ),
+                b""
+                if self.tmp_sessions is None or self.tmp_sessions is False
+                else (struct.pack("<i", self.tmp_sessions)),
+                self.user._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -50,10 +63,10 @@ class Authorization(TLObject):
 
 
 class AuthorizationSignUpRequired(TLObject):
-    CONSTRUCTOR_ID = 0x44747e9a
-    SUBCLASS_OF_ID = 0xb9e04e39
+    CONSTRUCTOR_ID = 0x44747E9A
+    SUBCLASS_OF_ID = 0xB9E04E39
 
-    def __init__(self, terms_of_service: Optional['TypeTermsOfService']=None):
+    def __init__(self, terms_of_service: Optional["TypeTermsOfService"] = None):
         """
         Constructor for auth.Authorization: Instance of either Authorization, AuthorizationSignUpRequired.
         """
@@ -61,16 +74,30 @@ class AuthorizationSignUpRequired(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'AuthorizationSignUpRequired',
-            'terms_of_service': self.terms_of_service.to_dict() if isinstance(self.terms_of_service, TLObject) else self.terms_of_service
+            "_": "AuthorizationSignUpRequired",
+            "terms_of_service": self.terms_of_service.to_dict()
+            if isinstance(self.terms_of_service, TLObject)
+            else self.terms_of_service,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x9a~tD',
-            struct.pack('<I', (0 if self.terms_of_service is None or self.terms_of_service is False else 1)),
-            b'' if self.terms_of_service is None or self.terms_of_service is False else (self.terms_of_service._bytes()),
-        ))
+        return b"".join(
+            (
+                b"\x9a~tD",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.terms_of_service is None
+                        or self.terms_of_service is False
+                        else 1
+                    ),
+                ),
+                b""
+                if self.terms_of_service is None or self.terms_of_service is False
+                else (self.terms_of_service._bytes()),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -84,18 +111,14 @@ class AuthorizationSignUpRequired(TLObject):
 
 
 class CodeTypeCall(TLObject):
-    CONSTRUCTOR_ID = 0x741cd3e3
-    SUBCLASS_OF_ID = 0xb3f3e401
+    CONSTRUCTOR_ID = 0x741CD3E3
+    SUBCLASS_OF_ID = 0xB3F3E401
 
     def to_dict(self):
-        return {
-            '_': 'CodeTypeCall'
-        }
+        return {"_": "CodeTypeCall"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xe3\xd3\x1ct',
-        ))
+        return b"".join((b"\xe3\xd3\x1ct",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -103,18 +126,14 @@ class CodeTypeCall(TLObject):
 
 
 class CodeTypeFlashCall(TLObject):
-    CONSTRUCTOR_ID = 0x226ccefb
-    SUBCLASS_OF_ID = 0xb3f3e401
+    CONSTRUCTOR_ID = 0x226CCEFB
+    SUBCLASS_OF_ID = 0xB3F3E401
 
     def to_dict(self):
-        return {
-            '_': 'CodeTypeFlashCall'
-        }
+        return {"_": "CodeTypeFlashCall"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xfb\xcel"',
-        ))
+        return b"".join((b'\xfb\xcel"',))
 
     @classmethod
     def from_reader(cls, reader):
@@ -122,18 +141,14 @@ class CodeTypeFlashCall(TLObject):
 
 
 class CodeTypeSms(TLObject):
-    CONSTRUCTOR_ID = 0x72a3158c
-    SUBCLASS_OF_ID = 0xb3f3e401
+    CONSTRUCTOR_ID = 0x72A3158C
+    SUBCLASS_OF_ID = 0xB3F3E401
 
     def to_dict(self):
-        return {
-            '_': 'CodeTypeSms'
-        }
+        return {"_": "CodeTypeSms"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x8c\x15\xa3r',
-        ))
+        return b"".join((b"\x8c\x15\xa3r",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -141,8 +156,8 @@ class CodeTypeSms(TLObject):
 
 
 class ExportedAuthorization(TLObject):
-    CONSTRUCTOR_ID = 0xdf969c2d
-    SUBCLASS_OF_ID = 0x5fd1ec51
+    CONSTRUCTOR_ID = 0xDF969C2D
+    SUBCLASS_OF_ID = 0x5FD1EC51
 
     # noinspection PyShadowingBuiltins
     def __init__(self, id: int, bytes: bytes):
@@ -153,18 +168,16 @@ class ExportedAuthorization(TLObject):
         self.bytes = bytes
 
     def to_dict(self):
-        return {
-            '_': 'ExportedAuthorization',
-            'id': self.id,
-            'bytes': self.bytes
-        }
+        return {"_": "ExportedAuthorization", "id": self.id, "bytes": self.bytes}
 
     def _bytes(self):
-        return b''.join((
-            b'-\x9c\x96\xdf',
-            struct.pack('<i', self.id),
-            self.serialize_bytes(self.bytes),
-        ))
+        return b"".join(
+            (
+                b"-\x9c\x96\xdf",
+                struct.pack("<i", self.id),
+                self.serialize_bytes(self.bytes),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -174,8 +187,8 @@ class ExportedAuthorization(TLObject):
 
 
 class LoginToken(TLObject):
-    CONSTRUCTOR_ID = 0x629f1980
-    SUBCLASS_OF_ID = 0x6b55f636
+    CONSTRUCTOR_ID = 0x629F1980
+    SUBCLASS_OF_ID = 0x6B55F636
 
     def __init__(self, expires: Optional[datetime], token: bytes):
         """
@@ -185,18 +198,16 @@ class LoginToken(TLObject):
         self.token = token
 
     def to_dict(self):
-        return {
-            '_': 'LoginToken',
-            'expires': self.expires,
-            'token': self.token
-        }
+        return {"_": "LoginToken", "expires": self.expires, "token": self.token}
 
     def _bytes(self):
-        return b''.join((
-            b'\x80\x19\x9fb',
-            self.serialize_datetime(self.expires),
-            self.serialize_bytes(self.token),
-        ))
+        return b"".join(
+            (
+                b"\x80\x19\x9fb",
+                self.serialize_datetime(self.expires),
+                self.serialize_bytes(self.token),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -206,8 +217,8 @@ class LoginToken(TLObject):
 
 
 class LoginTokenMigrateTo(TLObject):
-    CONSTRUCTOR_ID = 0x68e9916
-    SUBCLASS_OF_ID = 0x6b55f636
+    CONSTRUCTOR_ID = 0x68E9916
+    SUBCLASS_OF_ID = 0x6B55F636
 
     def __init__(self, dc_id: int, token: bytes):
         """
@@ -217,18 +228,16 @@ class LoginTokenMigrateTo(TLObject):
         self.token = token
 
     def to_dict(self):
-        return {
-            '_': 'LoginTokenMigrateTo',
-            'dc_id': self.dc_id,
-            'token': self.token
-        }
+        return {"_": "LoginTokenMigrateTo", "dc_id": self.dc_id, "token": self.token}
 
     def _bytes(self):
-        return b''.join((
-            b'\x16\x99\x8e\x06',
-            struct.pack('<i', self.dc_id),
-            self.serialize_bytes(self.token),
-        ))
+        return b"".join(
+            (
+                b"\x16\x99\x8e\x06",
+                struct.pack("<i", self.dc_id),
+                self.serialize_bytes(self.token),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -238,10 +247,10 @@ class LoginTokenMigrateTo(TLObject):
 
 
 class LoginTokenSuccess(TLObject):
-    CONSTRUCTOR_ID = 0x390d5c5e
-    SUBCLASS_OF_ID = 0x6b55f636
+    CONSTRUCTOR_ID = 0x390D5C5E
+    SUBCLASS_OF_ID = 0x6B55F636
 
-    def __init__(self, authorization: 'TypeAuthorization'):
+    def __init__(self, authorization: "TypeAuthorization"):
         """
         Constructor for auth.LoginToken: Instance of either LoginToken, LoginTokenMigrateTo, LoginTokenSuccess.
         """
@@ -249,15 +258,19 @@ class LoginTokenSuccess(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'LoginTokenSuccess',
-            'authorization': self.authorization.to_dict() if isinstance(self.authorization, TLObject) else self.authorization
+            "_": "LoginTokenSuccess",
+            "authorization": self.authorization.to_dict()
+            if isinstance(self.authorization, TLObject)
+            else self.authorization,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'^\\\r9',
-            self.authorization._bytes(),
-        ))
+        return b"".join(
+            (
+                b"^\\\r9",
+                self.authorization._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -266,8 +279,8 @@ class LoginTokenSuccess(TLObject):
 
 
 class PasswordRecovery(TLObject):
-    CONSTRUCTOR_ID = 0x137948a5
-    SUBCLASS_OF_ID = 0xfa72d43a
+    CONSTRUCTOR_ID = 0x137948A5
+    SUBCLASS_OF_ID = 0xFA72D43A
 
     def __init__(self, email_pattern: str):
         """
@@ -276,16 +289,15 @@ class PasswordRecovery(TLObject):
         self.email_pattern = email_pattern
 
     def to_dict(self):
-        return {
-            '_': 'PasswordRecovery',
-            'email_pattern': self.email_pattern
-        }
+        return {"_": "PasswordRecovery", "email_pattern": self.email_pattern}
 
     def _bytes(self):
-        return b''.join((
-            b'\xa5Hy\x13',
-            self.serialize_bytes(self.email_pattern),
-        ))
+        return b"".join(
+            (
+                b"\xa5Hy\x13",
+                self.serialize_bytes(self.email_pattern),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -294,11 +306,17 @@ class PasswordRecovery(TLObject):
 
 
 class SentCode(TLObject):
-    CONSTRUCTOR_ID = 0x5e002502
-    SUBCLASS_OF_ID = 0x6ce87081
+    CONSTRUCTOR_ID = 0x5E002502
+    SUBCLASS_OF_ID = 0x6CE87081
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, type: 'TypeSentCodeType', phone_code_hash: str, next_type: Optional['TypeCodeType']=None, timeout: Optional[int]=None):
+    def __init__(
+        self,
+        type: "TypeSentCodeType",
+        phone_code_hash: str,
+        next_type: Optional["TypeCodeType"] = None,
+        timeout: Optional[int] = None,
+    ):
         """
         Constructor for auth.SentCode: Instance of SentCode.
         """
@@ -309,22 +327,36 @@ class SentCode(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'SentCode',
-            'type': self.type.to_dict() if isinstance(self.type, TLObject) else self.type,
-            'phone_code_hash': self.phone_code_hash,
-            'next_type': self.next_type.to_dict() if isinstance(self.next_type, TLObject) else self.next_type,
-            'timeout': self.timeout
+            "_": "SentCode",
+            "type": self.type.to_dict()
+            if isinstance(self.type, TLObject)
+            else self.type,
+            "phone_code_hash": self.phone_code_hash,
+            "next_type": self.next_type.to_dict()
+            if isinstance(self.next_type, TLObject)
+            else self.next_type,
+            "timeout": self.timeout,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x02%\x00^',
-            struct.pack('<I', (0 if self.next_type is None or self.next_type is False else 2) | (0 if self.timeout is None or self.timeout is False else 4)),
-            self.type._bytes(),
-            self.serialize_bytes(self.phone_code_hash),
-            b'' if self.next_type is None or self.next_type is False else (self.next_type._bytes()),
-            b'' if self.timeout is None or self.timeout is False else (struct.pack('<i', self.timeout)),
-        ))
+        return b"".join(
+            (
+                b"\x02%\x00^",
+                struct.pack(
+                    "<I",
+                    (0 if self.next_type is None or self.next_type is False else 2)
+                    | (0 if self.timeout is None or self.timeout is False else 4),
+                ),
+                self.type._bytes(),
+                self.serialize_bytes(self.phone_code_hash),
+                b""
+                if self.next_type is None or self.next_type is False
+                else (self.next_type._bytes()),
+                b""
+                if self.timeout is None or self.timeout is False
+                else (struct.pack("<i", self.timeout)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -340,12 +372,17 @@ class SentCode(TLObject):
             _timeout = reader.read_int()
         else:
             _timeout = None
-        return cls(type=_type, phone_code_hash=_phone_code_hash, next_type=_next_type, timeout=_timeout)
+        return cls(
+            type=_type,
+            phone_code_hash=_phone_code_hash,
+            next_type=_next_type,
+            timeout=_timeout,
+        )
 
 
 class SentCodeTypeApp(TLObject):
-    CONSTRUCTOR_ID = 0x3dbb5986
-    SUBCLASS_OF_ID = 0xff5b158e
+    CONSTRUCTOR_ID = 0x3DBB5986
+    SUBCLASS_OF_ID = 0xFF5B158E
 
     def __init__(self, length: int):
         """
@@ -354,16 +391,15 @@ class SentCodeTypeApp(TLObject):
         self.length = length
 
     def to_dict(self):
-        return {
-            '_': 'SentCodeTypeApp',
-            'length': self.length
-        }
+        return {"_": "SentCodeTypeApp", "length": self.length}
 
     def _bytes(self):
-        return b''.join((
-            b'\x86Y\xbb=',
-            struct.pack('<i', self.length),
-        ))
+        return b"".join(
+            (
+                b"\x86Y\xbb=",
+                struct.pack("<i", self.length),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -372,8 +408,8 @@ class SentCodeTypeApp(TLObject):
 
 
 class SentCodeTypeCall(TLObject):
-    CONSTRUCTOR_ID = 0x5353e5a7
-    SUBCLASS_OF_ID = 0xff5b158e
+    CONSTRUCTOR_ID = 0x5353E5A7
+    SUBCLASS_OF_ID = 0xFF5B158E
 
     def __init__(self, length: int):
         """
@@ -382,16 +418,15 @@ class SentCodeTypeCall(TLObject):
         self.length = length
 
     def to_dict(self):
-        return {
-            '_': 'SentCodeTypeCall',
-            'length': self.length
-        }
+        return {"_": "SentCodeTypeCall", "length": self.length}
 
     def _bytes(self):
-        return b''.join((
-            b'\xa7\xe5SS',
-            struct.pack('<i', self.length),
-        ))
+        return b"".join(
+            (
+                b"\xa7\xe5SS",
+                struct.pack("<i", self.length),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -400,8 +435,8 @@ class SentCodeTypeCall(TLObject):
 
 
 class SentCodeTypeFlashCall(TLObject):
-    CONSTRUCTOR_ID = 0xab03c6d9
-    SUBCLASS_OF_ID = 0xff5b158e
+    CONSTRUCTOR_ID = 0xAB03C6D9
+    SUBCLASS_OF_ID = 0xFF5B158E
 
     def __init__(self, pattern: str):
         """
@@ -410,16 +445,15 @@ class SentCodeTypeFlashCall(TLObject):
         self.pattern = pattern
 
     def to_dict(self):
-        return {
-            '_': 'SentCodeTypeFlashCall',
-            'pattern': self.pattern
-        }
+        return {"_": "SentCodeTypeFlashCall", "pattern": self.pattern}
 
     def _bytes(self):
-        return b''.join((
-            b'\xd9\xc6\x03\xab',
-            self.serialize_bytes(self.pattern),
-        ))
+        return b"".join(
+            (
+                b"\xd9\xc6\x03\xab",
+                self.serialize_bytes(self.pattern),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -428,8 +462,8 @@ class SentCodeTypeFlashCall(TLObject):
 
 
 class SentCodeTypeSms(TLObject):
-    CONSTRUCTOR_ID = 0xc000bba2
-    SUBCLASS_OF_ID = 0xff5b158e
+    CONSTRUCTOR_ID = 0xC000BBA2
+    SUBCLASS_OF_ID = 0xFF5B158E
 
     def __init__(self, length: int):
         """
@@ -438,19 +472,17 @@ class SentCodeTypeSms(TLObject):
         self.length = length
 
     def to_dict(self):
-        return {
-            '_': 'SentCodeTypeSms',
-            'length': self.length
-        }
+        return {"_": "SentCodeTypeSms", "length": self.length}
 
     def _bytes(self):
-        return b''.join((
-            b'\xa2\xbb\x00\xc0',
-            struct.pack('<i', self.length),
-        ))
+        return b"".join(
+            (
+                b"\xa2\xbb\x00\xc0",
+                struct.pack("<i", self.length),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
         _length = reader.read_int()
         return cls(length=_length)
-

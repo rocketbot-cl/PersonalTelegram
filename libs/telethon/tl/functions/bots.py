@@ -5,16 +5,16 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
     from ...tl.types import TypeBotCommand, TypeDataJSON
 
 
-
 class AnswerWebhookJSONQueryRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xe6213f4d
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xE6213F4D
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, query_id: int, data: 'TypeDataJSON'):
+    def __init__(self, query_id: int, data: "TypeDataJSON"):
         """
         :returns Bool: This type has no constructors.
         """
@@ -23,17 +23,21 @@ class AnswerWebhookJSONQueryRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'AnswerWebhookJSONQueryRequest',
-            'query_id': self.query_id,
-            'data': self.data.to_dict() if isinstance(self.data, TLObject) else self.data
+            "_": "AnswerWebhookJSONQueryRequest",
+            "query_id": self.query_id,
+            "data": self.data.to_dict()
+            if isinstance(self.data, TLObject)
+            else self.data,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'M?!\xe6',
-            struct.pack('<q', self.query_id),
-            self.data._bytes(),
-        ))
+        return b"".join(
+            (
+                b"M?!\xe6",
+                struct.pack("<q", self.query_id),
+                self.data._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -43,10 +47,10 @@ class AnswerWebhookJSONQueryRequest(TLRequest):
 
 
 class SendCustomRequestRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xaa2769ed
-    SUBCLASS_OF_ID = 0xad0352e8
+    CONSTRUCTOR_ID = 0xAA2769ED
+    SUBCLASS_OF_ID = 0xAD0352E8
 
-    def __init__(self, custom_method: str, params: 'TypeDataJSON'):
+    def __init__(self, custom_method: str, params: "TypeDataJSON"):
         """
         :returns DataJSON: Instance of DataJSON.
         """
@@ -55,17 +59,21 @@ class SendCustomRequestRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SendCustomRequestRequest',
-            'custom_method': self.custom_method,
-            'params': self.params.to_dict() if isinstance(self.params, TLObject) else self.params
+            "_": "SendCustomRequestRequest",
+            "custom_method": self.custom_method,
+            "params": self.params.to_dict()
+            if isinstance(self.params, TLObject)
+            else self.params,
         }
 
     def _bytes(self):
-        return b''.join((
-            b"\xedi'\xaa",
-            self.serialize_bytes(self.custom_method),
-            self.params._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xedi'\xaa",
+                self.serialize_bytes(self.custom_method),
+                self.params._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -75,10 +83,10 @@ class SendCustomRequestRequest(TLRequest):
 
 
 class SetBotCommandsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x805d46f6
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x805D46F6
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, commands: List['TypeBotCommand']):
+    def __init__(self, commands: List["TypeBotCommand"]):
         """
         :returns Bool: This type has no constructors.
         """
@@ -86,15 +94,21 @@ class SetBotCommandsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SetBotCommandsRequest',
-            'commands': [] if self.commands is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.commands]
+            "_": "SetBotCommandsRequest",
+            "commands": []
+            if self.commands is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.commands],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf6F]\x80',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.commands)),b''.join(x._bytes() for x in self.commands),
-        ))
+        return b"".join(
+            (
+                b"\xf6F]\x80",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.commands)),
+                b"".join(x._bytes() for x in self.commands),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -105,4 +119,3 @@ class SetBotCommandsRequest(TLRequest):
             _commands.append(_x)
 
         return cls(commands=_commands)
-

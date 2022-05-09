@@ -4,17 +4,33 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
-    from ...tl.types import TypeChat, TypeDialog, TypeEncryptedMessage, TypeMessage, TypeUpdate, TypeUser
+    from ...tl.types import (
+        TypeChat,
+        TypeDialog,
+        TypeEncryptedMessage,
+        TypeMessage,
+        TypeUpdate,
+        TypeUser,
+    )
     from ...tl.types.updates import TypeState
 
 
-
 class ChannelDifference(TLObject):
-    CONSTRUCTOR_ID = 0x2064674e
-    SUBCLASS_OF_ID = 0x29896f5d
+    CONSTRUCTOR_ID = 0x2064674E
+    SUBCLASS_OF_ID = 0x29896F5D
 
-    def __init__(self, pts: int, new_messages: List['TypeMessage'], other_updates: List['TypeUpdate'], chats: List['TypeChat'], users: List['TypeUser'], final: Optional[bool]=None, timeout: Optional[int]=None):
+    def __init__(
+        self,
+        pts: int,
+        new_messages: List["TypeMessage"],
+        other_updates: List["TypeUpdate"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        final: Optional[bool] = None,
+        timeout: Optional[int] = None,
+    ):
         """
         Constructor for updates.ChannelDifference: Instance of either ChannelDifferenceEmpty, ChannelDifferenceTooLong, ChannelDifference.
         """
@@ -28,27 +44,56 @@ class ChannelDifference(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ChannelDifference',
-            'pts': self.pts,
-            'new_messages': [] if self.new_messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.new_messages],
-            'other_updates': [] if self.other_updates is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.other_updates],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'final': self.final,
-            'timeout': self.timeout
+            "_": "ChannelDifference",
+            "pts": self.pts,
+            "new_messages": []
+            if self.new_messages is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.new_messages
+            ],
+            "other_updates": []
+            if self.other_updates is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.other_updates
+            ],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "final": self.final,
+            "timeout": self.timeout,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'Ngd ',
-            struct.pack('<I', (0 if self.final is None or self.final is False else 1) | (0 if self.timeout is None or self.timeout is False else 2)),
-            struct.pack('<i', self.pts),
-            b'' if self.timeout is None or self.timeout is False else (struct.pack('<i', self.timeout)),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.new_messages)),b''.join(x._bytes() for x in self.new_messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.other_updates)),b''.join(x._bytes() for x in self.other_updates),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"Ngd ",
+                struct.pack(
+                    "<I",
+                    (0 if self.final is None or self.final is False else 1)
+                    | (0 if self.timeout is None or self.timeout is False else 2),
+                ),
+                struct.pack("<i", self.pts),
+                b""
+                if self.timeout is None or self.timeout is False
+                else (struct.pack("<i", self.timeout)),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.new_messages)),
+                b"".join(x._bytes() for x in self.new_messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.other_updates)),
+                b"".join(x._bytes() for x in self.other_updates),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -84,14 +129,24 @@ class ChannelDifference(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(pts=_pts, new_messages=_new_messages, other_updates=_other_updates, chats=_chats, users=_users, final=_final, timeout=_timeout)
+        return cls(
+            pts=_pts,
+            new_messages=_new_messages,
+            other_updates=_other_updates,
+            chats=_chats,
+            users=_users,
+            final=_final,
+            timeout=_timeout,
+        )
 
 
 class ChannelDifferenceEmpty(TLObject):
-    CONSTRUCTOR_ID = 0x3e11affb
-    SUBCLASS_OF_ID = 0x29896f5d
+    CONSTRUCTOR_ID = 0x3E11AFFB
+    SUBCLASS_OF_ID = 0x29896F5D
 
-    def __init__(self, pts: int, final: Optional[bool]=None, timeout: Optional[int]=None):
+    def __init__(
+        self, pts: int, final: Optional[bool] = None, timeout: Optional[int] = None
+    ):
         """
         Constructor for updates.ChannelDifference: Instance of either ChannelDifferenceEmpty, ChannelDifferenceTooLong, ChannelDifference.
         """
@@ -101,19 +156,27 @@ class ChannelDifferenceEmpty(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ChannelDifferenceEmpty',
-            'pts': self.pts,
-            'final': self.final,
-            'timeout': self.timeout
+            "_": "ChannelDifferenceEmpty",
+            "pts": self.pts,
+            "final": self.final,
+            "timeout": self.timeout,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xfb\xaf\x11>',
-            struct.pack('<I', (0 if self.final is None or self.final is False else 1) | (0 if self.timeout is None or self.timeout is False else 2)),
-            struct.pack('<i', self.pts),
-            b'' if self.timeout is None or self.timeout is False else (struct.pack('<i', self.timeout)),
-        ))
+        return b"".join(
+            (
+                b"\xfb\xaf\x11>",
+                struct.pack(
+                    "<I",
+                    (0 if self.final is None or self.final is False else 1)
+                    | (0 if self.timeout is None or self.timeout is False else 2),
+                ),
+                struct.pack("<i", self.pts),
+                b""
+                if self.timeout is None or self.timeout is False
+                else (struct.pack("<i", self.timeout)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -129,10 +192,18 @@ class ChannelDifferenceEmpty(TLObject):
 
 
 class ChannelDifferenceTooLong(TLObject):
-    CONSTRUCTOR_ID = 0xa4bcc6fe
-    SUBCLASS_OF_ID = 0x29896f5d
+    CONSTRUCTOR_ID = 0xA4BCC6FE
+    SUBCLASS_OF_ID = 0x29896F5D
 
-    def __init__(self, dialog: 'TypeDialog', messages: List['TypeMessage'], chats: List['TypeChat'], users: List['TypeUser'], final: Optional[bool]=None, timeout: Optional[int]=None):
+    def __init__(
+        self,
+        dialog: "TypeDialog",
+        messages: List["TypeMessage"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        final: Optional[bool] = None,
+        timeout: Optional[int] = None,
+    ):
         """
         Constructor for updates.ChannelDifference: Instance of either ChannelDifferenceEmpty, ChannelDifferenceTooLong, ChannelDifference.
         """
@@ -145,25 +216,47 @@ class ChannelDifferenceTooLong(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'ChannelDifferenceTooLong',
-            'dialog': self.dialog.to_dict() if isinstance(self.dialog, TLObject) else self.dialog,
-            'messages': [] if self.messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'final': self.final,
-            'timeout': self.timeout
+            "_": "ChannelDifferenceTooLong",
+            "dialog": self.dialog.to_dict()
+            if isinstance(self.dialog, TLObject)
+            else self.dialog,
+            "messages": []
+            if self.messages is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.messages],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "final": self.final,
+            "timeout": self.timeout,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xfe\xc6\xbc\xa4',
-            struct.pack('<I', (0 if self.final is None or self.final is False else 1) | (0 if self.timeout is None or self.timeout is False else 2)),
-            b'' if self.timeout is None or self.timeout is False else (struct.pack('<i', self.timeout)),
-            self.dialog._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.messages)),b''.join(x._bytes() for x in self.messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xfe\xc6\xbc\xa4",
+                struct.pack(
+                    "<I",
+                    (0 if self.final is None or self.final is False else 1)
+                    | (0 if self.timeout is None or self.timeout is False else 2),
+                ),
+                b""
+                if self.timeout is None or self.timeout is False
+                else (struct.pack("<i", self.timeout)),
+                self.dialog._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.messages)),
+                b"".join(x._bytes() for x in self.messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -193,14 +286,29 @@ class ChannelDifferenceTooLong(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(dialog=_dialog, messages=_messages, chats=_chats, users=_users, final=_final, timeout=_timeout)
+        return cls(
+            dialog=_dialog,
+            messages=_messages,
+            chats=_chats,
+            users=_users,
+            final=_final,
+            timeout=_timeout,
+        )
 
 
 class Difference(TLObject):
-    CONSTRUCTOR_ID = 0xf49ca0
+    CONSTRUCTOR_ID = 0xF49CA0
     SUBCLASS_OF_ID = 0x20482874
 
-    def __init__(self, new_messages: List['TypeMessage'], new_encrypted_messages: List['TypeEncryptedMessage'], other_updates: List['TypeUpdate'], chats: List['TypeChat'], users: List['TypeUser'], state: 'TypeState'):
+    def __init__(
+        self,
+        new_messages: List["TypeMessage"],
+        new_encrypted_messages: List["TypeEncryptedMessage"],
+        other_updates: List["TypeUpdate"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        state: "TypeState",
+    ):
         """
         Constructor for updates.Difference: Instance of either DifferenceEmpty, Difference, DifferenceSlice, DifferenceTooLong.
         """
@@ -213,25 +321,57 @@ class Difference(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Difference',
-            'new_messages': [] if self.new_messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.new_messages],
-            'new_encrypted_messages': [] if self.new_encrypted_messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.new_encrypted_messages],
-            'other_updates': [] if self.other_updates is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.other_updates],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'state': self.state.to_dict() if isinstance(self.state, TLObject) else self.state
+            "_": "Difference",
+            "new_messages": []
+            if self.new_messages is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.new_messages
+            ],
+            "new_encrypted_messages": []
+            if self.new_encrypted_messages is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.new_encrypted_messages
+            ],
+            "other_updates": []
+            if self.other_updates is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.other_updates
+            ],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "state": self.state.to_dict()
+            if isinstance(self.state, TLObject)
+            else self.state,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa0\x9c\xf4\x00',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.new_messages)),b''.join(x._bytes() for x in self.new_messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.new_encrypted_messages)),b''.join(x._bytes() for x in self.new_encrypted_messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.other_updates)),b''.join(x._bytes() for x in self.other_updates),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-            self.state._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xa0\x9c\xf4\x00",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.new_messages)),
+                b"".join(x._bytes() for x in self.new_messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.new_encrypted_messages)),
+                b"".join(x._bytes() for x in self.new_encrypted_messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.other_updates)),
+                b"".join(x._bytes() for x in self.other_updates),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+                self.state._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -266,11 +406,18 @@ class Difference(TLObject):
             _users.append(_x)
 
         _state = reader.tgread_object()
-        return cls(new_messages=_new_messages, new_encrypted_messages=_new_encrypted_messages, other_updates=_other_updates, chats=_chats, users=_users, state=_state)
+        return cls(
+            new_messages=_new_messages,
+            new_encrypted_messages=_new_encrypted_messages,
+            other_updates=_other_updates,
+            chats=_chats,
+            users=_users,
+            state=_state,
+        )
 
 
 class DifferenceEmpty(TLObject):
-    CONSTRUCTOR_ID = 0x5d75a138
+    CONSTRUCTOR_ID = 0x5D75A138
     SUBCLASS_OF_ID = 0x20482874
 
     def __init__(self, date: Optional[datetime], seq: int):
@@ -281,18 +428,16 @@ class DifferenceEmpty(TLObject):
         self.seq = seq
 
     def to_dict(self):
-        return {
-            '_': 'DifferenceEmpty',
-            'date': self.date,
-            'seq': self.seq
-        }
+        return {"_": "DifferenceEmpty", "date": self.date, "seq": self.seq}
 
     def _bytes(self):
-        return b''.join((
-            b'8\xa1u]',
-            self.serialize_datetime(self.date),
-            struct.pack('<i', self.seq),
-        ))
+        return b"".join(
+            (
+                b"8\xa1u]",
+                self.serialize_datetime(self.date),
+                struct.pack("<i", self.seq),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -302,10 +447,18 @@ class DifferenceEmpty(TLObject):
 
 
 class DifferenceSlice(TLObject):
-    CONSTRUCTOR_ID = 0xa8fb1981
+    CONSTRUCTOR_ID = 0xA8FB1981
     SUBCLASS_OF_ID = 0x20482874
 
-    def __init__(self, new_messages: List['TypeMessage'], new_encrypted_messages: List['TypeEncryptedMessage'], other_updates: List['TypeUpdate'], chats: List['TypeChat'], users: List['TypeUser'], intermediate_state: 'TypeState'):
+    def __init__(
+        self,
+        new_messages: List["TypeMessage"],
+        new_encrypted_messages: List["TypeEncryptedMessage"],
+        other_updates: List["TypeUpdate"],
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        intermediate_state: "TypeState",
+    ):
         """
         Constructor for updates.Difference: Instance of either DifferenceEmpty, Difference, DifferenceSlice, DifferenceTooLong.
         """
@@ -318,25 +471,57 @@ class DifferenceSlice(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'DifferenceSlice',
-            'new_messages': [] if self.new_messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.new_messages],
-            'new_encrypted_messages': [] if self.new_encrypted_messages is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.new_encrypted_messages],
-            'other_updates': [] if self.other_updates is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.other_updates],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'intermediate_state': self.intermediate_state.to_dict() if isinstance(self.intermediate_state, TLObject) else self.intermediate_state
+            "_": "DifferenceSlice",
+            "new_messages": []
+            if self.new_messages is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.new_messages
+            ],
+            "new_encrypted_messages": []
+            if self.new_encrypted_messages is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.new_encrypted_messages
+            ],
+            "other_updates": []
+            if self.other_updates is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x
+                for x in self.other_updates
+            ],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "intermediate_state": self.intermediate_state.to_dict()
+            if isinstance(self.intermediate_state, TLObject)
+            else self.intermediate_state,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x81\x19\xfb\xa8',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.new_messages)),b''.join(x._bytes() for x in self.new_messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.new_encrypted_messages)),b''.join(x._bytes() for x in self.new_encrypted_messages),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.other_updates)),b''.join(x._bytes() for x in self.other_updates),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-            self.intermediate_state._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x81\x19\xfb\xa8",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.new_messages)),
+                b"".join(x._bytes() for x in self.new_messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.new_encrypted_messages)),
+                b"".join(x._bytes() for x in self.new_encrypted_messages),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.other_updates)),
+                b"".join(x._bytes() for x in self.other_updates),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+                self.intermediate_state._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -371,11 +556,18 @@ class DifferenceSlice(TLObject):
             _users.append(_x)
 
         _intermediate_state = reader.tgread_object()
-        return cls(new_messages=_new_messages, new_encrypted_messages=_new_encrypted_messages, other_updates=_other_updates, chats=_chats, users=_users, intermediate_state=_intermediate_state)
+        return cls(
+            new_messages=_new_messages,
+            new_encrypted_messages=_new_encrypted_messages,
+            other_updates=_other_updates,
+            chats=_chats,
+            users=_users,
+            intermediate_state=_intermediate_state,
+        )
 
 
 class DifferenceTooLong(TLObject):
-    CONSTRUCTOR_ID = 0x4afe8f6d
+    CONSTRUCTOR_ID = 0x4AFE8F6D
     SUBCLASS_OF_ID = 0x20482874
 
     def __init__(self, pts: int):
@@ -385,16 +577,15 @@ class DifferenceTooLong(TLObject):
         self.pts = pts
 
     def to_dict(self):
-        return {
-            '_': 'DifferenceTooLong',
-            'pts': self.pts
-        }
+        return {"_": "DifferenceTooLong", "pts": self.pts}
 
     def _bytes(self):
-        return b''.join((
-            b'm\x8f\xfeJ',
-            struct.pack('<i', self.pts),
-        ))
+        return b"".join(
+            (
+                b"m\x8f\xfeJ",
+                struct.pack("<i", self.pts),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -403,10 +594,12 @@ class DifferenceTooLong(TLObject):
 
 
 class State(TLObject):
-    CONSTRUCTOR_ID = 0xa56c2a3e
-    SUBCLASS_OF_ID = 0x23df1a01
+    CONSTRUCTOR_ID = 0xA56C2A3E
+    SUBCLASS_OF_ID = 0x23DF1A01
 
-    def __init__(self, pts: int, qts: int, date: Optional[datetime], seq: int, unread_count: int):
+    def __init__(
+        self, pts: int, qts: int, date: Optional[datetime], seq: int, unread_count: int
+    ):
         """
         Constructor for updates.State: Instance of State.
         """
@@ -418,23 +611,25 @@ class State(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'State',
-            'pts': self.pts,
-            'qts': self.qts,
-            'date': self.date,
-            'seq': self.seq,
-            'unread_count': self.unread_count
+            "_": "State",
+            "pts": self.pts,
+            "qts": self.qts,
+            "date": self.date,
+            "seq": self.seq,
+            "unread_count": self.unread_count,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'>*l\xa5',
-            struct.pack('<i', self.pts),
-            struct.pack('<i', self.qts),
-            self.serialize_datetime(self.date),
-            struct.pack('<i', self.seq),
-            struct.pack('<i', self.unread_count),
-        ))
+        return b"".join(
+            (
+                b">*l\xa5",
+                struct.pack("<i", self.pts),
+                struct.pack("<i", self.qts),
+                self.serialize_datetime(self.date),
+                struct.pack("<i", self.seq),
+                struct.pack("<i", self.unread_count),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -444,4 +639,3 @@ class State(TLObject):
         _seq = reader.read_int()
         _unread_count = reader.read_int()
         return cls(pts=_pts, qts=_qts, date=_date, seq=_seq, unread_count=_unread_count)
-

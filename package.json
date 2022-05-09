@@ -46,8 +46,8 @@
             "type": "input",
             "placeholder": "0123456789abcdef0123456789abcdef",
             "title": {
-              "en": "API HASH:",
-              "es": "API HASH:"
+              "en": "API hash:",
+              "es": "API hash:"
             },
             "id": "api_hash",
             "css": "col-md-12"
@@ -56,8 +56,8 @@
             "type": "input",
             "placeholder": "+56 1234 5678",
             "title": {
-              "en": "PHONE NUMBER:",
-              "es": "NÚMERO DE TELÉFONO:"
+              "en": "Phone number:",
+              "es": "Número de teléfono:"
             },
             "id": "phone_number",
             "css": "col-md-12"
@@ -158,8 +158,8 @@
             "type": "input",
             "placeholder": "chat_id",
             "title": {
-              "en": "chat_id:",
-              "es": "chat_id:"
+              "en": "Chat id:",
+              "es": "Chat id:"
             },
             "id": "chat_id",
             "css": "col-md-12"
@@ -196,10 +196,10 @@
             "type": "input",
             "placeholder": "username",
             "title": {
-              "en": "Channel Username:",
-              "es": "Nombre de canal:"
+              "en": "Chat ID:",
+              "es": "Chat ID:"
             },
-            "id": "channel_username",
+            "id": "channel_id",
             "css": "col-md-12"
           },
           {
@@ -210,6 +210,30 @@
               "es": "Resultado:"
             },
             "id": "res",
+            "remove_vars": true,
+            "css": "col-md-12"
+          },
+          {
+            "type": "select",
+            "title": {
+              "es": "Descargar:",
+              "en": "Download:"
+            },
+            "options": [
+              {
+                "title": "--Seleccione--",
+                "value": ""
+              },
+              {
+                "title": "Just the messages",
+                "value": "messages_only"
+              },
+              {
+                "title": "All the metadata",
+                "value": "all_metadata"
+              }
+            ],
+            "id": "option_",
             "css": "col-md-12"
           }
         ]

@@ -5,17 +5,47 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
-    from ...tl.types import TypeAccountDaysTTL, TypeAutoDownloadSettings, TypeCodeSettings, TypeGlobalPrivacySettings, TypeInputCheckPasswordSRP, TypeInputDocument, TypeInputFile, TypeInputNotifyPeer, TypeInputPeer, TypeInputPeerNotifySettings, TypeInputPhoto, TypeInputPrivacyKey, TypeInputPrivacyRule, TypeInputSecureValue, TypeInputTheme, TypeInputThemeSettings, TypeInputWallPaper, TypeReportReason, TypeSecureCredentialsEncrypted, TypeSecureValueHash, TypeSecureValueType, TypeWallPaperSettings
+    from ...tl.types import (
+        TypeAccountDaysTTL,
+        TypeAutoDownloadSettings,
+        TypeCodeSettings,
+        TypeGlobalPrivacySettings,
+        TypeInputCheckPasswordSRP,
+        TypeInputDocument,
+        TypeInputFile,
+        TypeInputNotifyPeer,
+        TypeInputPeer,
+        TypeInputPeerNotifySettings,
+        TypeInputPhoto,
+        TypeInputPrivacyKey,
+        TypeInputPrivacyRule,
+        TypeInputSecureValue,
+        TypeInputTheme,
+        TypeInputThemeSettings,
+        TypeInputWallPaper,
+        TypeReportReason,
+        TypeSecureCredentialsEncrypted,
+        TypeSecureValueHash,
+        TypeSecureValueType,
+        TypeWallPaperSettings,
+    )
     from ...tl.types.account import TypePasswordInputSettings
 
 
-
 class AcceptAuthorizationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xe7027c94
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xE7027C94
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, bot_id: int, scope: str, public_key: str, value_hashes: List['TypeSecureValueHash'], credentials: 'TypeSecureCredentialsEncrypted'):
+    def __init__(
+        self,
+        bot_id: int,
+        scope: str,
+        public_key: str,
+        value_hashes: List["TypeSecureValueHash"],
+        credentials: "TypeSecureCredentialsEncrypted",
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -27,23 +57,33 @@ class AcceptAuthorizationRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'AcceptAuthorizationRequest',
-            'bot_id': self.bot_id,
-            'scope': self.scope,
-            'public_key': self.public_key,
-            'value_hashes': [] if self.value_hashes is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.value_hashes],
-            'credentials': self.credentials.to_dict() if isinstance(self.credentials, TLObject) else self.credentials
+            "_": "AcceptAuthorizationRequest",
+            "bot_id": self.bot_id,
+            "scope": self.scope,
+            "public_key": self.public_key,
+            "value_hashes": []
+            if self.value_hashes is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.value_hashes
+            ],
+            "credentials": self.credentials.to_dict()
+            if isinstance(self.credentials, TLObject)
+            else self.credentials,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x94|\x02\xe7',
-            struct.pack('<i', self.bot_id),
-            self.serialize_bytes(self.scope),
-            self.serialize_bytes(self.public_key),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.value_hashes)),b''.join(x._bytes() for x in self.value_hashes),
-            self.credentials._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x94|\x02\xe7",
+                struct.pack("<i", self.bot_id),
+                self.serialize_bytes(self.scope),
+                self.serialize_bytes(self.public_key),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.value_hashes)),
+                b"".join(x._bytes() for x in self.value_hashes),
+                self.credentials._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -57,22 +97,24 @@ class AcceptAuthorizationRequest(TLRequest):
             _value_hashes.append(_x)
 
         _credentials = reader.tgread_object()
-        return cls(bot_id=_bot_id, scope=_scope, public_key=_public_key, value_hashes=_value_hashes, credentials=_credentials)
+        return cls(
+            bot_id=_bot_id,
+            scope=_scope,
+            public_key=_public_key,
+            value_hashes=_value_hashes,
+            credentials=_credentials,
+        )
 
 
 class CancelPasswordEmailRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xc1cbd5b6
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xC1CBD5B6
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def to_dict(self):
-        return {
-            '_': 'CancelPasswordEmailRequest'
-        }
+        return {"_": "CancelPasswordEmailRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xb6\xd5\xcb\xc1',
-        ))
+        return b"".join((b"\xb6\xd5\xcb\xc1",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -80,8 +122,8 @@ class CancelPasswordEmailRequest(TLRequest):
 
 
 class ChangePhoneRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x70c32edb
-    SUBCLASS_OF_ID = 0x2da17977
+    CONSTRUCTOR_ID = 0x70C32EDB
+    SUBCLASS_OF_ID = 0x2DA17977
 
     def __init__(self, phone_number: str, phone_code_hash: str, phone_code: str):
         """
@@ -93,31 +135,37 @@ class ChangePhoneRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ChangePhoneRequest',
-            'phone_number': self.phone_number,
-            'phone_code_hash': self.phone_code_hash,
-            'phone_code': self.phone_code
+            "_": "ChangePhoneRequest",
+            "phone_number": self.phone_number,
+            "phone_code_hash": self.phone_code_hash,
+            "phone_code": self.phone_code,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xdb.\xc3p',
-            self.serialize_bytes(self.phone_number),
-            self.serialize_bytes(self.phone_code_hash),
-            self.serialize_bytes(self.phone_code),
-        ))
+        return b"".join(
+            (
+                b"\xdb.\xc3p",
+                self.serialize_bytes(self.phone_number),
+                self.serialize_bytes(self.phone_code_hash),
+                self.serialize_bytes(self.phone_code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
         _phone_number = reader.tgread_string()
         _phone_code_hash = reader.tgread_string()
         _phone_code = reader.tgread_string()
-        return cls(phone_number=_phone_number, phone_code_hash=_phone_code_hash, phone_code=_phone_code)
+        return cls(
+            phone_number=_phone_number,
+            phone_code_hash=_phone_code_hash,
+            phone_code=_phone_code,
+        )
 
 
 class CheckUsernameRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x2714d86c
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x2714D86C
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, username: str):
         """
@@ -126,16 +174,15 @@ class CheckUsernameRequest(TLRequest):
         self.username = username
 
     def to_dict(self):
-        return {
-            '_': 'CheckUsernameRequest',
-            'username': self.username
-        }
+        return {"_": "CheckUsernameRequest", "username": self.username}
 
     def _bytes(self):
-        return b''.join((
-            b"l\xd8\x14'",
-            self.serialize_bytes(self.username),
-        ))
+        return b"".join(
+            (
+                b"l\xd8\x14'",
+                self.serialize_bytes(self.username),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -144,8 +191,8 @@ class CheckUsernameRequest(TLRequest):
 
 
 class ConfirmPasswordEmailRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8fdf1920
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x8FDF1920
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, code: str):
         """
@@ -154,16 +201,15 @@ class ConfirmPasswordEmailRequest(TLRequest):
         self.code = code
 
     def to_dict(self):
-        return {
-            '_': 'ConfirmPasswordEmailRequest',
-            'code': self.code
-        }
+        return {"_": "ConfirmPasswordEmailRequest", "code": self.code}
 
     def _bytes(self):
-        return b''.join((
-            b' \x19\xdf\x8f',
-            self.serialize_bytes(self.code),
-        ))
+        return b"".join(
+            (
+                b" \x19\xdf\x8f",
+                self.serialize_bytes(self.code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -172,8 +218,8 @@ class ConfirmPasswordEmailRequest(TLRequest):
 
 
 class ConfirmPhoneRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x5f2178c3
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x5F2178C3
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, phone_code_hash: str, phone_code: str):
         """
@@ -184,17 +230,19 @@ class ConfirmPhoneRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ConfirmPhoneRequest',
-            'phone_code_hash': self.phone_code_hash,
-            'phone_code': self.phone_code
+            "_": "ConfirmPhoneRequest",
+            "phone_code_hash": self.phone_code_hash,
+            "phone_code": self.phone_code,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xc3x!_',
-            self.serialize_bytes(self.phone_code_hash),
-            self.serialize_bytes(self.phone_code),
-        ))
+        return b"".join(
+            (
+                b"\xc3x!_",
+                self.serialize_bytes(self.phone_code_hash),
+                self.serialize_bytes(self.phone_code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -204,10 +252,16 @@ class ConfirmPhoneRequest(TLRequest):
 
 
 class CreateThemeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8432c21f
-    SUBCLASS_OF_ID = 0x56b4c80c
+    CONSTRUCTOR_ID = 0x8432C21F
+    SUBCLASS_OF_ID = 0x56B4C80C
 
-    def __init__(self, slug: str, title: str, document: Optional['TypeInputDocument']=None, settings: Optional['TypeInputThemeSettings']=None):
+    def __init__(
+        self,
+        slug: str,
+        title: str,
+        document: Optional["TypeInputDocument"] = None,
+        settings: Optional["TypeInputThemeSettings"] = None,
+    ):
         """
         :returns Theme: Instance of Theme.
         """
@@ -222,22 +276,36 @@ class CreateThemeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'CreateThemeRequest',
-            'slug': self.slug,
-            'title': self.title,
-            'document': self.document.to_dict() if isinstance(self.document, TLObject) else self.document,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "CreateThemeRequest",
+            "slug": self.slug,
+            "title": self.title,
+            "document": self.document.to_dict()
+            if isinstance(self.document, TLObject)
+            else self.document,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x1f\xc22\x84',
-            struct.pack('<I', (0 if self.document is None or self.document is False else 4) | (0 if self.settings is None or self.settings is False else 8)),
-            self.serialize_bytes(self.slug),
-            self.serialize_bytes(self.title),
-            b'' if self.document is None or self.document is False else (self.document._bytes()),
-            b'' if self.settings is None or self.settings is False else (self.settings._bytes()),
-        ))
+        return b"".join(
+            (
+                b"\x1f\xc22\x84",
+                struct.pack(
+                    "<I",
+                    (0 if self.document is None or self.document is False else 4)
+                    | (0 if self.settings is None or self.settings is False else 8),
+                ),
+                self.serialize_bytes(self.slug),
+                self.serialize_bytes(self.title),
+                b""
+                if self.document is None or self.document is False
+                else (self.document._bytes()),
+                b""
+                if self.settings is None or self.settings is False
+                else (self.settings._bytes()),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -257,8 +325,8 @@ class CreateThemeRequest(TLRequest):
 
 
 class DeleteAccountRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x418d4e0b
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x418D4E0B
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, reason: str):
         """
@@ -267,16 +335,15 @@ class DeleteAccountRequest(TLRequest):
         self.reason = reason
 
     def to_dict(self):
-        return {
-            '_': 'DeleteAccountRequest',
-            'reason': self.reason
-        }
+        return {"_": "DeleteAccountRequest", "reason": self.reason}
 
     def _bytes(self):
-        return b''.join((
-            b'\x0bN\x8dA',
-            self.serialize_bytes(self.reason),
-        ))
+        return b"".join(
+            (
+                b"\x0bN\x8dA",
+                self.serialize_bytes(self.reason),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -285,10 +352,10 @@ class DeleteAccountRequest(TLRequest):
 
 
 class DeleteSecureValueRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xb880bc4b
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xB880BC4B
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, types: List['TypeSecureValueType']):
+    def __init__(self, types: List["TypeSecureValueType"]):
         """
         :returns Bool: This type has no constructors.
         """
@@ -296,15 +363,21 @@ class DeleteSecureValueRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'DeleteSecureValueRequest',
-            'types': [] if self.types is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.types]
+            "_": "DeleteSecureValueRequest",
+            "types": []
+            if self.types is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.types],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'K\xbc\x80\xb8',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.types)),b''.join(x._bytes() for x in self.types),
-        ))
+        return b"".join(
+            (
+                b"K\xbc\x80\xb8",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.types)),
+                b"".join(x._bytes() for x in self.types),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -318,26 +391,27 @@ class DeleteSecureValueRequest(TLRequest):
 
 
 class FinishTakeoutSessionRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x1d2652ee
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x1D2652EE
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, success: Optional[bool]=None):
+    def __init__(self, success: Optional[bool] = None):
         """
         :returns Bool: This type has no constructors.
         """
         self.success = success
 
     def to_dict(self):
-        return {
-            '_': 'FinishTakeoutSessionRequest',
-            'success': self.success
-        }
+        return {"_": "FinishTakeoutSessionRequest", "success": self.success}
 
     def _bytes(self):
-        return b''.join((
-            b'\xeeR&\x1d',
-            struct.pack('<I', (0 if self.success is None or self.success is False else 1)),
-        ))
+        return b"".join(
+            (
+                b"\xeeR&\x1d",
+                struct.pack(
+                    "<I", (0 if self.success is None or self.success is False else 1)
+                ),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -348,18 +422,14 @@ class FinishTakeoutSessionRequest(TLRequest):
 
 
 class GetAccountTTLRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8fc711d
-    SUBCLASS_OF_ID = 0xbaa39d88
+    CONSTRUCTOR_ID = 0x8FC711D
+    SUBCLASS_OF_ID = 0xBAA39D88
 
     def to_dict(self):
-        return {
-            '_': 'GetAccountTTLRequest'
-        }
+        return {"_": "GetAccountTTLRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x1dq\xfc\x08',
-        ))
+        return b"".join((b"\x1dq\xfc\x08",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -367,18 +437,14 @@ class GetAccountTTLRequest(TLRequest):
 
 
 class GetAllSecureValuesRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xb288bc7d
-    SUBCLASS_OF_ID = 0xe82e4121
+    CONSTRUCTOR_ID = 0xB288BC7D
+    SUBCLASS_OF_ID = 0xE82E4121
 
     def to_dict(self):
-        return {
-            '_': 'GetAllSecureValuesRequest'
-        }
+        return {"_": "GetAllSecureValuesRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'}\xbc\x88\xb2',
-        ))
+        return b"".join((b"}\xbc\x88\xb2",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -386,8 +452,8 @@ class GetAllSecureValuesRequest(TLRequest):
 
 
 class GetAuthorizationFormRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xb86ba8e1
-    SUBCLASS_OF_ID = 0x78049a94
+    CONSTRUCTOR_ID = 0xB86BA8E1
+    SUBCLASS_OF_ID = 0x78049A94
 
     def __init__(self, bot_id: int, scope: str, public_key: str):
         """
@@ -399,19 +465,21 @@ class GetAuthorizationFormRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetAuthorizationFormRequest',
-            'bot_id': self.bot_id,
-            'scope': self.scope,
-            'public_key': self.public_key
+            "_": "GetAuthorizationFormRequest",
+            "bot_id": self.bot_id,
+            "scope": self.scope,
+            "public_key": self.public_key,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xe1\xa8k\xb8',
-            struct.pack('<i', self.bot_id),
-            self.serialize_bytes(self.scope),
-            self.serialize_bytes(self.public_key),
-        ))
+        return b"".join(
+            (
+                b"\xe1\xa8k\xb8",
+                struct.pack("<i", self.bot_id),
+                self.serialize_bytes(self.scope),
+                self.serialize_bytes(self.public_key),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -422,18 +490,14 @@ class GetAuthorizationFormRequest(TLRequest):
 
 
 class GetAuthorizationsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xe320c158
-    SUBCLASS_OF_ID = 0xbf5e0ff
+    CONSTRUCTOR_ID = 0xE320C158
+    SUBCLASS_OF_ID = 0xBF5E0FF
 
     def to_dict(self):
-        return {
-            '_': 'GetAuthorizationsRequest'
-        }
+        return {"_": "GetAuthorizationsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'X\xc1 \xe3',
-        ))
+        return b"".join((b"X\xc1 \xe3",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -441,18 +505,14 @@ class GetAuthorizationsRequest(TLRequest):
 
 
 class GetAutoDownloadSettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x56da0b3f
-    SUBCLASS_OF_ID = 0x2fb85921
+    CONSTRUCTOR_ID = 0x56DA0B3F
+    SUBCLASS_OF_ID = 0x2FB85921
 
     def to_dict(self):
-        return {
-            '_': 'GetAutoDownloadSettingsRequest'
-        }
+        return {"_": "GetAutoDownloadSettingsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'?\x0b\xdaV',
-        ))
+        return b"".join((b"?\x0b\xdaV",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -460,18 +520,14 @@ class GetAutoDownloadSettingsRequest(TLRequest):
 
 
 class GetContactSignUpNotificationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x9f07c728
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x9F07C728
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def to_dict(self):
-        return {
-            '_': 'GetContactSignUpNotificationRequest'
-        }
+        return {"_": "GetContactSignUpNotificationRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'(\xc7\x07\x9f',
-        ))
+        return b"".join((b"(\xc7\x07\x9f",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -479,18 +535,14 @@ class GetContactSignUpNotificationRequest(TLRequest):
 
 
 class GetContentSettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8b9b4dae
-    SUBCLASS_OF_ID = 0xae3ff891
+    CONSTRUCTOR_ID = 0x8B9B4DAE
+    SUBCLASS_OF_ID = 0xAE3FF891
 
     def to_dict(self):
-        return {
-            '_': 'GetContentSettingsRequest'
-        }
+        return {"_": "GetContentSettingsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xaeM\x9b\x8b',
-        ))
+        return b"".join((b"\xaeM\x9b\x8b",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -498,18 +550,14 @@ class GetContentSettingsRequest(TLRequest):
 
 
 class GetGlobalPrivacySettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xeb2b4cf6
-    SUBCLASS_OF_ID = 0xc90e5770
+    CONSTRUCTOR_ID = 0xEB2B4CF6
+    SUBCLASS_OF_ID = 0xC90E5770
 
     def to_dict(self):
-        return {
-            '_': 'GetGlobalPrivacySettingsRequest'
-        }
+        return {"_": "GetGlobalPrivacySettingsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xf6L+\xeb',
-        ))
+        return b"".join((b"\xf6L+\xeb",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -517,10 +565,10 @@ class GetGlobalPrivacySettingsRequest(TLRequest):
 
 
 class GetMultiWallPapersRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x65ad71dc
-    SUBCLASS_OF_ID = 0x8ec35283
+    CONSTRUCTOR_ID = 0x65AD71DC
+    SUBCLASS_OF_ID = 0x8EC35283
 
-    def __init__(self, wallpapers: List['TypeInputWallPaper']):
+    def __init__(self, wallpapers: List["TypeInputWallPaper"]):
         """
         :returns Vector<WallPaper>: This type has no constructors.
         """
@@ -528,15 +576,23 @@ class GetMultiWallPapersRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetMultiWallPapersRequest',
-            'wallpapers': [] if self.wallpapers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.wallpapers]
+            "_": "GetMultiWallPapersRequest",
+            "wallpapers": []
+            if self.wallpapers is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.wallpapers
+            ],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xdcq\xade',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.wallpapers)),b''.join(x._bytes() for x in self.wallpapers),
-        ))
+        return b"".join(
+            (
+                b"\xdcq\xade",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.wallpapers)),
+                b"".join(x._bytes() for x in self.wallpapers),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -551,9 +607,13 @@ class GetMultiWallPapersRequest(TLRequest):
 
 class GetNotifyExceptionsRequest(TLRequest):
     CONSTRUCTOR_ID = 0x53577479
-    SUBCLASS_OF_ID = 0x8af52aac
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, compare_sound: Optional[bool]=None, peer: Optional['TypeInputNotifyPeer']=None):
+    def __init__(
+        self,
+        compare_sound: Optional[bool] = None,
+        peer: Optional["TypeInputNotifyPeer"] = None,
+    ):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -566,17 +626,31 @@ class GetNotifyExceptionsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetNotifyExceptionsRequest',
-            'compare_sound': self.compare_sound,
-            'peer': self.peer.to_dict() if isinstance(self.peer, TLObject) else self.peer
+            "_": "GetNotifyExceptionsRequest",
+            "compare_sound": self.compare_sound,
+            "peer": self.peer.to_dict()
+            if isinstance(self.peer, TLObject)
+            else self.peer,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'ytWS',
-            struct.pack('<I', (0 if self.compare_sound is None or self.compare_sound is False else 2) | (0 if self.peer is None or self.peer is False else 1)),
-            b'' if self.peer is None or self.peer is False else (self.peer._bytes()),
-        ))
+        return b"".join(
+            (
+                b"ytWS",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.compare_sound is None or self.compare_sound is False
+                        else 2
+                    )
+                    | (0 if self.peer is None or self.peer is False else 1),
+                ),
+                b""
+                if self.peer is None or self.peer is False
+                else (self.peer._bytes()),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -591,10 +665,10 @@ class GetNotifyExceptionsRequest(TLRequest):
 
 
 class GetNotifySettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x12b3ad31
-    SUBCLASS_OF_ID = 0xcf20c074
+    CONSTRUCTOR_ID = 0x12B3AD31
+    SUBCLASS_OF_ID = 0xCF20C074
 
-    def __init__(self, peer: 'TypeInputNotifyPeer'):
+    def __init__(self, peer: "TypeInputNotifyPeer"):
         """
         :returns PeerNotifySettings: Instance of PeerNotifySettings.
         """
@@ -605,15 +679,19 @@ class GetNotifySettingsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetNotifySettingsRequest',
-            'peer': self.peer.to_dict() if isinstance(self.peer, TLObject) else self.peer
+            "_": "GetNotifySettingsRequest",
+            "peer": self.peer.to_dict()
+            if isinstance(self.peer, TLObject)
+            else self.peer,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'1\xad\xb3\x12',
-            self.peer._bytes(),
-        ))
+        return b"".join(
+            (
+                b"1\xad\xb3\x12",
+                self.peer._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -622,18 +700,14 @@ class GetNotifySettingsRequest(TLRequest):
 
 
 class GetPasswordRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x548a30f5
-    SUBCLASS_OF_ID = 0x53a211a3
+    CONSTRUCTOR_ID = 0x548A30F5
+    SUBCLASS_OF_ID = 0x53A211A3
 
     def to_dict(self):
-        return {
-            '_': 'GetPasswordRequest'
-        }
+        return {"_": "GetPasswordRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\xf50\x8aT',
-        ))
+        return b"".join((b"\xf50\x8aT",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -641,10 +715,10 @@ class GetPasswordRequest(TLRequest):
 
 
 class GetPasswordSettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x9cd4eaf9
-    SUBCLASS_OF_ID = 0xd23fb078
+    CONSTRUCTOR_ID = 0x9CD4EAF9
+    SUBCLASS_OF_ID = 0xD23FB078
 
-    def __init__(self, password: 'TypeInputCheckPasswordSRP'):
+    def __init__(self, password: "TypeInputCheckPasswordSRP"):
         """
         :returns account.PasswordSettings: Instance of PasswordSettings.
         """
@@ -652,15 +726,19 @@ class GetPasswordSettingsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetPasswordSettingsRequest',
-            'password': self.password.to_dict() if isinstance(self.password, TLObject) else self.password
+            "_": "GetPasswordSettingsRequest",
+            "password": self.password.to_dict()
+            if isinstance(self.password, TLObject)
+            else self.password,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf9\xea\xd4\x9c',
-            self.password._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xf9\xea\xd4\x9c",
+                self.password._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -669,10 +747,10 @@ class GetPasswordSettingsRequest(TLRequest):
 
 
 class GetPrivacyRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xdadbc950
-    SUBCLASS_OF_ID = 0xb55aba82
+    CONSTRUCTOR_ID = 0xDADBC950
+    SUBCLASS_OF_ID = 0xB55ABA82
 
-    def __init__(self, key: 'TypeInputPrivacyKey'):
+    def __init__(self, key: "TypeInputPrivacyKey"):
         """
         :returns account.PrivacyRules: Instance of PrivacyRules.
         """
@@ -680,15 +758,17 @@ class GetPrivacyRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetPrivacyRequest',
-            'key': self.key.to_dict() if isinstance(self.key, TLObject) else self.key
+            "_": "GetPrivacyRequest",
+            "key": self.key.to_dict() if isinstance(self.key, TLObject) else self.key,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'P\xc9\xdb\xda',
-            self.key._bytes(),
-        ))
+        return b"".join(
+            (
+                b"P\xc9\xdb\xda",
+                self.key._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -697,10 +777,10 @@ class GetPrivacyRequest(TLRequest):
 
 
 class GetSecureValueRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x73665bc2
-    SUBCLASS_OF_ID = 0xe82e4121
+    CONSTRUCTOR_ID = 0x73665BC2
+    SUBCLASS_OF_ID = 0xE82E4121
 
-    def __init__(self, types: List['TypeSecureValueType']):
+    def __init__(self, types: List["TypeSecureValueType"]):
         """
         :returns Vector<SecureValue>: This type has no constructors.
         """
@@ -708,15 +788,21 @@ class GetSecureValueRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetSecureValueRequest',
-            'types': [] if self.types is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.types]
+            "_": "GetSecureValueRequest",
+            "types": []
+            if self.types is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.types],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xc2[fs',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.types)),b''.join(x._bytes() for x in self.types),
-        ))
+        return b"".join(
+            (
+                b"\xc2[fs",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.types)),
+                b"".join(x._bytes() for x in self.types),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -730,11 +816,11 @@ class GetSecureValueRequest(TLRequest):
 
 
 class GetThemeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8d9d742b
-    SUBCLASS_OF_ID = 0x56b4c80c
+    CONSTRUCTOR_ID = 0x8D9D742B
+    SUBCLASS_OF_ID = 0x56B4C80C
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, format: str, theme: 'TypeInputTheme', document_id: int):
+    def __init__(self, format: str, theme: "TypeInputTheme", document_id: int):
         """
         :returns Theme: Instance of Theme.
         """
@@ -744,19 +830,23 @@ class GetThemeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetThemeRequest',
-            'format': self.format,
-            'theme': self.theme.to_dict() if isinstance(self.theme, TLObject) else self.theme,
-            'document_id': self.document_id
+            "_": "GetThemeRequest",
+            "format": self.format,
+            "theme": self.theme.to_dict()
+            if isinstance(self.theme, TLObject)
+            else self.theme,
+            "document_id": self.document_id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'+t\x9d\x8d',
-            self.serialize_bytes(self.format),
-            self.theme._bytes(),
-            struct.pack('<q', self.document_id),
-        ))
+        return b"".join(
+            (
+                b"+t\x9d\x8d",
+                self.serialize_bytes(self.format),
+                self.theme._bytes(),
+                struct.pack("<q", self.document_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -767,8 +857,8 @@ class GetThemeRequest(TLRequest):
 
 
 class GetThemesRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x285946f8
-    SUBCLASS_OF_ID = 0x7fc52204
+    CONSTRUCTOR_ID = 0x285946F8
+    SUBCLASS_OF_ID = 0x7FC52204
 
     # noinspection PyShadowingBuiltins
     def __init__(self, format: str, hash: int):
@@ -779,18 +869,16 @@ class GetThemesRequest(TLRequest):
         self.hash = hash
 
     def to_dict(self):
-        return {
-            '_': 'GetThemesRequest',
-            'format': self.format,
-            'hash': self.hash
-        }
+        return {"_": "GetThemesRequest", "format": self.format, "hash": self.hash}
 
     def _bytes(self):
-        return b''.join((
-            b'\xf8FY(',
-            self.serialize_bytes(self.format),
-            struct.pack('<i', self.hash),
-        ))
+        return b"".join(
+            (
+                b"\xf8FY(",
+                self.serialize_bytes(self.format),
+                struct.pack("<i", self.hash),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -800,10 +888,10 @@ class GetThemesRequest(TLRequest):
 
 
 class GetTmpPasswordRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x449e0b51
-    SUBCLASS_OF_ID = 0xb064992d
+    CONSTRUCTOR_ID = 0x449E0B51
+    SUBCLASS_OF_ID = 0xB064992D
 
-    def __init__(self, password: 'TypeInputCheckPasswordSRP', period: int):
+    def __init__(self, password: "TypeInputCheckPasswordSRP", period: int):
         """
         :returns account.TmpPassword: Instance of TmpPassword.
         """
@@ -812,17 +900,21 @@ class GetTmpPasswordRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetTmpPasswordRequest',
-            'password': self.password.to_dict() if isinstance(self.password, TLObject) else self.password,
-            'period': self.period
+            "_": "GetTmpPasswordRequest",
+            "password": self.password.to_dict()
+            if isinstance(self.password, TLObject)
+            else self.password,
+            "period": self.period,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'Q\x0b\x9eD',
-            self.password._bytes(),
-            struct.pack('<i', self.period),
-        ))
+        return b"".join(
+            (
+                b"Q\x0b\x9eD",
+                self.password._bytes(),
+                struct.pack("<i", self.period),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -832,10 +924,10 @@ class GetTmpPasswordRequest(TLRequest):
 
 
 class GetWallPaperRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xfc8ddbea
-    SUBCLASS_OF_ID = 0x96a2c98b
+    CONSTRUCTOR_ID = 0xFC8DDBEA
+    SUBCLASS_OF_ID = 0x96A2C98B
 
-    def __init__(self, wallpaper: 'TypeInputWallPaper'):
+    def __init__(self, wallpaper: "TypeInputWallPaper"):
         """
         :returns WallPaper: Instance of either WallPaper, WallPaperNoFile.
         """
@@ -843,15 +935,19 @@ class GetWallPaperRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetWallPaperRequest',
-            'wallpaper': self.wallpaper.to_dict() if isinstance(self.wallpaper, TLObject) else self.wallpaper
+            "_": "GetWallPaperRequest",
+            "wallpaper": self.wallpaper.to_dict()
+            if isinstance(self.wallpaper, TLObject)
+            else self.wallpaper,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xea\xdb\x8d\xfc',
-            self.wallpaper._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xea\xdb\x8d\xfc",
+                self.wallpaper._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -860,8 +956,8 @@ class GetWallPaperRequest(TLRequest):
 
 
 class GetWallPapersRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xaabb1763
-    SUBCLASS_OF_ID = 0xa2c548fd
+    CONSTRUCTOR_ID = 0xAABB1763
+    SUBCLASS_OF_ID = 0xA2C548FD
 
     # noinspection PyShadowingBuiltins
     def __init__(self, hash: int):
@@ -871,16 +967,15 @@ class GetWallPapersRequest(TLRequest):
         self.hash = hash
 
     def to_dict(self):
-        return {
-            '_': 'GetWallPapersRequest',
-            'hash': self.hash
-        }
+        return {"_": "GetWallPapersRequest", "hash": self.hash}
 
     def _bytes(self):
-        return b''.join((
-            b'c\x17\xbb\xaa',
-            struct.pack('<i', self.hash),
-        ))
+        return b"".join(
+            (
+                b"c\x17\xbb\xaa",
+                struct.pack("<i", self.hash),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -889,18 +984,14 @@ class GetWallPapersRequest(TLRequest):
 
 
 class GetWebAuthorizationsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x182e6d6f
-    SUBCLASS_OF_ID = 0x9a365b32
+    CONSTRUCTOR_ID = 0x182E6D6F
+    SUBCLASS_OF_ID = 0x9A365B32
 
     def to_dict(self):
-        return {
-            '_': 'GetWebAuthorizationsRequest'
-        }
+        return {"_": "GetWebAuthorizationsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'om.\x18',
-        ))
+        return b"".join((b"om.\x18",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -908,10 +999,19 @@ class GetWebAuthorizationsRequest(TLRequest):
 
 
 class InitTakeoutSessionRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf05b4804
-    SUBCLASS_OF_ID = 0x843ebe85
+    CONSTRUCTOR_ID = 0xF05B4804
+    SUBCLASS_OF_ID = 0x843EBE85
 
-    def __init__(self, contacts: Optional[bool]=None, message_users: Optional[bool]=None, message_chats: Optional[bool]=None, message_megagroups: Optional[bool]=None, message_channels: Optional[bool]=None, files: Optional[bool]=None, file_max_size: Optional[int]=None):
+    def __init__(
+        self,
+        contacts: Optional[bool] = None,
+        message_users: Optional[bool] = None,
+        message_chats: Optional[bool] = None,
+        message_megagroups: Optional[bool] = None,
+        message_channels: Optional[bool] = None,
+        files: Optional[bool] = None,
+        file_max_size: Optional[int] = None,
+    ):
         """
         :returns account.Takeout: Instance of Takeout.
         """
@@ -925,23 +1025,64 @@ class InitTakeoutSessionRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InitTakeoutSessionRequest',
-            'contacts': self.contacts,
-            'message_users': self.message_users,
-            'message_chats': self.message_chats,
-            'message_megagroups': self.message_megagroups,
-            'message_channels': self.message_channels,
-            'files': self.files,
-            'file_max_size': self.file_max_size
+            "_": "InitTakeoutSessionRequest",
+            "contacts": self.contacts,
+            "message_users": self.message_users,
+            "message_chats": self.message_chats,
+            "message_megagroups": self.message_megagroups,
+            "message_channels": self.message_channels,
+            "files": self.files,
+            "file_max_size": self.file_max_size,
         }
 
     def _bytes(self):
-        assert ((self.files or self.files is not None) and (self.file_max_size or self.file_max_size is not None)) or ((self.files is None or self.files is False) and (self.file_max_size is None or self.file_max_size is False)), 'files, file_max_size parameters must all be False-y (like None) or all me True-y'
-        return b''.join((
-            b'\x04H[\xf0',
-            struct.pack('<I', (0 if self.contacts is None or self.contacts is False else 1) | (0 if self.message_users is None or self.message_users is False else 2) | (0 if self.message_chats is None or self.message_chats is False else 4) | (0 if self.message_megagroups is None or self.message_megagroups is False else 8) | (0 if self.message_channels is None or self.message_channels is False else 16) | (0 if self.files is None or self.files is False else 32) | (0 if self.file_max_size is None or self.file_max_size is False else 32)),
-            b'' if self.file_max_size is None or self.file_max_size is False else (struct.pack('<i', self.file_max_size)),
-        ))
+        assert (
+            (self.files or self.files is not None)
+            and (self.file_max_size or self.file_max_size is not None)
+        ) or (
+            (self.files is None or self.files is False)
+            and (self.file_max_size is None or self.file_max_size is False)
+        ), "files, file_max_size parameters must all be False-y (like None) or all me True-y"
+        return b"".join(
+            (
+                b"\x04H[\xf0",
+                struct.pack(
+                    "<I",
+                    (0 if self.contacts is None or self.contacts is False else 1)
+                    | (
+                        0
+                        if self.message_users is None or self.message_users is False
+                        else 2
+                    )
+                    | (
+                        0
+                        if self.message_chats is None or self.message_chats is False
+                        else 4
+                    )
+                    | (
+                        0
+                        if self.message_megagroups is None
+                        or self.message_megagroups is False
+                        else 8
+                    )
+                    | (
+                        0
+                        if self.message_channels is None
+                        or self.message_channels is False
+                        else 16
+                    )
+                    | (0 if self.files is None or self.files is False else 32)
+                    | (
+                        0
+                        if self.file_max_size is None or self.file_max_size is False
+                        else 32
+                    ),
+                ),
+                b""
+                if self.file_max_size is None or self.file_max_size is False
+                else (struct.pack("<i", self.file_max_size)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -957,15 +1098,28 @@ class InitTakeoutSessionRequest(TLRequest):
             _file_max_size = reader.read_int()
         else:
             _file_max_size = None
-        return cls(contacts=_contacts, message_users=_message_users, message_chats=_message_chats, message_megagroups=_message_megagroups, message_channels=_message_channels, files=_files, file_max_size=_file_max_size)
+        return cls(
+            contacts=_contacts,
+            message_users=_message_users,
+            message_chats=_message_chats,
+            message_megagroups=_message_megagroups,
+            message_channels=_message_channels,
+            files=_files,
+            file_max_size=_file_max_size,
+        )
 
 
 class InstallThemeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x7ae43737
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x7AE43737
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, dark: Optional[bool]=None, format: Optional[str]=None, theme: Optional['TypeInputTheme']=None):
+    def __init__(
+        self,
+        dark: Optional[bool] = None,
+        format: Optional[str] = None,
+        theme: Optional["TypeInputTheme"] = None,
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -975,20 +1129,39 @@ class InstallThemeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InstallThemeRequest',
-            'dark': self.dark,
-            'format': self.format,
-            'theme': self.theme.to_dict() if isinstance(self.theme, TLObject) else self.theme
+            "_": "InstallThemeRequest",
+            "dark": self.dark,
+            "format": self.format,
+            "theme": self.theme.to_dict()
+            if isinstance(self.theme, TLObject)
+            else self.theme,
         }
 
     def _bytes(self):
-        assert ((self.format or self.format is not None) and (self.theme or self.theme is not None)) or ((self.format is None or self.format is False) and (self.theme is None or self.theme is False)), 'format, theme parameters must all be False-y (like None) or all me True-y'
-        return b''.join((
-            b'77\xe4z',
-            struct.pack('<I', (0 if self.dark is None or self.dark is False else 1) | (0 if self.format is None or self.format is False else 2) | (0 if self.theme is None or self.theme is False else 2)),
-            b'' if self.format is None or self.format is False else (self.serialize_bytes(self.format)),
-            b'' if self.theme is None or self.theme is False else (self.theme._bytes()),
-        ))
+        assert (
+            (self.format or self.format is not None)
+            and (self.theme or self.theme is not None)
+        ) or (
+            (self.format is None or self.format is False)
+            and (self.theme is None or self.theme is False)
+        ), "format, theme parameters must all be False-y (like None) or all me True-y"
+        return b"".join(
+            (
+                b"77\xe4z",
+                struct.pack(
+                    "<I",
+                    (0 if self.dark is None or self.dark is False else 1)
+                    | (0 if self.format is None or self.format is False else 2)
+                    | (0 if self.theme is None or self.theme is False else 2),
+                ),
+                b""
+                if self.format is None or self.format is False
+                else (self.serialize_bytes(self.format)),
+                b""
+                if self.theme is None or self.theme is False
+                else (self.theme._bytes()),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1007,10 +1180,12 @@ class InstallThemeRequest(TLRequest):
 
 
 class InstallWallPaperRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xfeed5769
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xFEED5769
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, wallpaper: 'TypeInputWallPaper', settings: 'TypeWallPaperSettings'):
+    def __init__(
+        self, wallpaper: "TypeInputWallPaper", settings: "TypeWallPaperSettings"
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1019,17 +1194,23 @@ class InstallWallPaperRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InstallWallPaperRequest',
-            'wallpaper': self.wallpaper.to_dict() if isinstance(self.wallpaper, TLObject) else self.wallpaper,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "InstallWallPaperRequest",
+            "wallpaper": self.wallpaper.to_dict()
+            if isinstance(self.wallpaper, TLObject)
+            else self.wallpaper,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'iW\xed\xfe',
-            self.wallpaper._bytes(),
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"iW\xed\xfe",
+                self.wallpaper._bytes(),
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1039,10 +1220,18 @@ class InstallWallPaperRequest(TLRequest):
 
 
 class RegisterDeviceRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x68976c6f
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x68976C6F
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, token_type: int, token: str, app_sandbox: bool, secret: bytes, other_uids: List[int], no_muted: Optional[bool]=None):
+    def __init__(
+        self,
+        token_type: int,
+        token: str,
+        app_sandbox: bool,
+        secret: bytes,
+        other_uids: List[int],
+        no_muted: Optional[bool] = None,
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1055,25 +1244,31 @@ class RegisterDeviceRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'RegisterDeviceRequest',
-            'token_type': self.token_type,
-            'token': self.token,
-            'app_sandbox': self.app_sandbox,
-            'secret': self.secret,
-            'other_uids': [] if self.other_uids is None else self.other_uids[:],
-            'no_muted': self.no_muted
+            "_": "RegisterDeviceRequest",
+            "token_type": self.token_type,
+            "token": self.token,
+            "app_sandbox": self.app_sandbox,
+            "secret": self.secret,
+            "other_uids": [] if self.other_uids is None else self.other_uids[:],
+            "no_muted": self.no_muted,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'ol\x97h',
-            struct.pack('<I', (0 if self.no_muted is None or self.no_muted is False else 1)),
-            struct.pack('<i', self.token_type),
-            self.serialize_bytes(self.token),
-            b'\xb5ur\x99' if self.app_sandbox else b'7\x97y\xbc',
-            self.serialize_bytes(self.secret),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.other_uids)),b''.join(struct.pack('<i', x) for x in self.other_uids),
-        ))
+        return b"".join(
+            (
+                b"ol\x97h",
+                struct.pack(
+                    "<I", (0 if self.no_muted is None or self.no_muted is False else 1)
+                ),
+                struct.pack("<i", self.token_type),
+                self.serialize_bytes(self.token),
+                b"\xb5ur\x99" if self.app_sandbox else b"7\x97y\xbc",
+                self.serialize_bytes(self.secret),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.other_uids)),
+                b"".join(struct.pack("<i", x) for x in self.other_uids),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1090,14 +1285,21 @@ class RegisterDeviceRequest(TLRequest):
             _x = reader.read_int()
             _other_uids.append(_x)
 
-        return cls(token_type=_token_type, token=_token, app_sandbox=_app_sandbox, secret=_secret, other_uids=_other_uids, no_muted=_no_muted)
+        return cls(
+            token_type=_token_type,
+            token=_token,
+            app_sandbox=_app_sandbox,
+            secret=_secret,
+            other_uids=_other_uids,
+            no_muted=_no_muted,
+        )
 
 
 class ReportPeerRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xc5ba3d86
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xC5BA3D86
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, peer: 'TypeInputPeer', reason: 'TypeReportReason', message: str):
+    def __init__(self, peer: "TypeInputPeer", reason: "TypeReportReason", message: str):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1110,19 +1312,25 @@ class ReportPeerRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ReportPeerRequest',
-            'peer': self.peer.to_dict() if isinstance(self.peer, TLObject) else self.peer,
-            'reason': self.reason.to_dict() if isinstance(self.reason, TLObject) else self.reason,
-            'message': self.message
+            "_": "ReportPeerRequest",
+            "peer": self.peer.to_dict()
+            if isinstance(self.peer, TLObject)
+            else self.peer,
+            "reason": self.reason.to_dict()
+            if isinstance(self.reason, TLObject)
+            else self.reason,
+            "message": self.message,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x86=\xba\xc5',
-            self.peer._bytes(),
-            self.reason._bytes(),
-            self.serialize_bytes(self.message),
-        ))
+        return b"".join(
+            (
+                b"\x86=\xba\xc5",
+                self.peer._bytes(),
+                self.reason._bytes(),
+                self.serialize_bytes(self.message),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1133,10 +1341,16 @@ class ReportPeerRequest(TLRequest):
 
 
 class ReportProfilePhotoRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xfa8cc6f5
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xFA8CC6F5
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, peer: 'TypeInputPeer', photo_id: 'TypeInputPhoto', reason: 'TypeReportReason', message: str):
+    def __init__(
+        self,
+        peer: "TypeInputPeer",
+        photo_id: "TypeInputPhoto",
+        reason: "TypeReportReason",
+        message: str,
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1151,21 +1365,29 @@ class ReportProfilePhotoRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ReportProfilePhotoRequest',
-            'peer': self.peer.to_dict() if isinstance(self.peer, TLObject) else self.peer,
-            'photo_id': self.photo_id.to_dict() if isinstance(self.photo_id, TLObject) else self.photo_id,
-            'reason': self.reason.to_dict() if isinstance(self.reason, TLObject) else self.reason,
-            'message': self.message
+            "_": "ReportProfilePhotoRequest",
+            "peer": self.peer.to_dict()
+            if isinstance(self.peer, TLObject)
+            else self.peer,
+            "photo_id": self.photo_id.to_dict()
+            if isinstance(self.photo_id, TLObject)
+            else self.photo_id,
+            "reason": self.reason.to_dict()
+            if isinstance(self.reason, TLObject)
+            else self.reason,
+            "message": self.message,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf5\xc6\x8c\xfa',
-            self.peer._bytes(),
-            self.photo_id._bytes(),
-            self.reason._bytes(),
-            self.serialize_bytes(self.message),
-        ))
+        return b"".join(
+            (
+                b"\xf5\xc6\x8c\xfa",
+                self.peer._bytes(),
+                self.photo_id._bytes(),
+                self.reason._bytes(),
+                self.serialize_bytes(self.message),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1177,18 +1399,14 @@ class ReportProfilePhotoRequest(TLRequest):
 
 
 class ResendPasswordEmailRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x7a7f2a15
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x7A7F2A15
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def to_dict(self):
-        return {
-            '_': 'ResendPasswordEmailRequest'
-        }
+        return {"_": "ResendPasswordEmailRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x15*\x7fz',
-        ))
+        return b"".join((b"\x15*\x7fz",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -1196,8 +1414,8 @@ class ResendPasswordEmailRequest(TLRequest):
 
 
 class ResetAuthorizationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xdf77f3bc
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xDF77F3BC
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     # noinspection PyShadowingBuiltins
     def __init__(self, hash: int):
@@ -1207,16 +1425,15 @@ class ResetAuthorizationRequest(TLRequest):
         self.hash = hash
 
     def to_dict(self):
-        return {
-            '_': 'ResetAuthorizationRequest',
-            'hash': self.hash
-        }
+        return {"_": "ResetAuthorizationRequest", "hash": self.hash}
 
     def _bytes(self):
-        return b''.join((
-            b'\xbc\xf3w\xdf',
-            struct.pack('<q', self.hash),
-        ))
+        return b"".join(
+            (
+                b"\xbc\xf3w\xdf",
+                struct.pack("<q", self.hash),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1225,18 +1442,14 @@ class ResetAuthorizationRequest(TLRequest):
 
 
 class ResetNotifySettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xdb7e1747
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xDB7E1747
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def to_dict(self):
-        return {
-            '_': 'ResetNotifySettingsRequest'
-        }
+        return {"_": "ResetNotifySettingsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'G\x17~\xdb',
-        ))
+        return b"".join((b"G\x17~\xdb",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -1244,18 +1457,14 @@ class ResetNotifySettingsRequest(TLRequest):
 
 
 class ResetWallPapersRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xbb3b9804
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xBB3B9804
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def to_dict(self):
-        return {
-            '_': 'ResetWallPapersRequest'
-        }
+        return {"_": "ResetWallPapersRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x04\x98;\xbb',
-        ))
+        return b"".join((b"\x04\x98;\xbb",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -1263,8 +1472,8 @@ class ResetWallPapersRequest(TLRequest):
 
 
 class ResetWebAuthorizationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x2d01b9ef
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x2D01B9EF
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     # noinspection PyShadowingBuiltins
     def __init__(self, hash: int):
@@ -1274,16 +1483,15 @@ class ResetWebAuthorizationRequest(TLRequest):
         self.hash = hash
 
     def to_dict(self):
-        return {
-            '_': 'ResetWebAuthorizationRequest',
-            'hash': self.hash
-        }
+        return {"_": "ResetWebAuthorizationRequest", "hash": self.hash}
 
     def _bytes(self):
-        return b''.join((
-            b'\xef\xb9\x01-',
-            struct.pack('<q', self.hash),
-        ))
+        return b"".join(
+            (
+                b"\xef\xb9\x01-",
+                struct.pack("<q", self.hash),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1292,18 +1500,14 @@ class ResetWebAuthorizationRequest(TLRequest):
 
 
 class ResetWebAuthorizationsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x682d2594
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x682D2594
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def to_dict(self):
-        return {
-            '_': 'ResetWebAuthorizationsRequest'
-        }
+        return {"_": "ResetWebAuthorizationsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x94%-h',
-        ))
+        return b"".join((b"\x94%-h",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -1311,10 +1515,15 @@ class ResetWebAuthorizationsRequest(TLRequest):
 
 
 class SaveAutoDownloadSettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x76f36233
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x76F36233
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, settings: 'TypeAutoDownloadSettings', low: Optional[bool]=None, high: Optional[bool]=None):
+    def __init__(
+        self,
+        settings: "TypeAutoDownloadSettings",
+        low: Optional[bool] = None,
+        high: Optional[bool] = None,
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1324,18 +1533,26 @@ class SaveAutoDownloadSettingsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SaveAutoDownloadSettingsRequest',
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings,
-            'low': self.low,
-            'high': self.high
+            "_": "SaveAutoDownloadSettingsRequest",
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
+            "low": self.low,
+            "high": self.high,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'3b\xf3v',
-            struct.pack('<I', (0 if self.low is None or self.low is False else 1) | (0 if self.high is None or self.high is False else 2)),
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"3b\xf3v",
+                struct.pack(
+                    "<I",
+                    (0 if self.low is None or self.low is False else 1)
+                    | (0 if self.high is None or self.high is False else 2),
+                ),
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1348,10 +1565,10 @@ class SaveAutoDownloadSettingsRequest(TLRequest):
 
 
 class SaveSecureValueRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x899fe31d
-    SUBCLASS_OF_ID = 0x51138ae
+    CONSTRUCTOR_ID = 0x899FE31D
+    SUBCLASS_OF_ID = 0x51138AE
 
-    def __init__(self, value: 'TypeInputSecureValue', secure_secret_id: int):
+    def __init__(self, value: "TypeInputSecureValue", secure_secret_id: int):
         """
         :returns SecureValue: Instance of SecureValue.
         """
@@ -1360,17 +1577,21 @@ class SaveSecureValueRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SaveSecureValueRequest',
-            'value': self.value.to_dict() if isinstance(self.value, TLObject) else self.value,
-            'secure_secret_id': self.secure_secret_id
+            "_": "SaveSecureValueRequest",
+            "value": self.value.to_dict()
+            if isinstance(self.value, TLObject)
+            else self.value,
+            "secure_secret_id": self.secure_secret_id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x1d\xe3\x9f\x89',
-            self.value._bytes(),
-            struct.pack('<q', self.secure_secret_id),
-        ))
+        return b"".join(
+            (
+                b"\x1d\xe3\x9f\x89",
+                self.value._bytes(),
+                struct.pack("<q", self.secure_secret_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1380,10 +1601,10 @@ class SaveSecureValueRequest(TLRequest):
 
 
 class SaveThemeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf257106c
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xF257106C
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, theme: 'TypeInputTheme', unsave: bool):
+    def __init__(self, theme: "TypeInputTheme", unsave: bool):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1392,17 +1613,21 @@ class SaveThemeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SaveThemeRequest',
-            'theme': self.theme.to_dict() if isinstance(self.theme, TLObject) else self.theme,
-            'unsave': self.unsave
+            "_": "SaveThemeRequest",
+            "theme": self.theme.to_dict()
+            if isinstance(self.theme, TLObject)
+            else self.theme,
+            "unsave": self.unsave,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'l\x10W\xf2',
-            self.theme._bytes(),
-            b'\xb5ur\x99' if self.unsave else b'7\x97y\xbc',
-        ))
+        return b"".join(
+            (
+                b"l\x10W\xf2",
+                self.theme._bytes(),
+                b"\xb5ur\x99" if self.unsave else b"7\x97y\xbc",
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1412,10 +1637,15 @@ class SaveThemeRequest(TLRequest):
 
 
 class SaveWallPaperRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x6c5a5b37
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x6C5A5B37
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, wallpaper: 'TypeInputWallPaper', unsave: bool, settings: 'TypeWallPaperSettings'):
+    def __init__(
+        self,
+        wallpaper: "TypeInputWallPaper",
+        unsave: bool,
+        settings: "TypeWallPaperSettings",
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1425,19 +1655,25 @@ class SaveWallPaperRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SaveWallPaperRequest',
-            'wallpaper': self.wallpaper.to_dict() if isinstance(self.wallpaper, TLObject) else self.wallpaper,
-            'unsave': self.unsave,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "SaveWallPaperRequest",
+            "wallpaper": self.wallpaper.to_dict()
+            if isinstance(self.wallpaper, TLObject)
+            else self.wallpaper,
+            "unsave": self.unsave,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'7[Zl',
-            self.wallpaper._bytes(),
-            b'\xb5ur\x99' if self.unsave else b'7\x97y\xbc',
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"7[Zl",
+                self.wallpaper._bytes(),
+                b"\xb5ur\x99" if self.unsave else b"7\x97y\xbc",
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1448,10 +1684,10 @@ class SaveWallPaperRequest(TLRequest):
 
 
 class SendChangePhoneCodeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x82574ae5
-    SUBCLASS_OF_ID = 0x6ce87081
+    CONSTRUCTOR_ID = 0x82574AE5
+    SUBCLASS_OF_ID = 0x6CE87081
 
-    def __init__(self, phone_number: str, settings: 'TypeCodeSettings'):
+    def __init__(self, phone_number: str, settings: "TypeCodeSettings"):
         """
         :returns auth.SentCode: Instance of SentCode.
         """
@@ -1460,17 +1696,21 @@ class SendChangePhoneCodeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SendChangePhoneCodeRequest',
-            'phone_number': self.phone_number,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "SendChangePhoneCodeRequest",
+            "phone_number": self.phone_number,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xe5JW\x82',
-            self.serialize_bytes(self.phone_number),
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xe5JW\x82",
+                self.serialize_bytes(self.phone_number),
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1480,11 +1720,11 @@ class SendChangePhoneCodeRequest(TLRequest):
 
 
 class SendConfirmPhoneCodeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x1b3faa88
-    SUBCLASS_OF_ID = 0x6ce87081
+    CONSTRUCTOR_ID = 0x1B3FAA88
+    SUBCLASS_OF_ID = 0x6CE87081
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, hash: str, settings: 'TypeCodeSettings'):
+    def __init__(self, hash: str, settings: "TypeCodeSettings"):
         """
         :returns auth.SentCode: Instance of SentCode.
         """
@@ -1493,17 +1733,21 @@ class SendConfirmPhoneCodeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SendConfirmPhoneCodeRequest',
-            'hash': self.hash,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "SendConfirmPhoneCodeRequest",
+            "hash": self.hash,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x88\xaa?\x1b',
-            self.serialize_bytes(self.hash),
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x88\xaa?\x1b",
+                self.serialize_bytes(self.hash),
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1513,8 +1757,8 @@ class SendConfirmPhoneCodeRequest(TLRequest):
 
 
 class SendVerifyEmailCodeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x7011509f
-    SUBCLASS_OF_ID = 0x69f3c06e
+    CONSTRUCTOR_ID = 0x7011509F
+    SUBCLASS_OF_ID = 0x69F3C06E
 
     def __init__(self, email: str):
         """
@@ -1523,16 +1767,15 @@ class SendVerifyEmailCodeRequest(TLRequest):
         self.email = email
 
     def to_dict(self):
-        return {
-            '_': 'SendVerifyEmailCodeRequest',
-            'email': self.email
-        }
+        return {"_": "SendVerifyEmailCodeRequest", "email": self.email}
 
     def _bytes(self):
-        return b''.join((
-            b'\x9fP\x11p',
-            self.serialize_bytes(self.email),
-        ))
+        return b"".join(
+            (
+                b"\x9fP\x11p",
+                self.serialize_bytes(self.email),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1541,10 +1784,10 @@ class SendVerifyEmailCodeRequest(TLRequest):
 
 
 class SendVerifyPhoneCodeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xa5a356f9
-    SUBCLASS_OF_ID = 0x6ce87081
+    CONSTRUCTOR_ID = 0xA5A356F9
+    SUBCLASS_OF_ID = 0x6CE87081
 
-    def __init__(self, phone_number: str, settings: 'TypeCodeSettings'):
+    def __init__(self, phone_number: str, settings: "TypeCodeSettings"):
         """
         :returns auth.SentCode: Instance of SentCode.
         """
@@ -1553,17 +1796,21 @@ class SendVerifyPhoneCodeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SendVerifyPhoneCodeRequest',
-            'phone_number': self.phone_number,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "SendVerifyPhoneCodeRequest",
+            "phone_number": self.phone_number,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf9V\xa3\xa5',
-            self.serialize_bytes(self.phone_number),
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xf9V\xa3\xa5",
+                self.serialize_bytes(self.phone_number),
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1573,10 +1820,10 @@ class SendVerifyPhoneCodeRequest(TLRequest):
 
 
 class SetAccountTTLRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x2442485e
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x2442485E
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, ttl: 'TypeAccountDaysTTL'):
+    def __init__(self, ttl: "TypeAccountDaysTTL"):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1584,15 +1831,17 @@ class SetAccountTTLRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SetAccountTTLRequest',
-            'ttl': self.ttl.to_dict() if isinstance(self.ttl, TLObject) else self.ttl
+            "_": "SetAccountTTLRequest",
+            "ttl": self.ttl.to_dict() if isinstance(self.ttl, TLObject) else self.ttl,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'^HB$',
-            self.ttl._bytes(),
-        ))
+        return b"".join(
+            (
+                b"^HB$",
+                self.ttl._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1601,8 +1850,8 @@ class SetAccountTTLRequest(TLRequest):
 
 
 class SetContactSignUpNotificationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xcff43f61
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xCFF43F61
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, silent: bool):
         """
@@ -1611,16 +1860,15 @@ class SetContactSignUpNotificationRequest(TLRequest):
         self.silent = silent
 
     def to_dict(self):
-        return {
-            '_': 'SetContactSignUpNotificationRequest',
-            'silent': self.silent
-        }
+        return {"_": "SetContactSignUpNotificationRequest", "silent": self.silent}
 
     def _bytes(self):
-        return b''.join((
-            b'a?\xf4\xcf',
-            b'\xb5ur\x99' if self.silent else b'7\x97y\xbc',
-        ))
+        return b"".join(
+            (
+                b"a?\xf4\xcf",
+                b"\xb5ur\x99" if self.silent else b"7\x97y\xbc",
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1629,10 +1877,10 @@ class SetContactSignUpNotificationRequest(TLRequest):
 
 
 class SetContentSettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xb574b16b
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xB574B16B
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, sensitive_enabled: Optional[bool]=None):
+    def __init__(self, sensitive_enabled: Optional[bool] = None):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1640,15 +1888,25 @@ class SetContentSettingsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SetContentSettingsRequest',
-            'sensitive_enabled': self.sensitive_enabled
+            "_": "SetContentSettingsRequest",
+            "sensitive_enabled": self.sensitive_enabled,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'k\xb1t\xb5',
-            struct.pack('<I', (0 if self.sensitive_enabled is None or self.sensitive_enabled is False else 1)),
-        ))
+        return b"".join(
+            (
+                b"k\xb1t\xb5",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.sensitive_enabled is None
+                        or self.sensitive_enabled is False
+                        else 1
+                    ),
+                ),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1659,10 +1917,10 @@ class SetContentSettingsRequest(TLRequest):
 
 
 class SetGlobalPrivacySettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x1edaaac2
-    SUBCLASS_OF_ID = 0xc90e5770
+    CONSTRUCTOR_ID = 0x1EDAAAC2
+    SUBCLASS_OF_ID = 0xC90E5770
 
-    def __init__(self, settings: 'TypeGlobalPrivacySettings'):
+    def __init__(self, settings: "TypeGlobalPrivacySettings"):
         """
         :returns GlobalPrivacySettings: Instance of GlobalPrivacySettings.
         """
@@ -1670,15 +1928,19 @@ class SetGlobalPrivacySettingsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SetGlobalPrivacySettingsRequest',
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "SetGlobalPrivacySettingsRequest",
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xc2\xaa\xda\x1e',
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xc2\xaa\xda\x1e",
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1687,10 +1949,10 @@ class SetGlobalPrivacySettingsRequest(TLRequest):
 
 
 class SetPrivacyRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xc9f81ce8
-    SUBCLASS_OF_ID = 0xb55aba82
+    CONSTRUCTOR_ID = 0xC9F81CE8
+    SUBCLASS_OF_ID = 0xB55ABA82
 
-    def __init__(self, key: 'TypeInputPrivacyKey', rules: List['TypeInputPrivacyRule']):
+    def __init__(self, key: "TypeInputPrivacyKey", rules: List["TypeInputPrivacyRule"]):
         """
         :returns account.PrivacyRules: Instance of PrivacyRules.
         """
@@ -1699,17 +1961,23 @@ class SetPrivacyRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SetPrivacyRequest',
-            'key': self.key.to_dict() if isinstance(self.key, TLObject) else self.key,
-            'rules': [] if self.rules is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.rules]
+            "_": "SetPrivacyRequest",
+            "key": self.key.to_dict() if isinstance(self.key, TLObject) else self.key,
+            "rules": []
+            if self.rules is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.rules],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xe8\x1c\xf8\xc9',
-            self.key._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.rules)),b''.join(x._bytes() for x in self.rules),
-        ))
+        return b"".join(
+            (
+                b"\xe8\x1c\xf8\xc9",
+                self.key._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.rules)),
+                b"".join(x._bytes() for x in self.rules),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1724,8 +1992,8 @@ class SetPrivacyRequest(TLRequest):
 
 
 class UnregisterDeviceRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x3076c4bf
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x3076C4BF
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, token_type: int, token: str, other_uids: List[int]):
         """
@@ -1737,19 +2005,23 @@ class UnregisterDeviceRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UnregisterDeviceRequest',
-            'token_type': self.token_type,
-            'token': self.token,
-            'other_uids': [] if self.other_uids is None else self.other_uids[:]
+            "_": "UnregisterDeviceRequest",
+            "token_type": self.token_type,
+            "token": self.token,
+            "other_uids": [] if self.other_uids is None else self.other_uids[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xbf\xc4v0',
-            struct.pack('<i', self.token_type),
-            self.serialize_bytes(self.token),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.other_uids)),b''.join(struct.pack('<i', x) for x in self.other_uids),
-        ))
+        return b"".join(
+            (
+                b"\xbf\xc4v0",
+                struct.pack("<i", self.token_type),
+                self.serialize_bytes(self.token),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.other_uids)),
+                b"".join(struct.pack("<i", x) for x in self.other_uids),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1765,8 +2037,8 @@ class UnregisterDeviceRequest(TLRequest):
 
 
 class UpdateDeviceLockedRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x38df3532
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x38DF3532
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, period: int):
         """
@@ -1775,16 +2047,15 @@ class UpdateDeviceLockedRequest(TLRequest):
         self.period = period
 
     def to_dict(self):
-        return {
-            '_': 'UpdateDeviceLockedRequest',
-            'period': self.period
-        }
+        return {"_": "UpdateDeviceLockedRequest", "period": self.period}
 
     def _bytes(self):
-        return b''.join((
-            b'25\xdf8',
-            struct.pack('<i', self.period),
-        ))
+        return b"".join(
+            (
+                b"25\xdf8",
+                struct.pack("<i", self.period),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1793,10 +2064,12 @@ class UpdateDeviceLockedRequest(TLRequest):
 
 
 class UpdateNotifySettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x84be5b93
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x84BE5B93
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, peer: 'TypeInputNotifyPeer', settings: 'TypeInputPeerNotifySettings'):
+    def __init__(
+        self, peer: "TypeInputNotifyPeer", settings: "TypeInputPeerNotifySettings"
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1808,17 +2081,23 @@ class UpdateNotifySettingsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UpdateNotifySettingsRequest',
-            'peer': self.peer.to_dict() if isinstance(self.peer, TLObject) else self.peer,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "UpdateNotifySettingsRequest",
+            "peer": self.peer.to_dict()
+            if isinstance(self.peer, TLObject)
+            else self.peer,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x93[\xbe\x84',
-            self.peer._bytes(),
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x93[\xbe\x84",
+                self.peer._bytes(),
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1828,10 +2107,14 @@ class UpdateNotifySettingsRequest(TLRequest):
 
 
 class UpdatePasswordSettingsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xa59b102f
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xA59B102F
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, password: 'TypeInputCheckPasswordSRP', new_settings: 'TypePasswordInputSettings'):
+    def __init__(
+        self,
+        password: "TypeInputCheckPasswordSRP",
+        new_settings: "TypePasswordInputSettings",
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -1840,17 +2123,23 @@ class UpdatePasswordSettingsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UpdatePasswordSettingsRequest',
-            'password': self.password.to_dict() if isinstance(self.password, TLObject) else self.password,
-            'new_settings': self.new_settings.to_dict() if isinstance(self.new_settings, TLObject) else self.new_settings
+            "_": "UpdatePasswordSettingsRequest",
+            "password": self.password.to_dict()
+            if isinstance(self.password, TLObject)
+            else self.password,
+            "new_settings": self.new_settings.to_dict()
+            if isinstance(self.new_settings, TLObject)
+            else self.new_settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'/\x10\x9b\xa5',
-            self.password._bytes(),
-            self.new_settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"/\x10\x9b\xa5",
+                self.password._bytes(),
+                self.new_settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1861,9 +2150,14 @@ class UpdatePasswordSettingsRequest(TLRequest):
 
 class UpdateProfileRequest(TLRequest):
     CONSTRUCTOR_ID = 0x78515775
-    SUBCLASS_OF_ID = 0x2da17977
+    SUBCLASS_OF_ID = 0x2DA17977
 
-    def __init__(self, first_name: Optional[str]=None, last_name: Optional[str]=None, about: Optional[str]=None):
+    def __init__(
+        self,
+        first_name: Optional[str] = None,
+        last_name: Optional[str] = None,
+        about: Optional[str] = None,
+    ):
         """
         :returns User: Instance of either UserEmpty, User.
         """
@@ -1873,20 +2167,33 @@ class UpdateProfileRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UpdateProfileRequest',
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-            'about': self.about
+            "_": "UpdateProfileRequest",
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "about": self.about,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'uWQx',
-            struct.pack('<I', (0 if self.first_name is None or self.first_name is False else 1) | (0 if self.last_name is None or self.last_name is False else 2) | (0 if self.about is None or self.about is False else 4)),
-            b'' if self.first_name is None or self.first_name is False else (self.serialize_bytes(self.first_name)),
-            b'' if self.last_name is None or self.last_name is False else (self.serialize_bytes(self.last_name)),
-            b'' if self.about is None or self.about is False else (self.serialize_bytes(self.about)),
-        ))
+        return b"".join(
+            (
+                b"uWQx",
+                struct.pack(
+                    "<I",
+                    (0 if self.first_name is None or self.first_name is False else 1)
+                    | (0 if self.last_name is None or self.last_name is False else 2)
+                    | (0 if self.about is None or self.about is False else 4),
+                ),
+                b""
+                if self.first_name is None or self.first_name is False
+                else (self.serialize_bytes(self.first_name)),
+                b""
+                if self.last_name is None or self.last_name is False
+                else (self.serialize_bytes(self.last_name)),
+                b""
+                if self.about is None or self.about is False
+                else (self.serialize_bytes(self.about)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1908,8 +2215,8 @@ class UpdateProfileRequest(TLRequest):
 
 
 class UpdateStatusRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x6628562c
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x6628562C
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, offline: bool):
         """
@@ -1918,16 +2225,15 @@ class UpdateStatusRequest(TLRequest):
         self.offline = offline
 
     def to_dict(self):
-        return {
-            '_': 'UpdateStatusRequest',
-            'offline': self.offline
-        }
+        return {"_": "UpdateStatusRequest", "offline": self.offline}
 
     def _bytes(self):
-        return b''.join((
-            b',V(f',
-            b'\xb5ur\x99' if self.offline else b'7\x97y\xbc',
-        ))
+        return b"".join(
+            (
+                b",V(f",
+                b"\xb5ur\x99" if self.offline else b"7\x97y\xbc",
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -1936,11 +2242,19 @@ class UpdateStatusRequest(TLRequest):
 
 
 class UpdateThemeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x5cb367d5
-    SUBCLASS_OF_ID = 0x56b4c80c
+    CONSTRUCTOR_ID = 0x5CB367D5
+    SUBCLASS_OF_ID = 0x56B4C80C
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, format: str, theme: 'TypeInputTheme', slug: Optional[str]=None, title: Optional[str]=None, document: Optional['TypeInputDocument']=None, settings: Optional['TypeInputThemeSettings']=None):
+    def __init__(
+        self,
+        format: str,
+        theme: "TypeInputTheme",
+        slug: Optional[str] = None,
+        title: Optional[str] = None,
+        document: Optional["TypeInputDocument"] = None,
+        settings: Optional["TypeInputThemeSettings"] = None,
+    ):
         """
         :returns Theme: Instance of Theme.
         """
@@ -1957,26 +2271,48 @@ class UpdateThemeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UpdateThemeRequest',
-            'format': self.format,
-            'theme': self.theme.to_dict() if isinstance(self.theme, TLObject) else self.theme,
-            'slug': self.slug,
-            'title': self.title,
-            'document': self.document.to_dict() if isinstance(self.document, TLObject) else self.document,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "UpdateThemeRequest",
+            "format": self.format,
+            "theme": self.theme.to_dict()
+            if isinstance(self.theme, TLObject)
+            else self.theme,
+            "slug": self.slug,
+            "title": self.title,
+            "document": self.document.to_dict()
+            if isinstance(self.document, TLObject)
+            else self.document,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xd5g\xb3\\',
-            struct.pack('<I', (0 if self.slug is None or self.slug is False else 1) | (0 if self.title is None or self.title is False else 2) | (0 if self.document is None or self.document is False else 4) | (0 if self.settings is None or self.settings is False else 8)),
-            self.serialize_bytes(self.format),
-            self.theme._bytes(),
-            b'' if self.slug is None or self.slug is False else (self.serialize_bytes(self.slug)),
-            b'' if self.title is None or self.title is False else (self.serialize_bytes(self.title)),
-            b'' if self.document is None or self.document is False else (self.document._bytes()),
-            b'' if self.settings is None or self.settings is False else (self.settings._bytes()),
-        ))
+        return b"".join(
+            (
+                b"\xd5g\xb3\\",
+                struct.pack(
+                    "<I",
+                    (0 if self.slug is None or self.slug is False else 1)
+                    | (0 if self.title is None or self.title is False else 2)
+                    | (0 if self.document is None or self.document is False else 4)
+                    | (0 if self.settings is None or self.settings is False else 8),
+                ),
+                self.serialize_bytes(self.format),
+                self.theme._bytes(),
+                b""
+                if self.slug is None or self.slug is False
+                else (self.serialize_bytes(self.slug)),
+                b""
+                if self.title is None or self.title is False
+                else (self.serialize_bytes(self.title)),
+                b""
+                if self.document is None or self.document is False
+                else (self.document._bytes()),
+                b""
+                if self.settings is None or self.settings is False
+                else (self.settings._bytes()),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2000,12 +2336,19 @@ class UpdateThemeRequest(TLRequest):
             _settings = reader.tgread_object()
         else:
             _settings = None
-        return cls(format=_format, theme=_theme, slug=_slug, title=_title, document=_document, settings=_settings)
+        return cls(
+            format=_format,
+            theme=_theme,
+            slug=_slug,
+            title=_title,
+            document=_document,
+            settings=_settings,
+        )
 
 
 class UpdateUsernameRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x3e0bdd7c
-    SUBCLASS_OF_ID = 0x2da17977
+    CONSTRUCTOR_ID = 0x3E0BDD7C
+    SUBCLASS_OF_ID = 0x2DA17977
 
     def __init__(self, username: str):
         """
@@ -2014,16 +2357,15 @@ class UpdateUsernameRequest(TLRequest):
         self.username = username
 
     def to_dict(self):
-        return {
-            '_': 'UpdateUsernameRequest',
-            'username': self.username
-        }
+        return {"_": "UpdateUsernameRequest", "username": self.username}
 
     def _bytes(self):
-        return b''.join((
-            b'|\xdd\x0b>',
-            self.serialize_bytes(self.username),
-        ))
+        return b"".join(
+            (
+                b"|\xdd\x0b>",
+                self.serialize_bytes(self.username),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2032,10 +2374,16 @@ class UpdateUsernameRequest(TLRequest):
 
 
 class UploadThemeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x1c3db333
-    SUBCLASS_OF_ID = 0x211fe820
+    CONSTRUCTOR_ID = 0x1C3DB333
+    SUBCLASS_OF_ID = 0x211FE820
 
-    def __init__(self, file: 'TypeInputFile', file_name: str, mime_type: str, thumb: Optional['TypeInputFile']=None):
+    def __init__(
+        self,
+        file: "TypeInputFile",
+        file_name: str,
+        mime_type: str,
+        thumb: Optional["TypeInputFile"] = None,
+    ):
         """
         :returns Document: Instance of either DocumentEmpty, Document.
         """
@@ -2046,22 +2394,32 @@ class UploadThemeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UploadThemeRequest',
-            'file': self.file.to_dict() if isinstance(self.file, TLObject) else self.file,
-            'file_name': self.file_name,
-            'mime_type': self.mime_type,
-            'thumb': self.thumb.to_dict() if isinstance(self.thumb, TLObject) else self.thumb
+            "_": "UploadThemeRequest",
+            "file": self.file.to_dict()
+            if isinstance(self.file, TLObject)
+            else self.file,
+            "file_name": self.file_name,
+            "mime_type": self.mime_type,
+            "thumb": self.thumb.to_dict()
+            if isinstance(self.thumb, TLObject)
+            else self.thumb,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'3\xb3=\x1c',
-            struct.pack('<I', (0 if self.thumb is None or self.thumb is False else 1)),
-            self.file._bytes(),
-            b'' if self.thumb is None or self.thumb is False else (self.thumb._bytes()),
-            self.serialize_bytes(self.file_name),
-            self.serialize_bytes(self.mime_type),
-        ))
+        return b"".join(
+            (
+                b"3\xb3=\x1c",
+                struct.pack(
+                    "<I", (0 if self.thumb is None or self.thumb is False else 1)
+                ),
+                self.file._bytes(),
+                b""
+                if self.thumb is None or self.thumb is False
+                else (self.thumb._bytes()),
+                self.serialize_bytes(self.file_name),
+                self.serialize_bytes(self.mime_type),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2078,10 +2436,12 @@ class UploadThemeRequest(TLRequest):
 
 
 class UploadWallPaperRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xdd853661
-    SUBCLASS_OF_ID = 0x96a2c98b
+    CONSTRUCTOR_ID = 0xDD853661
+    SUBCLASS_OF_ID = 0x96A2C98B
 
-    def __init__(self, file: 'TypeInputFile', mime_type: str, settings: 'TypeWallPaperSettings'):
+    def __init__(
+        self, file: "TypeInputFile", mime_type: str, settings: "TypeWallPaperSettings"
+    ):
         """
         :returns WallPaper: Instance of either WallPaper, WallPaperNoFile.
         """
@@ -2091,19 +2451,25 @@ class UploadWallPaperRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UploadWallPaperRequest',
-            'file': self.file.to_dict() if isinstance(self.file, TLObject) else self.file,
-            'mime_type': self.mime_type,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "UploadWallPaperRequest",
+            "file": self.file.to_dict()
+            if isinstance(self.file, TLObject)
+            else self.file,
+            "mime_type": self.mime_type,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'a6\x85\xdd',
-            self.file._bytes(),
-            self.serialize_bytes(self.mime_type),
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"a6\x85\xdd",
+                self.file._bytes(),
+                self.serialize_bytes(self.mime_type),
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2114,8 +2480,8 @@ class UploadWallPaperRequest(TLRequest):
 
 
 class VerifyEmailRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xecba39db
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xECBA39DB
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, email: str, code: str):
         """
@@ -2125,18 +2491,16 @@ class VerifyEmailRequest(TLRequest):
         self.code = code
 
     def to_dict(self):
-        return {
-            '_': 'VerifyEmailRequest',
-            'email': self.email,
-            'code': self.code
-        }
+        return {"_": "VerifyEmailRequest", "email": self.email, "code": self.code}
 
     def _bytes(self):
-        return b''.join((
-            b'\xdb9\xba\xec',
-            self.serialize_bytes(self.email),
-            self.serialize_bytes(self.code),
-        ))
+        return b"".join(
+            (
+                b"\xdb9\xba\xec",
+                self.serialize_bytes(self.email),
+                self.serialize_bytes(self.code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -2146,8 +2510,8 @@ class VerifyEmailRequest(TLRequest):
 
 
 class VerifyPhoneRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x4dd3a7f6
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x4DD3A7F6
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, phone_number: str, phone_code_hash: str, phone_code: str):
         """
@@ -2159,24 +2523,29 @@ class VerifyPhoneRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'VerifyPhoneRequest',
-            'phone_number': self.phone_number,
-            'phone_code_hash': self.phone_code_hash,
-            'phone_code': self.phone_code
+            "_": "VerifyPhoneRequest",
+            "phone_number": self.phone_number,
+            "phone_code_hash": self.phone_code_hash,
+            "phone_code": self.phone_code,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf6\xa7\xd3M',
-            self.serialize_bytes(self.phone_number),
-            self.serialize_bytes(self.phone_code_hash),
-            self.serialize_bytes(self.phone_code),
-        ))
+        return b"".join(
+            (
+                b"\xf6\xa7\xd3M",
+                self.serialize_bytes(self.phone_number),
+                self.serialize_bytes(self.phone_code_hash),
+                self.serialize_bytes(self.phone_code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
         _phone_number = reader.tgread_string()
         _phone_code_hash = reader.tgread_string()
         _phone_code = reader.tgread_string()
-        return cls(phone_number=_phone_number, phone_code_hash=_phone_code_hash, phone_code=_phone_code)
-
+        return cls(
+            phone_number=_phone_number,
+            phone_code_hash=_phone_code_hash,
+            phone_code=_phone_code,
+        )
