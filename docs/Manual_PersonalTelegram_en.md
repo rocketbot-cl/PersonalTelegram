@@ -12,7 +12,7 @@ This module connects the [Telegram](https://my.telegram.org/apps) with Rocketbot
 
 To use this module you need to create an app and obtain the `api_id` and the `api_hash`.
 
-1. Go to [http://my.telegram.org/apps](http://my.telegram.org/apps) and register an app with a name, short name, and pick the plataform. After that click on `Create application`.
+1. Go to [http://my.telegram.org/apps](http://my.telegram.org/apps) and register an app with a name, short name, and pick the plataform. The fields url and description can stay empty. After that click on `Create application`.
 
 <div align="center">
 

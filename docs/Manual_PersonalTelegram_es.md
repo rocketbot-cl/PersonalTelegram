@@ -12,7 +12,7 @@ Este módulo se conecta con [Telegram](https://my.telegram.org/apps). Puedes con
 
 Para utilizar este módulo tienes que crear una app y obtener el `api_id` y el `api_hash`.
 
-1. Entra en [http://my.telegram.org/apps](http://my.telegram.org/apps) y crea tu aplicación con un nombre, nickname, y elige la plataforma. Luego has click en `Create application`
+1. Entra en [http://my.telegram.org/apps](http://my.telegram.org/apps) y crea tu aplicación con un nombre, nickname, y elige la plataforma. El campo de url y descripción pueden quedar vacíos. Luego has click en `Create application`
 
 <div align="center">
 
