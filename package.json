@@ -194,7 +194,7 @@
         "inputs": [
           {
             "type": "input",
-            "placeholder": "username",
+            "placeholder": "-10435435",
             "title": {
               "en": "Chat ID:",
               "es": "Chat ID:"
