@@ -30,7 +30,7 @@ Para utilizar este módulo tienes que crear una app y obtener el `api_id` y el `
 
 </div>
 
-3. Telegram te enviará un código a tu teléfono y en la página te aparece un campo nuevo devajo para compeltar el código.
+3. Telegram te enviará un código a tu teléfono y en la página te aparece un campo nuevo debajo para compeltar el código.
 
 <div align="center">
 
@@ -48,7 +48,7 @@ Para utilizar este módulo tienes que crear una app y obtener el `api_id` y el `
 
 </div>
 
-    Listo! Ya están realizadas las credenciales para Rocketbot
+Listo! Ya están realizadas las credenciales para Rocketbot
 
 ## Descripción de los comandos
 

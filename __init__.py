@@ -85,11 +85,9 @@ if module == "send_message":
         from telethon.tl.functions.messages import GetHistoryRequest  # type: ignore
         from telethon.tl.types import InputPeerUser  # type: ignore
 
-        with TelegramClient("session_file", api_id, api_hash) as client:
-            client.start()
-            # Save the User, Chat or Channel into entity var
-            entity = client.get_entity(chat_id)
-            client.send_message(entity=entity, message=msg)
+        # Save the User, Chat or Channel into entity var
+        entity = client.get_entity(chat_id)
+        client.send_message(entity=entity, message=msg)
 
     except Exception as e:
         PrintException()  # type: ignore
