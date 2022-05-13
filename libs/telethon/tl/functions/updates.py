@@ -5,17 +5,24 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
     from ...tl.types import TypeChannelMessagesFilter, TypeInputChannel
 
 
-
 class GetChannelDifferenceRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x3173d78
-    SUBCLASS_OF_ID = 0x29896f5d
+    CONSTRUCTOR_ID = 0x3173D78
+    SUBCLASS_OF_ID = 0x29896F5D
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, channel: 'TypeInputChannel', filter: 'TypeChannelMessagesFilter', pts: int, limit: int, force: Optional[bool]=None):
+    def __init__(
+        self,
+        channel: "TypeInputChannel",
+        filter: "TypeChannelMessagesFilter",
+        pts: int,
+        limit: int,
+        force: Optional[bool] = None,
+    ):
         """
         :returns updates.ChannelDifference: Instance of either ChannelDifferenceEmpty, ChannelDifferenceTooLong, ChannelDifference.
         """
@@ -26,27 +33,37 @@ class GetChannelDifferenceRequest(TLRequest):
         self.force = force
 
     async def resolve(self, client, utils):
-        self.channel = utils.get_input_channel(await client.get_input_entity(self.channel))
+        self.channel = utils.get_input_channel(
+            await client.get_input_entity(self.channel)
+        )
 
     def to_dict(self):
         return {
-            '_': 'GetChannelDifferenceRequest',
-            'channel': self.channel.to_dict() if isinstance(self.channel, TLObject) else self.channel,
-            'filter': self.filter.to_dict() if isinstance(self.filter, TLObject) else self.filter,
-            'pts': self.pts,
-            'limit': self.limit,
-            'force': self.force
+            "_": "GetChannelDifferenceRequest",
+            "channel": self.channel.to_dict()
+            if isinstance(self.channel, TLObject)
+            else self.channel,
+            "filter": self.filter.to_dict()
+            if isinstance(self.filter, TLObject)
+            else self.filter,
+            "pts": self.pts,
+            "limit": self.limit,
+            "force": self.force,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'x=\x17\x03',
-            struct.pack('<I', (0 if self.force is None or self.force is False else 1)),
-            self.channel._bytes(),
-            self.filter._bytes(),
-            struct.pack('<i', self.pts),
-            struct.pack('<i', self.limit),
-        ))
+        return b"".join(
+            (
+                b"x=\x17\x03",
+                struct.pack(
+                    "<I", (0 if self.force is None or self.force is False else 1)
+                ),
+                self.channel._bytes(),
+                self.filter._bytes(),
+                struct.pack("<i", self.pts),
+                struct.pack("<i", self.limit),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -57,14 +74,22 @@ class GetChannelDifferenceRequest(TLRequest):
         _filter = reader.tgread_object()
         _pts = reader.read_int()
         _limit = reader.read_int()
-        return cls(channel=_channel, filter=_filter, pts=_pts, limit=_limit, force=_force)
+        return cls(
+            channel=_channel, filter=_filter, pts=_pts, limit=_limit, force=_force
+        )
 
 
 class GetDifferenceRequest(TLRequest):
     CONSTRUCTOR_ID = 0x25939651
     SUBCLASS_OF_ID = 0x20482874
 
-    def __init__(self, pts: int, date: Optional[datetime], qts: int, pts_total_limit: Optional[int]=None):
+    def __init__(
+        self,
+        pts: int,
+        date: Optional[datetime],
+        qts: int,
+        pts_total_limit: Optional[int] = None,
+    ):
         """
         :returns updates.Difference: Instance of either DifferenceEmpty, Difference, DifferenceSlice, DifferenceTooLong.
         """
@@ -75,22 +100,33 @@ class GetDifferenceRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetDifferenceRequest',
-            'pts': self.pts,
-            'date': self.date,
-            'qts': self.qts,
-            'pts_total_limit': self.pts_total_limit
+            "_": "GetDifferenceRequest",
+            "pts": self.pts,
+            "date": self.date,
+            "qts": self.qts,
+            "pts_total_limit": self.pts_total_limit,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'Q\x96\x93%',
-            struct.pack('<I', (0 if self.pts_total_limit is None or self.pts_total_limit is False else 1)),
-            struct.pack('<i', self.pts),
-            b'' if self.pts_total_limit is None or self.pts_total_limit is False else (struct.pack('<i', self.pts_total_limit)),
-            self.serialize_datetime(self.date),
-            struct.pack('<i', self.qts),
-        ))
+        return b"".join(
+            (
+                b"Q\x96\x93%",
+                struct.pack(
+                    "<I",
+                    (
+                        0
+                        if self.pts_total_limit is None or self.pts_total_limit is False
+                        else 1
+                    ),
+                ),
+                struct.pack("<i", self.pts),
+                b""
+                if self.pts_total_limit is None or self.pts_total_limit is False
+                else (struct.pack("<i", self.pts_total_limit)),
+                self.serialize_datetime(self.date),
+                struct.pack("<i", self.qts),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -107,20 +143,15 @@ class GetDifferenceRequest(TLRequest):
 
 
 class GetStateRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xedd4882a
-    SUBCLASS_OF_ID = 0x23df1a01
+    CONSTRUCTOR_ID = 0xEDD4882A
+    SUBCLASS_OF_ID = 0x23DF1A01
 
     def to_dict(self):
-        return {
-            '_': 'GetStateRequest'
-        }
+        return {"_": "GetStateRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'*\x88\xd4\xed',
-        ))
+        return b"".join((b"*\x88\xd4\xed",))
 
     @classmethod
     def from_reader(cls, reader):
         return cls()
-

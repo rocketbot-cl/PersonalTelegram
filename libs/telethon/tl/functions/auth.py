@@ -5,14 +5,14 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
     from ...tl.types import TypeCodeSettings, TypeInputCheckPasswordSRP
 
 
-
 class AcceptLoginTokenRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xe894ad4d
-    SUBCLASS_OF_ID = 0xc913c01a
+    CONSTRUCTOR_ID = 0xE894AD4D
+    SUBCLASS_OF_ID = 0xC913C01A
 
     def __init__(self, token: bytes):
         """
@@ -21,16 +21,15 @@ class AcceptLoginTokenRequest(TLRequest):
         self.token = token
 
     def to_dict(self):
-        return {
-            '_': 'AcceptLoginTokenRequest',
-            'token': self.token
-        }
+        return {"_": "AcceptLoginTokenRequest", "token": self.token}
 
     def _bytes(self):
-        return b''.join((
-            b'M\xad\x94\xe8',
-            self.serialize_bytes(self.token),
-        ))
+        return b"".join(
+            (
+                b"M\xad\x94\xe8",
+                self.serialize_bytes(self.token),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -39,10 +38,16 @@ class AcceptLoginTokenRequest(TLRequest):
 
 
 class BindTempAuthKeyRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xcdd42a05
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0xCDD42A05
+    SUBCLASS_OF_ID = 0xF5B399AC
 
-    def __init__(self, perm_auth_key_id: int, nonce: int, expires_at: Optional[datetime], encrypted_message: bytes):
+    def __init__(
+        self,
+        perm_auth_key_id: int,
+        nonce: int,
+        expires_at: Optional[datetime],
+        encrypted_message: bytes,
+    ):
         """
         :returns Bool: This type has no constructors.
         """
@@ -53,21 +58,23 @@ class BindTempAuthKeyRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'BindTempAuthKeyRequest',
-            'perm_auth_key_id': self.perm_auth_key_id,
-            'nonce': self.nonce,
-            'expires_at': self.expires_at,
-            'encrypted_message': self.encrypted_message
+            "_": "BindTempAuthKeyRequest",
+            "perm_auth_key_id": self.perm_auth_key_id,
+            "nonce": self.nonce,
+            "expires_at": self.expires_at,
+            "encrypted_message": self.encrypted_message,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x05*\xd4\xcd',
-            struct.pack('<q', self.perm_auth_key_id),
-            struct.pack('<q', self.nonce),
-            self.serialize_datetime(self.expires_at),
-            self.serialize_bytes(self.encrypted_message),
-        ))
+        return b"".join(
+            (
+                b"\x05*\xd4\xcd",
+                struct.pack("<q", self.perm_auth_key_id),
+                struct.pack("<q", self.nonce),
+                self.serialize_datetime(self.expires_at),
+                self.serialize_bytes(self.encrypted_message),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -75,12 +82,17 @@ class BindTempAuthKeyRequest(TLRequest):
         _nonce = reader.read_long()
         _expires_at = reader.tgread_date()
         _encrypted_message = reader.tgread_bytes()
-        return cls(perm_auth_key_id=_perm_auth_key_id, nonce=_nonce, expires_at=_expires_at, encrypted_message=_encrypted_message)
+        return cls(
+            perm_auth_key_id=_perm_auth_key_id,
+            nonce=_nonce,
+            expires_at=_expires_at,
+            encrypted_message=_encrypted_message,
+        )
 
 
 class CancelCodeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x1f040578
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x1F040578
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, phone_number: str, phone_code_hash: str):
         """
@@ -91,17 +103,19 @@ class CancelCodeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'CancelCodeRequest',
-            'phone_number': self.phone_number,
-            'phone_code_hash': self.phone_code_hash
+            "_": "CancelCodeRequest",
+            "phone_number": self.phone_number,
+            "phone_code_hash": self.phone_code_hash,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'x\x05\x04\x1f',
-            self.serialize_bytes(self.phone_number),
-            self.serialize_bytes(self.phone_code_hash),
-        ))
+        return b"".join(
+            (
+                b"x\x05\x04\x1f",
+                self.serialize_bytes(self.phone_number),
+                self.serialize_bytes(self.phone_code_hash),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -111,10 +125,10 @@ class CancelCodeRequest(TLRequest):
 
 
 class CheckPasswordRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xd18b4d16
-    SUBCLASS_OF_ID = 0xb9e04e39
+    CONSTRUCTOR_ID = 0xD18B4D16
+    SUBCLASS_OF_ID = 0xB9E04E39
 
-    def __init__(self, password: 'TypeInputCheckPasswordSRP'):
+    def __init__(self, password: "TypeInputCheckPasswordSRP"):
         """
         :returns auth.Authorization: Instance of either Authorization, AuthorizationSignUpRequired.
         """
@@ -122,15 +136,19 @@ class CheckPasswordRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'CheckPasswordRequest',
-            'password': self.password.to_dict() if isinstance(self.password, TLObject) else self.password
+            "_": "CheckPasswordRequest",
+            "password": self.password.to_dict()
+            if isinstance(self.password, TLObject)
+            else self.password,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x16M\x8b\xd1',
-            self.password._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\x16M\x8b\xd1",
+                self.password._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -139,8 +157,8 @@ class CheckPasswordRequest(TLRequest):
 
 
 class DropTempAuthKeysRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8e48a188
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x8E48A188
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def __init__(self, except_auth_keys: List[int]):
         """
@@ -150,15 +168,21 @@ class DropTempAuthKeysRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'DropTempAuthKeysRequest',
-            'except_auth_keys': [] if self.except_auth_keys is None else self.except_auth_keys[:]
+            "_": "DropTempAuthKeysRequest",
+            "except_auth_keys": []
+            if self.except_auth_keys is None
+            else self.except_auth_keys[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x88\xa1H\x8e',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.except_auth_keys)),b''.join(struct.pack('<q', x) for x in self.except_auth_keys),
-        ))
+        return b"".join(
+            (
+                b"\x88\xa1H\x8e",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.except_auth_keys)),
+                b"".join(struct.pack("<q", x) for x in self.except_auth_keys),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -172,8 +196,8 @@ class DropTempAuthKeysRequest(TLRequest):
 
 
 class ExportAuthorizationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xe5bfffcd
-    SUBCLASS_OF_ID = 0x5fd1ec51
+    CONSTRUCTOR_ID = 0xE5BFFFCD
+    SUBCLASS_OF_ID = 0x5FD1EC51
 
     def __init__(self, dc_id: int):
         """
@@ -182,16 +206,15 @@ class ExportAuthorizationRequest(TLRequest):
         self.dc_id = dc_id
 
     def to_dict(self):
-        return {
-            '_': 'ExportAuthorizationRequest',
-            'dc_id': self.dc_id
-        }
+        return {"_": "ExportAuthorizationRequest", "dc_id": self.dc_id}
 
     def _bytes(self):
-        return b''.join((
-            b'\xcd\xff\xbf\xe5',
-            struct.pack('<i', self.dc_id),
-        ))
+        return b"".join(
+            (
+                b"\xcd\xff\xbf\xe5",
+                struct.pack("<i", self.dc_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -200,8 +223,8 @@ class ExportAuthorizationRequest(TLRequest):
 
 
 class ExportLoginTokenRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xb1b41517
-    SUBCLASS_OF_ID = 0x6b55f636
+    CONSTRUCTOR_ID = 0xB1B41517
+    SUBCLASS_OF_ID = 0x6B55F636
 
     def __init__(self, api_id: int, api_hash: str, except_ids: List[int]):
         """
@@ -213,19 +236,23 @@ class ExportLoginTokenRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ExportLoginTokenRequest',
-            'api_id': self.api_id,
-            'api_hash': self.api_hash,
-            'except_ids': [] if self.except_ids is None else self.except_ids[:]
+            "_": "ExportLoginTokenRequest",
+            "api_id": self.api_id,
+            "api_hash": self.api_hash,
+            "except_ids": [] if self.except_ids is None else self.except_ids[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x17\x15\xb4\xb1',
-            struct.pack('<i', self.api_id),
-            self.serialize_bytes(self.api_hash),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.except_ids)),b''.join(struct.pack('<i', x) for x in self.except_ids),
-        ))
+        return b"".join(
+            (
+                b"\x17\x15\xb4\xb1",
+                struct.pack("<i", self.api_id),
+                self.serialize_bytes(self.api_hash),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.except_ids)),
+                b"".join(struct.pack("<i", x) for x in self.except_ids),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -241,8 +268,8 @@ class ExportLoginTokenRequest(TLRequest):
 
 
 class ImportAuthorizationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xe3ef9613
-    SUBCLASS_OF_ID = 0xb9e04e39
+    CONSTRUCTOR_ID = 0xE3EF9613
+    SUBCLASS_OF_ID = 0xB9E04E39
 
     # noinspection PyShadowingBuiltins
     def __init__(self, id: int, bytes: bytes):
@@ -253,18 +280,16 @@ class ImportAuthorizationRequest(TLRequest):
         self.bytes = bytes
 
     def to_dict(self):
-        return {
-            '_': 'ImportAuthorizationRequest',
-            'id': self.id,
-            'bytes': self.bytes
-        }
+        return {"_": "ImportAuthorizationRequest", "id": self.id, "bytes": self.bytes}
 
     def _bytes(self):
-        return b''.join((
-            b'\x13\x96\xef\xe3',
-            struct.pack('<i', self.id),
-            self.serialize_bytes(self.bytes),
-        ))
+        return b"".join(
+            (
+                b"\x13\x96\xef\xe3",
+                struct.pack("<i", self.id),
+                self.serialize_bytes(self.bytes),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -274,8 +299,8 @@ class ImportAuthorizationRequest(TLRequest):
 
 
 class ImportBotAuthorizationRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x67a3ff2c
-    SUBCLASS_OF_ID = 0xb9e04e39
+    CONSTRUCTOR_ID = 0x67A3FF2C
+    SUBCLASS_OF_ID = 0xB9E04E39
 
     def __init__(self, flags: int, api_id: int, api_hash: str, bot_auth_token: str):
         """
@@ -288,21 +313,23 @@ class ImportBotAuthorizationRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ImportBotAuthorizationRequest',
-            'flags': self.flags,
-            'api_id': self.api_id,
-            'api_hash': self.api_hash,
-            'bot_auth_token': self.bot_auth_token
+            "_": "ImportBotAuthorizationRequest",
+            "flags": self.flags,
+            "api_id": self.api_id,
+            "api_hash": self.api_hash,
+            "bot_auth_token": self.bot_auth_token,
         }
 
     def _bytes(self):
-        return b''.join((
-            b',\xff\xa3g',
-            struct.pack('<i', self.flags),
-            struct.pack('<i', self.api_id),
-            self.serialize_bytes(self.api_hash),
-            self.serialize_bytes(self.bot_auth_token),
-        ))
+        return b"".join(
+            (
+                b",\xff\xa3g",
+                struct.pack("<i", self.flags),
+                struct.pack("<i", self.api_id),
+                self.serialize_bytes(self.api_hash),
+                self.serialize_bytes(self.bot_auth_token),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -310,12 +337,17 @@ class ImportBotAuthorizationRequest(TLRequest):
         _api_id = reader.read_int()
         _api_hash = reader.tgread_string()
         _bot_auth_token = reader.tgread_string()
-        return cls(flags=_flags, api_id=_api_id, api_hash=_api_hash, bot_auth_token=_bot_auth_token)
+        return cls(
+            flags=_flags,
+            api_id=_api_id,
+            api_hash=_api_hash,
+            bot_auth_token=_bot_auth_token,
+        )
 
 
 class ImportLoginTokenRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x95ac5ce4
-    SUBCLASS_OF_ID = 0x6b55f636
+    CONSTRUCTOR_ID = 0x95AC5CE4
+    SUBCLASS_OF_ID = 0x6B55F636
 
     def __init__(self, token: bytes):
         """
@@ -324,16 +356,15 @@ class ImportLoginTokenRequest(TLRequest):
         self.token = token
 
     def to_dict(self):
-        return {
-            '_': 'ImportLoginTokenRequest',
-            'token': self.token
-        }
+        return {"_": "ImportLoginTokenRequest", "token": self.token}
 
     def _bytes(self):
-        return b''.join((
-            b'\xe4\\\xac\x95',
-            self.serialize_bytes(self.token),
-        ))
+        return b"".join(
+            (
+                b"\xe4\\\xac\x95",
+                self.serialize_bytes(self.token),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -342,18 +373,14 @@ class ImportLoginTokenRequest(TLRequest):
 
 
 class LogOutRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x5717da40
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x5717DA40
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def to_dict(self):
-        return {
-            '_': 'LogOutRequest'
-        }
+        return {"_": "LogOutRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'@\xda\x17W',
-        ))
+        return b"".join((b"@\xda\x17W",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -361,8 +388,8 @@ class LogOutRequest(TLRequest):
 
 
 class RecoverPasswordRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x4ea56e92
-    SUBCLASS_OF_ID = 0xb9e04e39
+    CONSTRUCTOR_ID = 0x4EA56E92
+    SUBCLASS_OF_ID = 0xB9E04E39
 
     def __init__(self, code: str):
         """
@@ -371,16 +398,15 @@ class RecoverPasswordRequest(TLRequest):
         self.code = code
 
     def to_dict(self):
-        return {
-            '_': 'RecoverPasswordRequest',
-            'code': self.code
-        }
+        return {"_": "RecoverPasswordRequest", "code": self.code}
 
     def _bytes(self):
-        return b''.join((
-            b'\x92n\xa5N',
-            self.serialize_bytes(self.code),
-        ))
+        return b"".join(
+            (
+                b"\x92n\xa5N",
+                self.serialize_bytes(self.code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -389,18 +415,14 @@ class RecoverPasswordRequest(TLRequest):
 
 
 class RequestPasswordRecoveryRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xd897bc66
-    SUBCLASS_OF_ID = 0xfa72d43a
+    CONSTRUCTOR_ID = 0xD897BC66
+    SUBCLASS_OF_ID = 0xFA72D43A
 
     def to_dict(self):
-        return {
-            '_': 'RequestPasswordRecoveryRequest'
-        }
+        return {"_": "RequestPasswordRecoveryRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'f\xbc\x97\xd8',
-        ))
+        return b"".join((b"f\xbc\x97\xd8",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -408,8 +430,8 @@ class RequestPasswordRecoveryRequest(TLRequest):
 
 
 class ResendCodeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x3ef1a9bf
-    SUBCLASS_OF_ID = 0x6ce87081
+    CONSTRUCTOR_ID = 0x3EF1A9BF
+    SUBCLASS_OF_ID = 0x6CE87081
 
     def __init__(self, phone_number: str, phone_code_hash: str):
         """
@@ -420,17 +442,19 @@ class ResendCodeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ResendCodeRequest',
-            'phone_number': self.phone_number,
-            'phone_code_hash': self.phone_code_hash
+            "_": "ResendCodeRequest",
+            "phone_number": self.phone_number,
+            "phone_code_hash": self.phone_code_hash,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xbf\xa9\xf1>',
-            self.serialize_bytes(self.phone_number),
-            self.serialize_bytes(self.phone_code_hash),
-        ))
+        return b"".join(
+            (
+                b"\xbf\xa9\xf1>",
+                self.serialize_bytes(self.phone_number),
+                self.serialize_bytes(self.phone_code_hash),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -440,18 +464,14 @@ class ResendCodeRequest(TLRequest):
 
 
 class ResetAuthorizationsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x9fab0d1a
-    SUBCLASS_OF_ID = 0xf5b399ac
+    CONSTRUCTOR_ID = 0x9FAB0D1A
+    SUBCLASS_OF_ID = 0xF5B399AC
 
     def to_dict(self):
-        return {
-            '_': 'ResetAuthorizationsRequest'
-        }
+        return {"_": "ResetAuthorizationsRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'\x1a\r\xab\x9f',
-        ))
+        return b"".join((b"\x1a\r\xab\x9f",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -459,10 +479,16 @@ class ResetAuthorizationsRequest(TLRequest):
 
 
 class SendCodeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xa677244f
-    SUBCLASS_OF_ID = 0x6ce87081
+    CONSTRUCTOR_ID = 0xA677244F
+    SUBCLASS_OF_ID = 0x6CE87081
 
-    def __init__(self, phone_number: str, api_id: int, api_hash: str, settings: 'TypeCodeSettings'):
+    def __init__(
+        self,
+        phone_number: str,
+        api_id: int,
+        api_hash: str,
+        settings: "TypeCodeSettings",
+    ):
         """
         :returns auth.SentCode: Instance of SentCode.
         """
@@ -473,21 +499,25 @@ class SendCodeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SendCodeRequest',
-            'phone_number': self.phone_number,
-            'api_id': self.api_id,
-            'api_hash': self.api_hash,
-            'settings': self.settings.to_dict() if isinstance(self.settings, TLObject) else self.settings
+            "_": "SendCodeRequest",
+            "phone_number": self.phone_number,
+            "api_id": self.api_id,
+            "api_hash": self.api_hash,
+            "settings": self.settings.to_dict()
+            if isinstance(self.settings, TLObject)
+            else self.settings,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'O$w\xa6',
-            self.serialize_bytes(self.phone_number),
-            struct.pack('<i', self.api_id),
-            self.serialize_bytes(self.api_hash),
-            self.settings._bytes(),
-        ))
+        return b"".join(
+            (
+                b"O$w\xa6",
+                self.serialize_bytes(self.phone_number),
+                struct.pack("<i", self.api_id),
+                self.serialize_bytes(self.api_hash),
+                self.settings._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -495,12 +525,17 @@ class SendCodeRequest(TLRequest):
         _api_id = reader.read_int()
         _api_hash = reader.tgread_string()
         _settings = reader.tgread_object()
-        return cls(phone_number=_phone_number, api_id=_api_id, api_hash=_api_hash, settings=_settings)
+        return cls(
+            phone_number=_phone_number,
+            api_id=_api_id,
+            api_hash=_api_hash,
+            settings=_settings,
+        )
 
 
 class SignInRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xbcd51581
-    SUBCLASS_OF_ID = 0xb9e04e39
+    CONSTRUCTOR_ID = 0xBCD51581
+    SUBCLASS_OF_ID = 0xB9E04E39
 
     def __init__(self, phone_number: str, phone_code_hash: str, phone_code: str):
         """
@@ -512,33 +547,41 @@ class SignInRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SignInRequest',
-            'phone_number': self.phone_number,
-            'phone_code_hash': self.phone_code_hash,
-            'phone_code': self.phone_code
+            "_": "SignInRequest",
+            "phone_number": self.phone_number,
+            "phone_code_hash": self.phone_code_hash,
+            "phone_code": self.phone_code,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x81\x15\xd5\xbc',
-            self.serialize_bytes(self.phone_number),
-            self.serialize_bytes(self.phone_code_hash),
-            self.serialize_bytes(self.phone_code),
-        ))
+        return b"".join(
+            (
+                b"\x81\x15\xd5\xbc",
+                self.serialize_bytes(self.phone_number),
+                self.serialize_bytes(self.phone_code_hash),
+                self.serialize_bytes(self.phone_code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
         _phone_number = reader.tgread_string()
         _phone_code_hash = reader.tgread_string()
         _phone_code = reader.tgread_string()
-        return cls(phone_number=_phone_number, phone_code_hash=_phone_code_hash, phone_code=_phone_code)
+        return cls(
+            phone_number=_phone_number,
+            phone_code_hash=_phone_code_hash,
+            phone_code=_phone_code,
+        )
 
 
 class SignUpRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x80eee427
-    SUBCLASS_OF_ID = 0xb9e04e39
+    CONSTRUCTOR_ID = 0x80EEE427
+    SUBCLASS_OF_ID = 0xB9E04E39
 
-    def __init__(self, phone_number: str, phone_code_hash: str, first_name: str, last_name: str):
+    def __init__(
+        self, phone_number: str, phone_code_hash: str, first_name: str, last_name: str
+    ):
         """
         :returns auth.Authorization: Instance of either Authorization, AuthorizationSignUpRequired.
         """
@@ -549,21 +592,23 @@ class SignUpRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SignUpRequest',
-            'phone_number': self.phone_number,
-            'phone_code_hash': self.phone_code_hash,
-            'first_name': self.first_name,
-            'last_name': self.last_name
+            "_": "SignUpRequest",
+            "phone_number": self.phone_number,
+            "phone_code_hash": self.phone_code_hash,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
         }
 
     def _bytes(self):
-        return b''.join((
-            b"'\xe4\xee\x80",
-            self.serialize_bytes(self.phone_number),
-            self.serialize_bytes(self.phone_code_hash),
-            self.serialize_bytes(self.first_name),
-            self.serialize_bytes(self.last_name),
-        ))
+        return b"".join(
+            (
+                b"'\xe4\xee\x80",
+                self.serialize_bytes(self.phone_number),
+                self.serialize_bytes(self.phone_code_hash),
+                self.serialize_bytes(self.first_name),
+                self.serialize_bytes(self.last_name),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -571,5 +616,9 @@ class SignUpRequest(TLRequest):
         _phone_code_hash = reader.tgread_string()
         _first_name = reader.tgread_string()
         _last_name = reader.tgread_string()
-        return cls(phone_number=_phone_number, phone_code_hash=_phone_code_hash, first_name=_first_name, last_name=_last_name)
-
+        return cls(
+            phone_number=_phone_number,
+            phone_code_hash=_phone_code_hash,
+            first_name=_first_name,
+            last_name=_last_name,
+        )

@@ -5,14 +5,14 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
     from ...tl.types import TypeInputFolderPeer
 
 
-
 class DeleteFolderRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x1c295881
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0x1C295881
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
     def __init__(self, folder_id: int):
         """
@@ -21,16 +21,15 @@ class DeleteFolderRequest(TLRequest):
         self.folder_id = folder_id
 
     def to_dict(self):
-        return {
-            '_': 'DeleteFolderRequest',
-            'folder_id': self.folder_id
-        }
+        return {"_": "DeleteFolderRequest", "folder_id": self.folder_id}
 
     def _bytes(self):
-        return b''.join((
-            b'\x81X)\x1c',
-            struct.pack('<i', self.folder_id),
-        ))
+        return b"".join(
+            (
+                b"\x81X)\x1c",
+                struct.pack("<i", self.folder_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -39,10 +38,10 @@ class DeleteFolderRequest(TLRequest):
 
 
 class EditPeerFoldersRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x6847d0ab
-    SUBCLASS_OF_ID = 0x8af52aac
+    CONSTRUCTOR_ID = 0x6847D0AB
+    SUBCLASS_OF_ID = 0x8AF52AAC
 
-    def __init__(self, folder_peers: List['TypeInputFolderPeer']):
+    def __init__(self, folder_peers: List["TypeInputFolderPeer"]):
         """
         :returns Updates: Instance of either UpdatesTooLong, UpdateShortMessage, UpdateShortChatMessage, UpdateShort, UpdatesCombined, Updates, UpdateShortSentMessage.
         """
@@ -50,15 +49,23 @@ class EditPeerFoldersRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'EditPeerFoldersRequest',
-            'folder_peers': [] if self.folder_peers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.folder_peers]
+            "_": "EditPeerFoldersRequest",
+            "folder_peers": []
+            if self.folder_peers is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.folder_peers
+            ],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xab\xd0Gh',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.folder_peers)),b''.join(x._bytes() for x in self.folder_peers),
-        ))
+        return b"".join(
+            (
+                b"\xab\xd0Gh",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.folder_peers)),
+                b"".join(x._bytes() for x in self.folder_peers),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -69,4 +76,3 @@ class EditPeerFoldersRequest(TLRequest):
             _folder_peers.append(_x)
 
         return cls(folder_peers=_folder_peers)
-

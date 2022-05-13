@@ -2,28 +2,48 @@
 from ...tl.tlobject import TLObject
 from ...tl.tlobject import TLRequest
 from typing import Optional, List, Union, TYPE_CHECKING
-from . import account, auth, bots, channels, contacts, folders, help, langpack, messages, payments, phone, photos, stats, stickers, updates, upload, users
+from . import (
+    account,
+    auth,
+    bots,
+    channels,
+    contacts,
+    folders,
+    help,
+    langpack,
+    messages,
+    payments,
+    phone,
+    photos,
+    stats,
+    stickers,
+    updates,
+    upload,
+    users,
+)
 import os
 import struct
 from datetime import datetime
-if TYPE_CHECKING:
-    from ...tl.types import TypeInputClientProxy, TypeJSONValue, TypeMessageRange, TypeType, TypeX
 
+if TYPE_CHECKING:
+    from ...tl.types import (
+        TypeInputClientProxy,
+        TypeJSONValue,
+        TypeMessageRange,
+        TypeType,
+        TypeX,
+    )
 
 
 class DestroyAuthKeyRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xd1435160
-    SUBCLASS_OF_ID = 0x8291e68e
+    CONSTRUCTOR_ID = 0xD1435160
+    SUBCLASS_OF_ID = 0x8291E68E
 
     def to_dict(self):
-        return {
-            '_': 'DestroyAuthKeyRequest'
-        }
+        return {"_": "DestroyAuthKeyRequest"}
 
     def _bytes(self):
-        return b''.join((
-            b'`QC\xd1',
-        ))
+        return b"".join((b"`QC\xd1",))
 
     @classmethod
     def from_reader(cls, reader):
@@ -31,8 +51,8 @@ class DestroyAuthKeyRequest(TLRequest):
 
 
 class DestroySessionRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xe7512126
-    SUBCLASS_OF_ID = 0xaf0ce7bd
+    CONSTRUCTOR_ID = 0xE7512126
+    SUBCLASS_OF_ID = 0xAF0CE7BD
 
     def __init__(self, session_id: int):
         """
@@ -41,16 +61,15 @@ class DestroySessionRequest(TLRequest):
         self.session_id = session_id
 
     def to_dict(self):
-        return {
-            '_': 'DestroySessionRequest',
-            'session_id': self.session_id
-        }
+        return {"_": "DestroySessionRequest", "session_id": self.session_id}
 
     def _bytes(self):
-        return b''.join((
-            b'&!Q\xe7',
-            struct.pack('<q', self.session_id),
-        ))
+        return b"".join(
+            (
+                b"&!Q\xe7",
+                struct.pack("<q", self.session_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -59,8 +78,8 @@ class DestroySessionRequest(TLRequest):
 
 
 class GetFutureSaltsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xb921bd04
-    SUBCLASS_OF_ID = 0x1090f517
+    CONSTRUCTOR_ID = 0xB921BD04
+    SUBCLASS_OF_ID = 0x1090F517
 
     def __init__(self, num: int):
         """
@@ -69,16 +88,15 @@ class GetFutureSaltsRequest(TLRequest):
         self.num = num
 
     def to_dict(self):
-        return {
-            '_': 'GetFutureSaltsRequest',
-            'num': self.num
-        }
+        return {"_": "GetFutureSaltsRequest", "num": self.num}
 
     def _bytes(self):
-        return b''.join((
-            b'\x04\xbd!\xb9',
-            struct.pack('<i', self.num),
-        ))
+        return b"".join(
+            (
+                b"\x04\xbd!\xb9",
+                struct.pack("<i", self.num),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -87,10 +105,22 @@ class GetFutureSaltsRequest(TLRequest):
 
 
 class InitConnectionRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xc1cd5ea9
-    SUBCLASS_OF_ID = 0xb7b2364b
+    CONSTRUCTOR_ID = 0xC1CD5EA9
+    SUBCLASS_OF_ID = 0xB7B2364B
 
-    def __init__(self, api_id: int, device_model: str, system_version: str, app_version: str, system_lang_code: str, lang_pack: str, lang_code: str, query: 'TypeX', proxy: Optional['TypeInputClientProxy']=None, params: Optional['TypeJSONValue']=None):
+    def __init__(
+        self,
+        api_id: int,
+        device_model: str,
+        system_version: str,
+        app_version: str,
+        system_lang_code: str,
+        lang_pack: str,
+        lang_code: str,
+        query: "TypeX",
+        proxy: Optional["TypeInputClientProxy"] = None,
+        params: Optional["TypeJSONValue"] = None,
+    ):
         """
         :returns X: This type has no constructors.
         """
@@ -107,34 +137,50 @@ class InitConnectionRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InitConnectionRequest',
-            'api_id': self.api_id,
-            'device_model': self.device_model,
-            'system_version': self.system_version,
-            'app_version': self.app_version,
-            'system_lang_code': self.system_lang_code,
-            'lang_pack': self.lang_pack,
-            'lang_code': self.lang_code,
-            'query': self.query.to_dict() if isinstance(self.query, TLObject) else self.query,
-            'proxy': self.proxy.to_dict() if isinstance(self.proxy, TLObject) else self.proxy,
-            'params': self.params.to_dict() if isinstance(self.params, TLObject) else self.params
+            "_": "InitConnectionRequest",
+            "api_id": self.api_id,
+            "device_model": self.device_model,
+            "system_version": self.system_version,
+            "app_version": self.app_version,
+            "system_lang_code": self.system_lang_code,
+            "lang_pack": self.lang_pack,
+            "lang_code": self.lang_code,
+            "query": self.query.to_dict()
+            if isinstance(self.query, TLObject)
+            else self.query,
+            "proxy": self.proxy.to_dict()
+            if isinstance(self.proxy, TLObject)
+            else self.proxy,
+            "params": self.params.to_dict()
+            if isinstance(self.params, TLObject)
+            else self.params,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa9^\xcd\xc1',
-            struct.pack('<I', (0 if self.proxy is None or self.proxy is False else 1) | (0 if self.params is None or self.params is False else 2)),
-            struct.pack('<i', self.api_id),
-            self.serialize_bytes(self.device_model),
-            self.serialize_bytes(self.system_version),
-            self.serialize_bytes(self.app_version),
-            self.serialize_bytes(self.system_lang_code),
-            self.serialize_bytes(self.lang_pack),
-            self.serialize_bytes(self.lang_code),
-            b'' if self.proxy is None or self.proxy is False else (self.proxy._bytes()),
-            b'' if self.params is None or self.params is False else (self.params._bytes()),
-            self.query._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xa9^\xcd\xc1",
+                struct.pack(
+                    "<I",
+                    (0 if self.proxy is None or self.proxy is False else 1)
+                    | (0 if self.params is None or self.params is False else 2),
+                ),
+                struct.pack("<i", self.api_id),
+                self.serialize_bytes(self.device_model),
+                self.serialize_bytes(self.system_version),
+                self.serialize_bytes(self.app_version),
+                self.serialize_bytes(self.system_lang_code),
+                self.serialize_bytes(self.lang_pack),
+                self.serialize_bytes(self.lang_code),
+                b""
+                if self.proxy is None or self.proxy is False
+                else (self.proxy._bytes()),
+                b""
+                if self.params is None or self.params is False
+                else (self.params._bytes()),
+                self.query._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -156,14 +202,25 @@ class InitConnectionRequest(TLRequest):
         else:
             _params = None
         _query = reader.tgread_object()
-        return cls(api_id=_api_id, device_model=_device_model, system_version=_system_version, app_version=_app_version, system_lang_code=_system_lang_code, lang_pack=_lang_pack, lang_code=_lang_code, query=_query, proxy=_proxy, params=_params)
+        return cls(
+            api_id=_api_id,
+            device_model=_device_model,
+            system_version=_system_version,
+            app_version=_app_version,
+            system_lang_code=_system_lang_code,
+            lang_pack=_lang_pack,
+            lang_code=_lang_code,
+            query=_query,
+            proxy=_proxy,
+            params=_params,
+        )
 
 
 class InvokeAfterMsgRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xcb9f372d
-    SUBCLASS_OF_ID = 0xb7b2364b
+    CONSTRUCTOR_ID = 0xCB9F372D
+    SUBCLASS_OF_ID = 0xB7B2364B
 
-    def __init__(self, msg_id: int, query: 'TypeX'):
+    def __init__(self, msg_id: int, query: "TypeX"):
         """
         :returns X: This type has no constructors.
         """
@@ -172,17 +229,21 @@ class InvokeAfterMsgRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InvokeAfterMsgRequest',
-            'msg_id': self.msg_id,
-            'query': self.query.to_dict() if isinstance(self.query, TLObject) else self.query
+            "_": "InvokeAfterMsgRequest",
+            "msg_id": self.msg_id,
+            "query": self.query.to_dict()
+            if isinstance(self.query, TLObject)
+            else self.query,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'-7\x9f\xcb',
-            struct.pack('<q', self.msg_id),
-            self.query._bytes(),
-        ))
+        return b"".join(
+            (
+                b"-7\x9f\xcb",
+                struct.pack("<q", self.msg_id),
+                self.query._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -192,10 +253,10 @@ class InvokeAfterMsgRequest(TLRequest):
 
 
 class InvokeAfterMsgsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x3dc4b4f0
-    SUBCLASS_OF_ID = 0xb7b2364b
+    CONSTRUCTOR_ID = 0x3DC4B4F0
+    SUBCLASS_OF_ID = 0xB7B2364B
 
-    def __init__(self, msg_ids: List[int], query: 'TypeX'):
+    def __init__(self, msg_ids: List[int], query: "TypeX"):
         """
         :returns X: This type has no constructors.
         """
@@ -204,17 +265,23 @@ class InvokeAfterMsgsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InvokeAfterMsgsRequest',
-            'msg_ids': [] if self.msg_ids is None else self.msg_ids[:],
-            'query': self.query.to_dict() if isinstance(self.query, TLObject) else self.query
+            "_": "InvokeAfterMsgsRequest",
+            "msg_ids": [] if self.msg_ids is None else self.msg_ids[:],
+            "query": self.query.to_dict()
+            if isinstance(self.query, TLObject)
+            else self.query,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf0\xb4\xc4=',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.msg_ids)),b''.join(struct.pack('<q', x) for x in self.msg_ids),
-            self.query._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xf0\xb4\xc4=",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.msg_ids)),
+                b"".join(struct.pack("<q", x) for x in self.msg_ids),
+                self.query._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -229,10 +296,10 @@ class InvokeAfterMsgsRequest(TLRequest):
 
 
 class InvokeWithLayerRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xda9b0d0d
-    SUBCLASS_OF_ID = 0xb7b2364b
+    CONSTRUCTOR_ID = 0xDA9B0D0D
+    SUBCLASS_OF_ID = 0xB7B2364B
 
-    def __init__(self, layer: int, query: 'TypeX'):
+    def __init__(self, layer: int, query: "TypeX"):
         """
         :returns X: This type has no constructors.
         """
@@ -241,17 +308,21 @@ class InvokeWithLayerRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InvokeWithLayerRequest',
-            'layer': self.layer,
-            'query': self.query.to_dict() if isinstance(self.query, TLObject) else self.query
+            "_": "InvokeWithLayerRequest",
+            "layer": self.layer,
+            "query": self.query.to_dict()
+            if isinstance(self.query, TLObject)
+            else self.query,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\r\r\x9b\xda',
-            struct.pack('<i', self.layer),
-            self.query._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\r\r\x9b\xda",
+                struct.pack("<i", self.layer),
+                self.query._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -261,11 +332,11 @@ class InvokeWithLayerRequest(TLRequest):
 
 
 class InvokeWithMessagesRangeRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x365275f2
-    SUBCLASS_OF_ID = 0xb7b2364b
+    CONSTRUCTOR_ID = 0x365275F2
+    SUBCLASS_OF_ID = 0xB7B2364B
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, range: 'TypeMessageRange', query: 'TypeX'):
+    def __init__(self, range: "TypeMessageRange", query: "TypeX"):
         """
         :returns X: This type has no constructors.
         """
@@ -274,17 +345,23 @@ class InvokeWithMessagesRangeRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InvokeWithMessagesRangeRequest',
-            'range': self.range.to_dict() if isinstance(self.range, TLObject) else self.range,
-            'query': self.query.to_dict() if isinstance(self.query, TLObject) else self.query
+            "_": "InvokeWithMessagesRangeRequest",
+            "range": self.range.to_dict()
+            if isinstance(self.range, TLObject)
+            else self.range,
+            "query": self.query.to_dict()
+            if isinstance(self.query, TLObject)
+            else self.query,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xf2uR6',
-            self.range._bytes(),
-            self.query._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xf2uR6",
+                self.range._bytes(),
+                self.query._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -294,10 +371,10 @@ class InvokeWithMessagesRangeRequest(TLRequest):
 
 
 class InvokeWithTakeoutRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xaca9fd2e
-    SUBCLASS_OF_ID = 0xb7b2364b
+    CONSTRUCTOR_ID = 0xACA9FD2E
+    SUBCLASS_OF_ID = 0xB7B2364B
 
-    def __init__(self, takeout_id: int, query: 'TypeX'):
+    def __init__(self, takeout_id: int, query: "TypeX"):
         """
         :returns X: This type has no constructors.
         """
@@ -306,17 +383,21 @@ class InvokeWithTakeoutRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InvokeWithTakeoutRequest',
-            'takeout_id': self.takeout_id,
-            'query': self.query.to_dict() if isinstance(self.query, TLObject) else self.query
+            "_": "InvokeWithTakeoutRequest",
+            "takeout_id": self.takeout_id,
+            "query": self.query.to_dict()
+            if isinstance(self.query, TLObject)
+            else self.query,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'.\xfd\xa9\xac',
-            struct.pack('<q', self.takeout_id),
-            self.query._bytes(),
-        ))
+        return b"".join(
+            (
+                b".\xfd\xa9\xac",
+                struct.pack("<q", self.takeout_id),
+                self.query._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -326,10 +407,10 @@ class InvokeWithTakeoutRequest(TLRequest):
 
 
 class InvokeWithoutUpdatesRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xbf9459b7
-    SUBCLASS_OF_ID = 0xb7b2364b
+    CONSTRUCTOR_ID = 0xBF9459B7
+    SUBCLASS_OF_ID = 0xB7B2364B
 
-    def __init__(self, query: 'TypeX'):
+    def __init__(self, query: "TypeX"):
         """
         :returns X: This type has no constructors.
         """
@@ -337,15 +418,19 @@ class InvokeWithoutUpdatesRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'InvokeWithoutUpdatesRequest',
-            'query': self.query.to_dict() if isinstance(self.query, TLObject) else self.query
+            "_": "InvokeWithoutUpdatesRequest",
+            "query": self.query.to_dict()
+            if isinstance(self.query, TLObject)
+            else self.query,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xb7Y\x94\xbf',
-            self.query._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xb7Y\x94\xbf",
+                self.query._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -354,8 +439,8 @@ class InvokeWithoutUpdatesRequest(TLRequest):
 
 
 class PingRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x7abe77ec
-    SUBCLASS_OF_ID = 0x816aee71
+    CONSTRUCTOR_ID = 0x7ABE77EC
+    SUBCLASS_OF_ID = 0x816AEE71
 
     def __init__(self, ping_id: int):
         """
@@ -364,16 +449,15 @@ class PingRequest(TLRequest):
         self.ping_id = ping_id
 
     def to_dict(self):
-        return {
-            '_': 'PingRequest',
-            'ping_id': self.ping_id
-        }
+        return {"_": "PingRequest", "ping_id": self.ping_id}
 
     def _bytes(self):
-        return b''.join((
-            b'\xecw\xbez',
-            struct.pack('<q', self.ping_id),
-        ))
+        return b"".join(
+            (
+                b"\xecw\xbez",
+                struct.pack("<q", self.ping_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -382,8 +466,8 @@ class PingRequest(TLRequest):
 
 
 class PingDelayDisconnectRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf3427b8c
-    SUBCLASS_OF_ID = 0x816aee71
+    CONSTRUCTOR_ID = 0xF3427B8C
+    SUBCLASS_OF_ID = 0x816AEE71
 
     def __init__(self, ping_id: int, disconnect_delay: int):
         """
@@ -394,17 +478,19 @@ class PingDelayDisconnectRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'PingDelayDisconnectRequest',
-            'ping_id': self.ping_id,
-            'disconnect_delay': self.disconnect_delay
+            "_": "PingDelayDisconnectRequest",
+            "ping_id": self.ping_id,
+            "disconnect_delay": self.disconnect_delay,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x8c{B\xf3',
-            struct.pack('<q', self.ping_id),
-            struct.pack('<i', self.disconnect_delay),
-        ))
+        return b"".join(
+            (
+                b"\x8c{B\xf3",
+                struct.pack("<q", self.ping_id),
+                struct.pack("<i", self.disconnect_delay),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -414,10 +500,18 @@ class PingDelayDisconnectRequest(TLRequest):
 
 
 class ReqDHParamsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xd712e4be
-    SUBCLASS_OF_ID = 0xa6188d9e
+    CONSTRUCTOR_ID = 0xD712E4BE
+    SUBCLASS_OF_ID = 0xA6188D9E
 
-    def __init__(self, nonce: int, server_nonce: int, p: bytes, q: bytes, public_key_fingerprint: int, encrypted_data: bytes):
+    def __init__(
+        self,
+        nonce: int,
+        server_nonce: int,
+        p: bytes,
+        q: bytes,
+        public_key_fingerprint: int,
+        encrypted_data: bytes,
+    ):
         """
         :returns Server_DH_Params: Instance of either ServerDHParamsFail, ServerDHParamsOk.
         """
@@ -430,25 +524,27 @@ class ReqDHParamsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ReqDHParamsRequest',
-            'nonce': self.nonce,
-            'server_nonce': self.server_nonce,
-            'p': self.p,
-            'q': self.q,
-            'public_key_fingerprint': self.public_key_fingerprint,
-            'encrypted_data': self.encrypted_data
+            "_": "ReqDHParamsRequest",
+            "nonce": self.nonce,
+            "server_nonce": self.server_nonce,
+            "p": self.p,
+            "q": self.q,
+            "public_key_fingerprint": self.public_key_fingerprint,
+            "encrypted_data": self.encrypted_data,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xbe\xe4\x12\xd7',
-            self.nonce.to_bytes(16, 'little', signed=True),
-            self.server_nonce.to_bytes(16, 'little', signed=True),
-            self.serialize_bytes(self.p),
-            self.serialize_bytes(self.q),
-            struct.pack('<q', self.public_key_fingerprint),
-            self.serialize_bytes(self.encrypted_data),
-        ))
+        return b"".join(
+            (
+                b"\xbe\xe4\x12\xd7",
+                self.nonce.to_bytes(16, "little", signed=True),
+                self.server_nonce.to_bytes(16, "little", signed=True),
+                self.serialize_bytes(self.p),
+                self.serialize_bytes(self.q),
+                struct.pack("<q", self.public_key_fingerprint),
+                self.serialize_bytes(self.encrypted_data),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -458,12 +554,19 @@ class ReqDHParamsRequest(TLRequest):
         _q = reader.tgread_bytes()
         _public_key_fingerprint = reader.read_long()
         _encrypted_data = reader.tgread_bytes()
-        return cls(nonce=_nonce, server_nonce=_server_nonce, p=_p, q=_q, public_key_fingerprint=_public_key_fingerprint, encrypted_data=_encrypted_data)
+        return cls(
+            nonce=_nonce,
+            server_nonce=_server_nonce,
+            p=_p,
+            q=_q,
+            public_key_fingerprint=_public_key_fingerprint,
+            encrypted_data=_encrypted_data,
+        )
 
 
 class ReqPqRequest(TLRequest):
     CONSTRUCTOR_ID = 0x60469778
-    SUBCLASS_OF_ID = 0x786986b8
+    SUBCLASS_OF_ID = 0x786986B8
 
     def __init__(self, nonce: int):
         """
@@ -472,16 +575,15 @@ class ReqPqRequest(TLRequest):
         self.nonce = nonce
 
     def to_dict(self):
-        return {
-            '_': 'ReqPqRequest',
-            'nonce': self.nonce
-        }
+        return {"_": "ReqPqRequest", "nonce": self.nonce}
 
     def _bytes(self):
-        return b''.join((
-            b'x\x97F`',
-            self.nonce.to_bytes(16, 'little', signed=True),
-        ))
+        return b"".join(
+            (
+                b"x\x97F`",
+                self.nonce.to_bytes(16, "little", signed=True),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -490,8 +592,8 @@ class ReqPqRequest(TLRequest):
 
 
 class ReqPqMultiRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xbe7e8ef1
-    SUBCLASS_OF_ID = 0x786986b8
+    CONSTRUCTOR_ID = 0xBE7E8EF1
+    SUBCLASS_OF_ID = 0x786986B8
 
     def __init__(self, nonce: int):
         """
@@ -500,16 +602,15 @@ class ReqPqMultiRequest(TLRequest):
         self.nonce = nonce
 
     def to_dict(self):
-        return {
-            '_': 'ReqPqMultiRequest',
-            'nonce': self.nonce
-        }
+        return {"_": "ReqPqMultiRequest", "nonce": self.nonce}
 
     def _bytes(self):
-        return b''.join((
-            b'\xf1\x8e~\xbe',
-            self.nonce.to_bytes(16, 'little', signed=True),
-        ))
+        return b"".join(
+            (
+                b"\xf1\x8e~\xbe",
+                self.nonce.to_bytes(16, "little", signed=True),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -518,8 +619,8 @@ class ReqPqMultiRequest(TLRequest):
 
 
 class RpcDropAnswerRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x58e4a740
-    SUBCLASS_OF_ID = 0x4bca7570
+    CONSTRUCTOR_ID = 0x58E4A740
+    SUBCLASS_OF_ID = 0x4BCA7570
 
     def __init__(self, req_msg_id: int):
         """
@@ -528,16 +629,15 @@ class RpcDropAnswerRequest(TLRequest):
         self.req_msg_id = req_msg_id
 
     def to_dict(self):
-        return {
-            '_': 'RpcDropAnswerRequest',
-            'req_msg_id': self.req_msg_id
-        }
+        return {"_": "RpcDropAnswerRequest", "req_msg_id": self.req_msg_id}
 
     def _bytes(self):
-        return b''.join((
-            b'@\xa7\xe4X',
-            struct.pack('<q', self.req_msg_id),
-        ))
+        return b"".join(
+            (
+                b"@\xa7\xe4X",
+                struct.pack("<q", self.req_msg_id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -546,8 +646,8 @@ class RpcDropAnswerRequest(TLRequest):
 
 
 class SetClientDHParamsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf5045f1f
-    SUBCLASS_OF_ID = 0x55dd6cdb
+    CONSTRUCTOR_ID = 0xF5045F1F
+    SUBCLASS_OF_ID = 0x55DD6CDB
 
     def __init__(self, nonce: int, server_nonce: int, encrypted_data: bytes):
         """
@@ -559,24 +659,27 @@ class SetClientDHParamsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SetClientDHParamsRequest',
-            'nonce': self.nonce,
-            'server_nonce': self.server_nonce,
-            'encrypted_data': self.encrypted_data
+            "_": "SetClientDHParamsRequest",
+            "nonce": self.nonce,
+            "server_nonce": self.server_nonce,
+            "encrypted_data": self.encrypted_data,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x1f_\x04\xf5',
-            self.nonce.to_bytes(16, 'little', signed=True),
-            self.server_nonce.to_bytes(16, 'little', signed=True),
-            self.serialize_bytes(self.encrypted_data),
-        ))
+        return b"".join(
+            (
+                b"\x1f_\x04\xf5",
+                self.nonce.to_bytes(16, "little", signed=True),
+                self.server_nonce.to_bytes(16, "little", signed=True),
+                self.serialize_bytes(self.encrypted_data),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
         _nonce = reader.read_large_int(bits=128)
         _server_nonce = reader.read_large_int(bits=128)
         _encrypted_data = reader.tgread_bytes()
-        return cls(nonce=_nonce, server_nonce=_server_nonce, encrypted_data=_encrypted_data)
-
+        return cls(
+            nonce=_nonce, server_nonce=_server_nonce, encrypted_data=_encrypted_data
+        )

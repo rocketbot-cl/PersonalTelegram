@@ -46,10 +46,20 @@
             "type": "input",
             "placeholder": "0123456789abcdef0123456789abcdef",
             "title": {
-              "en": "API HASH:",
-              "es": "API HASH:"
+              "en": "API hash:",
+              "es": "API hash:"
             },
             "id": "api_hash",
+            "css": "col-md-12"
+          },
+          {
+            "type": "input",
+            "placeholder": "+56 1234 5678",
+            "title": {
+              "en": "Phone number:",
+              "es": "Número de teléfono:"
+            },
+            "id": "phone_number",
             "css": "col-md-12"
           }
         ]
@@ -57,6 +67,60 @@
       "video_youtube": "",
       "icon": "data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiBmaWxsPSIjMDM5YmU1IiByPSIxMiIvPjxwYXRoIGQ9Im01LjQ5MSAxMS43NCAxMS41Ny00LjQ2MWMuNTM3LS4xOTQgMS4wMDYuMTMxLjgzMi45NDNsLjAwMS0uMDAxLTEuOTcgOS4yODFjLS4xNDYuNjU4LS41MzcuODE4LTEuMDg0LjUwOGwtMy0yLjIxMS0xLjQ0NyAxLjM5NGMtLjE2LjE2LS4yOTUuMjk1LS42MDUuMjk1bC4yMTMtMy4wNTMgNS41Ni01LjAyM2MuMjQyLS4yMTMtLjA1NC0uMzMzLS4zNzMtLjEyMWwtNi44NzEgNC4zMjYtMi45NjItLjkyNGMtLjY0My0uMjA0LS42NTctLjY0My4xMzYtLjk1M3oiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
       "module": "connect",
+      "module_name": "PersonalTelegram",
+      "father": "module",
+      "group": "scripts",
+      "linux": true,
+      "windows": true,
+      "mac": true,
+      "docker": false,
+      "visible": true,
+      "options": false
+    },
+    {
+      "title": {
+        "en": "Get chats IDs",
+        "es": "Obtener IDs de chats"
+      },
+      "description": {
+        "en": "Print a list of the IDs",
+        "es": "Imprime una lista de IDs"
+      },
+      "form": {
+        "css": "modal-lg",
+        "style": "min-width:1024px;",
+        "inputs": [
+          {
+            "type": "input",
+            "placeholder": "result",
+            "title": {
+              "es": "Asignar resultado a variable",
+              "en": "Assign result to variable",
+              "pr": "Atribuir resultado a variável"
+            },
+            "description": {
+              "es": "Nombre de la variable donde se asignará el resultado de la execución del comando.",
+              "en": "Name of the variable where the result of the execution of the command will be assigned.",
+              "pr": "Nome da variável onde será atribuído o resultado da execução do comando."
+            },
+            "remove_vars": true,
+            "id": "result",
+            "css": "col-md-12"
+          },
+          {
+            "type": "label",
+            "title": {
+              "es": "Este comando listará todos los nombres de los chats y sus correspondientes IDs en la terminal, y guardará el resultado en la variable indicada",
+              "en": "This command will list all the chats names and its IDs on the terminal and then save it on the assigned variables"
+            },
+            "id": "label",
+            "css": "col-md-12"
+          }
+        ]
+      },
+      "video_youtube": "",
+      "icon": "data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiBmaWxsPSIjMDM5YmU1IiByPSIxMiIvPjxwYXRoIGQ9Im01LjQ5MSAxMS43NCAxMS41Ny00LjQ2MWMuNTM3LS4xOTQgMS4wMDYuMTMxLjgzMi45NDNsLjAwMS0uMDAxLTEuOTcgOS4yODFjLS4xNDYuNjU4LS41MzcuODE4LTEuMDg0LjUwOGwtMy0yLjIxMS0xLjQ0NyAxLjM5NGMtLjE2LjE2LS4yOTUuMjk1LS42MDUuMjk1bC4yMTMtMy4wNTMgNS41Ni01LjAyM2MuMjQyLS4yMTMtLjA1NC0uMzMzLS4zNzMtLjEyMWwtNi44NzEgNC4zMjYtMi45NjItLjkyNGMtLjY0My0uMjA0LS42NTctLjY0My4xMzYtLjk1M3oiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
+      "module": "get_chats_ids",
       "module_name": "PersonalTelegram",
       "father": "module",
       "group": "scripts",
@@ -94,15 +158,15 @@
             "type": "input",
             "placeholder": "chat_id",
             "title": {
-              "en": "chat_id:",
-              "es": "chat_id:"
+              "en": "Chat id:",
+              "es": "Chat id:"
             },
             "id": "chat_id",
             "css": "col-md-12"
           }
         ]
       },
-      "video_youtube": "aMV6cXPMMSo",
+      "video_youtube": "",
       "icon": "data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiBmaWxsPSIjMDM5YmU1IiByPSIxMiIvPjxwYXRoIGQ9Im01LjQ5MSAxMS43NCAxMS41Ny00LjQ2MWMuNTM3LS4xOTQgMS4wMDYuMTMxLjgzMi45NDNsLjAwMS0uMDAxLTEuOTcgOS4yODFjLS4xNDYuNjU4LS41MzcuODE4LTEuMDg0LjUwOGwtMy0yLjIxMS0xLjQ0NyAxLjM5NGMtLjE2LjE2LS4yOTUuMjk1LS42MDUuMjk1bC4yMTMtMy4wNTMgNS41Ni01LjAyM2MuMjQyLS4yMTMtLjA1NC0uMzMzLS4zNzMtLjEyMWwtNi44NzEgNC4zMjYtMi45NjItLjkyNGMtLjY0My0uMjA0LS42NTctLjY0My4xMzYtLjk1M3oiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
       "module": "send_message",
       "module_name": "PersonalTelegram",
@@ -130,12 +194,12 @@
         "inputs": [
           {
             "type": "input",
-            "placeholder": "username",
+            "placeholder": "-10435435",
             "title": {
-              "en": "Channel Username:",
-              "es": "Nombre de canal:"
+              "en": "Chat ID:",
+              "es": "Chat ID:"
             },
-            "id": "channel_username",
+            "id": "channel_id",
             "css": "col-md-12"
           },
           {
@@ -146,11 +210,35 @@
               "es": "Resultado:"
             },
             "id": "res",
+            "remove_vars": true,
+            "css": "col-md-12"
+          },
+          {
+            "type": "select",
+            "title": {
+              "es": "Descargar:",
+              "en": "Download:"
+            },
+            "options": [
+              {
+                "title": "--Seleccione--",
+                "value": ""
+              },
+              {
+                "title": "Just the messages",
+                "value": "messages_only"
+              },
+              {
+                "title": "All the metadata",
+                "value": "all_metadata"
+              }
+            ],
+            "id": "option_",
             "css": "col-md-12"
           }
         ]
       },
-      "video_youtube": "aMV6cXPMMSo",
+      "video_youtube": "",
       "icon": "data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiBmaWxsPSIjMDM5YmU1IiByPSIxMiIvPjxwYXRoIGQ9Im01LjQ5MSAxMS43NCAxMS41Ny00LjQ2MWMuNTM3LS4xOTQgMS4wMDYuMTMxLjgzMi45NDNsLjAwMS0uMDAxLTEuOTcgOS4yODFjLS4xNDYuNjU4LS41MzcuODE4LTEuMDg0LjUwOGwtMy0yLjIxMS0xLjQ0NyAxLjM5NGMtLjE2LjE2LS4yOTUuMjk1LS42MDUuMjk1bC4yMTMtMy4wNTMgNS41Ni01LjAyM2MuMjQyLS4yMTMtLjA1NC0uMzMzLS4zNzMtLjEyMWwtNi44NzEgNC4zMjYtMi45NjItLjkyNGMtLjY0My0uMjA0LS42NTctLjY0My4xMzYtLjk1M3oiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
       "module": "read_message",
       "module_name": "PersonalTelegram",

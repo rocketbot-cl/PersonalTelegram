@@ -4,16 +4,16 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
     from ...tl.types import TypePhoto, TypeUser
 
 
-
 class Photo(TLObject):
-    CONSTRUCTOR_ID = 0x20212ca8
-    SUBCLASS_OF_ID = 0xc292bd24
+    CONSTRUCTOR_ID = 0x20212CA8
+    SUBCLASS_OF_ID = 0xC292BD24
 
-    def __init__(self, photo: 'TypePhoto', users: List['TypeUser']):
+    def __init__(self, photo: "TypePhoto", users: List["TypeUser"]):
         """
         Constructor for photos.Photo: Instance of Photo.
         """
@@ -22,17 +22,25 @@ class Photo(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Photo',
-            'photo': self.photo.to_dict() if isinstance(self.photo, TLObject) else self.photo,
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "Photo",
+            "photo": self.photo.to_dict()
+            if isinstance(self.photo, TLObject)
+            else self.photo,
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa8,! ',
-            self.photo._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xa8,! ",
+                self.photo._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -47,10 +55,10 @@ class Photo(TLObject):
 
 
 class Photos(TLObject):
-    CONSTRUCTOR_ID = 0x8dca6aa5
-    SUBCLASS_OF_ID = 0x27cfb967
+    CONSTRUCTOR_ID = 0x8DCA6AA5
+    SUBCLASS_OF_ID = 0x27CFB967
 
-    def __init__(self, photos: List['TypePhoto'], users: List['TypeUser']):
+    def __init__(self, photos: List["TypePhoto"], users: List["TypeUser"]):
         """
         Constructor for photos.Photos: Instance of either Photos, PhotosSlice.
         """
@@ -59,17 +67,27 @@ class Photos(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'Photos',
-            'photos': [] if self.photos is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.photos],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "Photos",
+            "photos": []
+            if self.photos is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.photos],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa5j\xca\x8d',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.photos)),b''.join(x._bytes() for x in self.photos),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xa5j\xca\x8d",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.photos)),
+                b"".join(x._bytes() for x in self.photos),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -89,10 +107,10 @@ class Photos(TLObject):
 
 
 class PhotosSlice(TLObject):
-    CONSTRUCTOR_ID = 0x15051f54
-    SUBCLASS_OF_ID = 0x27cfb967
+    CONSTRUCTOR_ID = 0x15051F54
+    SUBCLASS_OF_ID = 0x27CFB967
 
-    def __init__(self, count: int, photos: List['TypePhoto'], users: List['TypeUser']):
+    def __init__(self, count: int, photos: List["TypePhoto"], users: List["TypeUser"]):
         """
         Constructor for photos.Photos: Instance of either Photos, PhotosSlice.
         """
@@ -102,19 +120,29 @@ class PhotosSlice(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'PhotosSlice',
-            'count': self.count,
-            'photos': [] if self.photos is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.photos],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "PhotosSlice",
+            "count": self.count,
+            "photos": []
+            if self.photos is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.photos],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'T\x1f\x05\x15',
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.photos)),b''.join(x._bytes() for x in self.photos),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"T\x1f\x05\x15",
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.photos)),
+                b"".join(x._bytes() for x in self.photos),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -132,4 +160,3 @@ class PhotosSlice(TLObject):
             _users.append(_x)
 
         return cls(count=_count, photos=_photos, users=_users)
-

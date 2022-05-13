@@ -8,8 +8,8 @@ from datetime import datetime
 
 
 class GetDifferenceRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xcd984aa5
-    SUBCLASS_OF_ID = 0x52662d55
+    CONSTRUCTOR_ID = 0xCD984AA5
+    SUBCLASS_OF_ID = 0x52662D55
 
     def __init__(self, lang_pack: str, lang_code: str, from_version: int):
         """
@@ -21,31 +21,35 @@ class GetDifferenceRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetDifferenceRequest',
-            'lang_pack': self.lang_pack,
-            'lang_code': self.lang_code,
-            'from_version': self.from_version
+            "_": "GetDifferenceRequest",
+            "lang_pack": self.lang_pack,
+            "lang_code": self.lang_code,
+            "from_version": self.from_version,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa5J\x98\xcd',
-            self.serialize_bytes(self.lang_pack),
-            self.serialize_bytes(self.lang_code),
-            struct.pack('<i', self.from_version),
-        ))
+        return b"".join(
+            (
+                b"\xa5J\x98\xcd",
+                self.serialize_bytes(self.lang_pack),
+                self.serialize_bytes(self.lang_code),
+                struct.pack("<i", self.from_version),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
         _lang_pack = reader.tgread_string()
         _lang_code = reader.tgread_string()
         _from_version = reader.read_int()
-        return cls(lang_pack=_lang_pack, lang_code=_lang_code, from_version=_from_version)
+        return cls(
+            lang_pack=_lang_pack, lang_code=_lang_code, from_version=_from_version
+        )
 
 
 class GetLangPackRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf2f2330a
-    SUBCLASS_OF_ID = 0x52662d55
+    CONSTRUCTOR_ID = 0xF2F2330A
+    SUBCLASS_OF_ID = 0x52662D55
 
     def __init__(self, lang_pack: str, lang_code: str):
         """
@@ -56,17 +60,19 @@ class GetLangPackRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetLangPackRequest',
-            'lang_pack': self.lang_pack,
-            'lang_code': self.lang_code
+            "_": "GetLangPackRequest",
+            "lang_pack": self.lang_pack,
+            "lang_code": self.lang_code,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\n3\xf2\xf2',
-            self.serialize_bytes(self.lang_pack),
-            self.serialize_bytes(self.lang_code),
-        ))
+        return b"".join(
+            (
+                b"\n3\xf2\xf2",
+                self.serialize_bytes(self.lang_pack),
+                self.serialize_bytes(self.lang_code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -76,8 +82,8 @@ class GetLangPackRequest(TLRequest):
 
 
 class GetLanguageRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x6a596502
-    SUBCLASS_OF_ID = 0xabac89b7
+    CONSTRUCTOR_ID = 0x6A596502
+    SUBCLASS_OF_ID = 0xABAC89B7
 
     def __init__(self, lang_pack: str, lang_code: str):
         """
@@ -88,17 +94,19 @@ class GetLanguageRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetLanguageRequest',
-            'lang_pack': self.lang_pack,
-            'lang_code': self.lang_code
+            "_": "GetLanguageRequest",
+            "lang_pack": self.lang_pack,
+            "lang_code": self.lang_code,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x02eYj',
-            self.serialize_bytes(self.lang_pack),
-            self.serialize_bytes(self.lang_code),
-        ))
+        return b"".join(
+            (
+                b"\x02eYj",
+                self.serialize_bytes(self.lang_pack),
+                self.serialize_bytes(self.lang_code),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -108,8 +116,8 @@ class GetLanguageRequest(TLRequest):
 
 
 class GetLanguagesRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x42c6978f
-    SUBCLASS_OF_ID = 0x280912c9
+    CONSTRUCTOR_ID = 0x42C6978F
+    SUBCLASS_OF_ID = 0x280912C9
 
     def __init__(self, lang_pack: str):
         """
@@ -118,16 +126,15 @@ class GetLanguagesRequest(TLRequest):
         self.lang_pack = lang_pack
 
     def to_dict(self):
-        return {
-            '_': 'GetLanguagesRequest',
-            'lang_pack': self.lang_pack
-        }
+        return {"_": "GetLanguagesRequest", "lang_pack": self.lang_pack}
 
     def _bytes(self):
-        return b''.join((
-            b'\x8f\x97\xc6B',
-            self.serialize_bytes(self.lang_pack),
-        ))
+        return b"".join(
+            (
+                b"\x8f\x97\xc6B",
+                self.serialize_bytes(self.lang_pack),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -136,8 +143,8 @@ class GetLanguagesRequest(TLRequest):
 
 
 class GetStringsRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xefea3803
-    SUBCLASS_OF_ID = 0xc7b7353d
+    CONSTRUCTOR_ID = 0xEFEA3803
+    SUBCLASS_OF_ID = 0xC7B7353D
 
     def __init__(self, lang_pack: str, lang_code: str, keys: List[str]):
         """
@@ -149,19 +156,23 @@ class GetStringsRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetStringsRequest',
-            'lang_pack': self.lang_pack,
-            'lang_code': self.lang_code,
-            'keys': [] if self.keys is None else self.keys[:]
+            "_": "GetStringsRequest",
+            "lang_pack": self.lang_pack,
+            "lang_code": self.lang_code,
+            "keys": [] if self.keys is None else self.keys[:],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x038\xea\xef',
-            self.serialize_bytes(self.lang_pack),
-            self.serialize_bytes(self.lang_code),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.keys)),b''.join(self.serialize_bytes(x) for x in self.keys),
-        ))
+        return b"".join(
+            (
+                b"\x038\xea\xef",
+                self.serialize_bytes(self.lang_pack),
+                self.serialize_bytes(self.lang_code),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.keys)),
+                b"".join(self.serialize_bytes(x) for x in self.keys),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -174,4 +185,3 @@ class GetStringsRequest(TLRequest):
             _keys.append(_x)
 
         return cls(lang_pack=_lang_pack, lang_code=_lang_code, keys=_keys)
-

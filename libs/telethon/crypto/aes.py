@@ -17,19 +17,23 @@ __log__ = logging.getLogger(__name__)
 
 try:
     import tgcrypto
-    __log__.debug('tgcrypto detected, it will be used for encryption')
+
+    __log__.debug("tgcrypto detected, it will be used for encryption")
 except ImportError:
     tgcrypto = None
     try:
         import cryptg
-        __log__.debug('cryptg detected, it will be used for encryption')
+
+        __log__.debug("cryptg detected, it will be used for encryption")
     except ImportError:
         cryptg = None
         if libssl.encrypt_ige and libssl.decrypt_ige:
-            __log__.debug('libssl detected, it will be used for encryption')
+            __log__.debug("libssl detected, it will be used for encryption")
         else:
-            __log__.debug('tgcrypto or cryptg modules not installed and libssl not found, '
-                        'falling back to (slower) Python encryption')
+            __log__.debug(
+                "tgcrypto or cryptg modules not installed and libssl not found, "
+                "falling back to (slower) Python encryption"
+            )
 
 
 class AES:
@@ -37,6 +41,7 @@ class AES:
     Class that servers as an interface to encrypt and decrypt
     text through the AES IGE mode.
     """
+
     @staticmethod
     def decrypt_ige(cipher_text, key, iv):
         """
@@ -50,8 +55,8 @@ class AES:
         if libssl.decrypt_ige:
             return libssl.decrypt_ige(cipher_text, key, iv)
 
-        iv1 = iv[:len(iv) // 2]
-        iv2 = iv[len(iv) // 2:]
+        iv1 = iv[: len(iv) // 2]
+        iv2 = iv[len(iv) // 2 :]
 
         aes = pyaes.AES(key)
 
@@ -61,15 +66,14 @@ class AES:
         cipher_text_block = [0] * 16
         for block_index in range(blocks_count):
             for i in range(16):
-                cipher_text_block[i] = \
-                    cipher_text[block_index * 16 + i] ^ iv2[i]
+                cipher_text_block[i] = cipher_text[block_index * 16 + i] ^ iv2[i]
 
             plain_text_block = aes.decrypt(cipher_text_block)
 
             for i in range(16):
                 plain_text_block[i] ^= iv1[i]
 
-            iv1 = cipher_text[block_index * 16:block_index * 16 + 16]
+            iv1 = cipher_text[block_index * 16 : block_index * 16 + 16]
             iv2 = plain_text_block
 
             plain_text.extend(plain_text_block)
@@ -93,8 +97,8 @@ class AES:
         if libssl.encrypt_ige:
             return libssl.encrypt_ige(plain_text, key, iv)
 
-        iv1 = iv[:len(iv) // 2]
-        iv2 = iv[len(iv) // 2:]
+        iv1 = iv[: len(iv) // 2]
+        iv2 = iv[len(iv) // 2 :]
 
         aes = pyaes.AES(key)
 
@@ -103,7 +107,7 @@ class AES:
 
         for block_index in range(blocks_count):
             plain_text_block = list(
-                plain_text[block_index * 16:block_index * 16 + 16]
+                plain_text[block_index * 16 : block_index * 16 + 16]
             )
             for i in range(16):
                 plain_text_block[i] ^= iv1[i]
@@ -114,7 +118,7 @@ class AES:
                 cipher_text_block[i] ^= iv2[i]
 
             iv1 = cipher_text_block
-            iv2 = plain_text[block_index * 16:block_index * 16 + 16]
+            iv2 = plain_text[block_index * 16 : block_index * 16 + 16]
 
             cipher_text.extend(cipher_text_block)
 

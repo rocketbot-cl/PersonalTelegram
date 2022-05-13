@@ -10,15 +10,18 @@ __log__ = logging.getLogger(__name__)
 
 try:
     import tgcrypto
-    __log__.debug('tgcrypto detected, it will be used for ctr encryption')
+
+    __log__.debug("tgcrypto detected, it will be used for ctr encryption")
 except ImportError:
     tgcrypto = None
-    __log__.debug('tgcrypto module not installed, '
-                'falling back to (slower) Python encryption')
+    __log__.debug(
+        "tgcrypto module not installed, " "falling back to (slower) Python encryption"
+    )
 
 
 class AESModeCTR:
     """Wrapper around pyaes.AESModeOfOperationCTR mode with custom IV"""
+
     # TODO Maybe make a pull request to pyaes to support iv on CTR
 
     def __init__(self, key, iv):

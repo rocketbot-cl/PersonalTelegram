@@ -4,14 +4,21 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
-if TYPE_CHECKING:
-    from ...tl.types import TypeChat, TypeGroupCall, TypeGroupCallParticipant, TypePeer, TypePhoneCall, TypeUser
 
+if TYPE_CHECKING:
+    from ...tl.types import (
+        TypeChat,
+        TypeGroupCall,
+        TypeGroupCallParticipant,
+        TypePeer,
+        TypePhoneCall,
+        TypeUser,
+    )
 
 
 class ExportedGroupCallInvite(TLObject):
-    CONSTRUCTOR_ID = 0x204bd158
-    SUBCLASS_OF_ID = 0x3b3bfe8f
+    CONSTRUCTOR_ID = 0x204BD158
+    SUBCLASS_OF_ID = 0x3B3BFE8F
 
     def __init__(self, link: str):
         """
@@ -20,16 +27,15 @@ class ExportedGroupCallInvite(TLObject):
         self.link = link
 
     def to_dict(self):
-        return {
-            '_': 'ExportedGroupCallInvite',
-            'link': self.link
-        }
+        return {"_": "ExportedGroupCallInvite", "link": self.link}
 
     def _bytes(self):
-        return b''.join((
-            b'X\xd1K ',
-            self.serialize_bytes(self.link),
-        ))
+        return b"".join(
+            (
+                b"X\xd1K ",
+                self.serialize_bytes(self.link),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -38,10 +44,17 @@ class ExportedGroupCallInvite(TLObject):
 
 
 class GroupCall(TLObject):
-    CONSTRUCTOR_ID = 0x9e727aad
-    SUBCLASS_OF_ID = 0x304116be
+    CONSTRUCTOR_ID = 0x9E727AAD
+    SUBCLASS_OF_ID = 0x304116BE
 
-    def __init__(self, call: 'TypeGroupCall', participants: List['TypeGroupCallParticipant'], participants_next_offset: str, chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self,
+        call: "TypeGroupCall",
+        participants: List["TypeGroupCallParticipant"],
+        participants_next_offset: str,
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+    ):
         """
         Constructor for phone.GroupCall: Instance of GroupCall.
         """
@@ -53,23 +66,41 @@ class GroupCall(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'GroupCall',
-            'call': self.call.to_dict() if isinstance(self.call, TLObject) else self.call,
-            'participants': [] if self.participants is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.participants],
-            'participants_next_offset': self.participants_next_offset,
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "GroupCall",
+            "call": self.call.to_dict()
+            if isinstance(self.call, TLObject)
+            else self.call,
+            "participants": []
+            if self.participants is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.participants
+            ],
+            "participants_next_offset": self.participants_next_offset,
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xadzr\x9e',
-            self.call._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.participants)),b''.join(x._bytes() for x in self.participants),
-            self.serialize_bytes(self.participants_next_offset),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"\xadzr\x9e",
+                self.call._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.participants)),
+                b"".join(x._bytes() for x in self.participants),
+                self.serialize_bytes(self.participants_next_offset),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -93,14 +124,28 @@ class GroupCall(TLObject):
             _x = reader.tgread_object()
             _users.append(_x)
 
-        return cls(call=_call, participants=_participants, participants_next_offset=_participants_next_offset, chats=_chats, users=_users)
+        return cls(
+            call=_call,
+            participants=_participants,
+            participants_next_offset=_participants_next_offset,
+            chats=_chats,
+            users=_users,
+        )
 
 
 class GroupParticipants(TLObject):
-    CONSTRUCTOR_ID = 0xf47751b6
-    SUBCLASS_OF_ID = 0x72d304f4
+    CONSTRUCTOR_ID = 0xF47751B6
+    SUBCLASS_OF_ID = 0x72D304F4
 
-    def __init__(self, count: int, participants: List['TypeGroupCallParticipant'], next_offset: str, chats: List['TypeChat'], users: List['TypeUser'], version: int):
+    def __init__(
+        self,
+        count: int,
+        participants: List["TypeGroupCallParticipant"],
+        next_offset: str,
+        chats: List["TypeChat"],
+        users: List["TypeUser"],
+        version: int,
+    ):
         """
         Constructor for phone.GroupParticipants: Instance of GroupParticipants.
         """
@@ -113,25 +158,41 @@ class GroupParticipants(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'GroupParticipants',
-            'count': self.count,
-            'participants': [] if self.participants is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.participants],
-            'next_offset': self.next_offset,
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
-            'version': self.version
+            "_": "GroupParticipants",
+            "count": self.count,
+            "participants": []
+            if self.participants is None
+            else [
+                x.to_dict() if isinstance(x, TLObject) else x for x in self.participants
+            ],
+            "next_offset": self.next_offset,
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
+            "version": self.version,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xb6Qw\xf4',
-            struct.pack('<i', self.count),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.participants)),b''.join(x._bytes() for x in self.participants),
-            self.serialize_bytes(self.next_offset),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-            struct.pack('<i', self.version),
-        ))
+        return b"".join(
+            (
+                b"\xb6Qw\xf4",
+                struct.pack("<i", self.count),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.participants)),
+                b"".join(x._bytes() for x in self.participants),
+                self.serialize_bytes(self.next_offset),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+                struct.pack("<i", self.version),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -156,14 +217,23 @@ class GroupParticipants(TLObject):
             _users.append(_x)
 
         _version = reader.read_int()
-        return cls(count=_count, participants=_participants, next_offset=_next_offset, chats=_chats, users=_users, version=_version)
+        return cls(
+            count=_count,
+            participants=_participants,
+            next_offset=_next_offset,
+            chats=_chats,
+            users=_users,
+            version=_version,
+        )
 
 
 class JoinAsPeers(TLObject):
-    CONSTRUCTOR_ID = 0xafe5623f
-    SUBCLASS_OF_ID = 0xb4b770fb
+    CONSTRUCTOR_ID = 0xAFE5623F
+    SUBCLASS_OF_ID = 0xB4B770FB
 
-    def __init__(self, peers: List['TypePeer'], chats: List['TypeChat'], users: List['TypeUser']):
+    def __init__(
+        self, peers: List["TypePeer"], chats: List["TypeChat"], users: List["TypeUser"]
+    ):
         """
         Constructor for phone.JoinAsPeers: Instance of JoinAsPeers.
         """
@@ -173,19 +243,33 @@ class JoinAsPeers(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'JoinAsPeers',
-            'peers': [] if self.peers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.peers],
-            'chats': [] if self.chats is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "JoinAsPeers",
+            "peers": []
+            if self.peers is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.peers],
+            "chats": []
+            if self.chats is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.chats],
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'?b\xe5\xaf',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.peers)),b''.join(x._bytes() for x in self.peers),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.chats)),b''.join(x._bytes() for x in self.chats),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"?b\xe5\xaf",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.peers)),
+                b"".join(x._bytes() for x in self.peers),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.chats)),
+                b"".join(x._bytes() for x in self.chats),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -211,10 +295,10 @@ class JoinAsPeers(TLObject):
 
 
 class PhoneCall(TLObject):
-    CONSTRUCTOR_ID = 0xec82e140
-    SUBCLASS_OF_ID = 0xd48afe4f
+    CONSTRUCTOR_ID = 0xEC82E140
+    SUBCLASS_OF_ID = 0xD48AFE4F
 
-    def __init__(self, phone_call: 'TypePhoneCall', users: List['TypeUser']):
+    def __init__(self, phone_call: "TypePhoneCall", users: List["TypeUser"]):
         """
         Constructor for phone.PhoneCall: Instance of PhoneCall.
         """
@@ -223,17 +307,25 @@ class PhoneCall(TLObject):
 
     def to_dict(self):
         return {
-            '_': 'PhoneCall',
-            'phone_call': self.phone_call.to_dict() if isinstance(self.phone_call, TLObject) else self.phone_call,
-            'users': [] if self.users is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users]
+            "_": "PhoneCall",
+            "phone_call": self.phone_call.to_dict()
+            if isinstance(self.phone_call, TLObject)
+            else self.phone_call,
+            "users": []
+            if self.users is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.users],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'@\xe1\x82\xec',
-            self.phone_call._bytes(),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.users)),b''.join(x._bytes() for x in self.users),
-        ))
+        return b"".join(
+            (
+                b"@\xe1\x82\xec",
+                self.phone_call._bytes(),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.users)),
+                b"".join(x._bytes() for x in self.users),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -245,4 +337,3 @@ class PhoneCall(TLObject):
             _users.append(_x)
 
         return cls(phone_call=_phone_call, users=_users)
-

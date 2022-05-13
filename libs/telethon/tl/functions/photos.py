@@ -5,17 +5,17 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
+
 if TYPE_CHECKING:
     from ...tl.types import TypeInputFile, TypeInputPhoto, TypeInputUser
 
 
-
 class DeletePhotosRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x87cf7f2f
-    SUBCLASS_OF_ID = 0x8918e168
+    CONSTRUCTOR_ID = 0x87CF7F2F
+    SUBCLASS_OF_ID = 0x8918E168
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, id: List['TypeInputPhoto']):
+    def __init__(self, id: List["TypeInputPhoto"]):
         """
         :returns Vector<long>: This type has no constructors.
         """
@@ -30,15 +30,21 @@ class DeletePhotosRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'DeletePhotosRequest',
-            'id': [] if self.id is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.id]
+            "_": "DeletePhotosRequest",
+            "id": []
+            if self.id is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.id],
         }
 
     def _bytes(self):
-        return b''.join((
-            b'/\x7f\xcf\x87',
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.id)),b''.join(x._bytes() for x in self.id),
-        ))
+        return b"".join(
+            (
+                b"/\x7f\xcf\x87",
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.id)),
+                b"".join(x._bytes() for x in self.id),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -57,10 +63,10 @@ class DeletePhotosRequest(TLRequest):
 
 
 class GetUserPhotosRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x91cd32a8
-    SUBCLASS_OF_ID = 0x27cfb967
+    CONSTRUCTOR_ID = 0x91CD32A8
+    SUBCLASS_OF_ID = 0x27CFB967
 
-    def __init__(self, user_id: 'TypeInputUser', offset: int, max_id: int, limit: int):
+    def __init__(self, user_id: "TypeInputUser", offset: int, max_id: int, limit: int):
         """
         :returns photos.Photos: Instance of either Photos, PhotosSlice.
         """
@@ -74,21 +80,25 @@ class GetUserPhotosRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'GetUserPhotosRequest',
-            'user_id': self.user_id.to_dict() if isinstance(self.user_id, TLObject) else self.user_id,
-            'offset': self.offset,
-            'max_id': self.max_id,
-            'limit': self.limit
+            "_": "GetUserPhotosRequest",
+            "user_id": self.user_id.to_dict()
+            if isinstance(self.user_id, TLObject)
+            else self.user_id,
+            "offset": self.offset,
+            "max_id": self.max_id,
+            "limit": self.limit,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xa82\xcd\x91',
-            self.user_id._bytes(),
-            struct.pack('<i', self.offset),
-            struct.pack('<q', self.max_id),
-            struct.pack('<i', self.limit),
-        ))
+        return b"".join(
+            (
+                b"\xa82\xcd\x91",
+                self.user_id._bytes(),
+                struct.pack("<i", self.offset),
+                struct.pack("<q", self.max_id),
+                struct.pack("<i", self.limit),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -100,11 +110,11 @@ class GetUserPhotosRequest(TLRequest):
 
 
 class UpdateProfilePhotoRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x72d4742c
-    SUBCLASS_OF_ID = 0xc292bd24
+    CONSTRUCTOR_ID = 0x72D4742C
+    SUBCLASS_OF_ID = 0xC292BD24
 
     # noinspection PyShadowingBuiltins
-    def __init__(self, id: 'TypeInputPhoto'):
+    def __init__(self, id: "TypeInputPhoto"):
         """
         :returns photos.Photo: Instance of Photo.
         """
@@ -115,15 +125,17 @@ class UpdateProfilePhotoRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UpdateProfilePhotoRequest',
-            'id': self.id.to_dict() if isinstance(self.id, TLObject) else self.id
+            "_": "UpdateProfilePhotoRequest",
+            "id": self.id.to_dict() if isinstance(self.id, TLObject) else self.id,
         }
 
     def _bytes(self):
-        return b''.join((
-            b',t\xd4r',
-            self.id._bytes(),
-        ))
+        return b"".join(
+            (
+                b",t\xd4r",
+                self.id._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -132,10 +144,15 @@ class UpdateProfilePhotoRequest(TLRequest):
 
 
 class UploadProfilePhotoRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x89f30f69
-    SUBCLASS_OF_ID = 0xc292bd24
+    CONSTRUCTOR_ID = 0x89F30F69
+    SUBCLASS_OF_ID = 0xC292BD24
 
-    def __init__(self, file: Optional['TypeInputFile']=None, video: Optional['TypeInputFile']=None, video_start_ts: Optional[float]=None):
+    def __init__(
+        self,
+        file: Optional["TypeInputFile"] = None,
+        video: Optional["TypeInputFile"] = None,
+        video_start_ts: Optional[float] = None,
+    ):
         """
         :returns photos.Photo: Instance of Photo.
         """
@@ -145,20 +162,41 @@ class UploadProfilePhotoRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'UploadProfilePhotoRequest',
-            'file': self.file.to_dict() if isinstance(self.file, TLObject) else self.file,
-            'video': self.video.to_dict() if isinstance(self.video, TLObject) else self.video,
-            'video_start_ts': self.video_start_ts
+            "_": "UploadProfilePhotoRequest",
+            "file": self.file.to_dict()
+            if isinstance(self.file, TLObject)
+            else self.file,
+            "video": self.video.to_dict()
+            if isinstance(self.video, TLObject)
+            else self.video,
+            "video_start_ts": self.video_start_ts,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'i\x0f\xf3\x89',
-            struct.pack('<I', (0 if self.file is None or self.file is False else 1) | (0 if self.video is None or self.video is False else 2) | (0 if self.video_start_ts is None or self.video_start_ts is False else 4)),
-            b'' if self.file is None or self.file is False else (self.file._bytes()),
-            b'' if self.video is None or self.video is False else (self.video._bytes()),
-            b'' if self.video_start_ts is None or self.video_start_ts is False else (struct.pack('<d', self.video_start_ts)),
-        ))
+        return b"".join(
+            (
+                b"i\x0f\xf3\x89",
+                struct.pack(
+                    "<I",
+                    (0 if self.file is None or self.file is False else 1)
+                    | (0 if self.video is None or self.video is False else 2)
+                    | (
+                        0
+                        if self.video_start_ts is None or self.video_start_ts is False
+                        else 4
+                    ),
+                ),
+                b""
+                if self.file is None or self.file is False
+                else (self.file._bytes()),
+                b""
+                if self.video is None or self.video is False
+                else (self.video._bytes()),
+                b""
+                if self.video_start_ts is None or self.video_start_ts is False
+                else (struct.pack("<d", self.video_start_ts)),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -177,4 +215,3 @@ class UploadProfilePhotoRequest(TLRequest):
         else:
             _video_start_ts = None
         return cls(file=_file, video=_video, video_start_ts=_video_start_ts)
-

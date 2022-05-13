@@ -5,16 +5,23 @@ from typing import Optional, List, Union, TYPE_CHECKING
 import os
 import struct
 from datetime import datetime
-if TYPE_CHECKING:
-    from ...tl.types import TypeInputDocument, TypeInputStickerSet, TypeInputStickerSetItem, TypeInputUser
 
+if TYPE_CHECKING:
+    from ...tl.types import (
+        TypeInputDocument,
+        TypeInputStickerSet,
+        TypeInputStickerSetItem,
+        TypeInputUser,
+    )
 
 
 class AddStickerToSetRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x8653febe
-    SUBCLASS_OF_ID = 0x9b704a5a
+    CONSTRUCTOR_ID = 0x8653FEBE
+    SUBCLASS_OF_ID = 0x9B704A5A
 
-    def __init__(self, stickerset: 'TypeInputStickerSet', sticker: 'TypeInputStickerSetItem'):
+    def __init__(
+        self, stickerset: "TypeInputStickerSet", sticker: "TypeInputStickerSetItem"
+    ):
         """
         :returns messages.StickerSet: Instance of StickerSet.
         """
@@ -23,17 +30,23 @@ class AddStickerToSetRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'AddStickerToSetRequest',
-            'stickerset': self.stickerset.to_dict() if isinstance(self.stickerset, TLObject) else self.stickerset,
-            'sticker': self.sticker.to_dict() if isinstance(self.sticker, TLObject) else self.sticker
+            "_": "AddStickerToSetRequest",
+            "stickerset": self.stickerset.to_dict()
+            if isinstance(self.stickerset, TLObject)
+            else self.stickerset,
+            "sticker": self.sticker.to_dict()
+            if isinstance(self.sticker, TLObject)
+            else self.sticker,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xbe\xfeS\x86',
-            self.stickerset._bytes(),
-            self.sticker._bytes(),
-        ))
+        return b"".join(
+            (
+                b"\xbe\xfeS\x86",
+                self.stickerset._bytes(),
+                self.sticker._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -43,10 +56,10 @@ class AddStickerToSetRequest(TLRequest):
 
 
 class ChangeStickerPositionRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xffb6d4ca
-    SUBCLASS_OF_ID = 0x9b704a5a
+    CONSTRUCTOR_ID = 0xFFB6D4CA
+    SUBCLASS_OF_ID = 0x9B704A5A
 
-    def __init__(self, sticker: 'TypeInputDocument', position: int):
+    def __init__(self, sticker: "TypeInputDocument", position: int):
         """
         :returns messages.StickerSet: Instance of StickerSet.
         """
@@ -58,17 +71,21 @@ class ChangeStickerPositionRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'ChangeStickerPositionRequest',
-            'sticker': self.sticker.to_dict() if isinstance(self.sticker, TLObject) else self.sticker,
-            'position': self.position
+            "_": "ChangeStickerPositionRequest",
+            "sticker": self.sticker.to_dict()
+            if isinstance(self.sticker, TLObject)
+            else self.sticker,
+            "position": self.position,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\xca\xd4\xb6\xff',
-            self.sticker._bytes(),
-            struct.pack('<i', self.position),
-        ))
+        return b"".join(
+            (
+                b"\xca\xd4\xb6\xff",
+                self.sticker._bytes(),
+                struct.pack("<i", self.position),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -78,10 +95,19 @@ class ChangeStickerPositionRequest(TLRequest):
 
 
 class CreateStickerSetRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf1036780
-    SUBCLASS_OF_ID = 0x9b704a5a
+    CONSTRUCTOR_ID = 0xF1036780
+    SUBCLASS_OF_ID = 0x9B704A5A
 
-    def __init__(self, user_id: 'TypeInputUser', title: str, short_name: str, stickers: List['TypeInputStickerSetItem'], masks: Optional[bool]=None, animated: Optional[bool]=None, thumb: Optional['TypeInputDocument']=None):
+    def __init__(
+        self,
+        user_id: "TypeInputUser",
+        title: str,
+        short_name: str,
+        stickers: List["TypeInputStickerSetItem"],
+        masks: Optional[bool] = None,
+        animated: Optional[bool] = None,
+        thumb: Optional["TypeInputDocument"] = None,
+    ):
         """
         :returns messages.StickerSet: Instance of StickerSet.
         """
@@ -100,26 +126,43 @@ class CreateStickerSetRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'CreateStickerSetRequest',
-            'user_id': self.user_id.to_dict() if isinstance(self.user_id, TLObject) else self.user_id,
-            'title': self.title,
-            'short_name': self.short_name,
-            'stickers': [] if self.stickers is None else [x.to_dict() if isinstance(x, TLObject) else x for x in self.stickers],
-            'masks': self.masks,
-            'animated': self.animated,
-            'thumb': self.thumb.to_dict() if isinstance(self.thumb, TLObject) else self.thumb
+            "_": "CreateStickerSetRequest",
+            "user_id": self.user_id.to_dict()
+            if isinstance(self.user_id, TLObject)
+            else self.user_id,
+            "title": self.title,
+            "short_name": self.short_name,
+            "stickers": []
+            if self.stickers is None
+            else [x.to_dict() if isinstance(x, TLObject) else x for x in self.stickers],
+            "masks": self.masks,
+            "animated": self.animated,
+            "thumb": self.thumb.to_dict()
+            if isinstance(self.thumb, TLObject)
+            else self.thumb,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'\x80g\x03\xf1',
-            struct.pack('<I', (0 if self.masks is None or self.masks is False else 1) | (0 if self.animated is None or self.animated is False else 2) | (0 if self.thumb is None or self.thumb is False else 4)),
-            self.user_id._bytes(),
-            self.serialize_bytes(self.title),
-            self.serialize_bytes(self.short_name),
-            b'' if self.thumb is None or self.thumb is False else (self.thumb._bytes()),
-            b'\x15\xc4\xb5\x1c',struct.pack('<i', len(self.stickers)),b''.join(x._bytes() for x in self.stickers),
-        ))
+        return b"".join(
+            (
+                b"\x80g\x03\xf1",
+                struct.pack(
+                    "<I",
+                    (0 if self.masks is None or self.masks is False else 1)
+                    | (0 if self.animated is None or self.animated is False else 2)
+                    | (0 if self.thumb is None or self.thumb is False else 4),
+                ),
+                self.user_id._bytes(),
+                self.serialize_bytes(self.title),
+                self.serialize_bytes(self.short_name),
+                b""
+                if self.thumb is None or self.thumb is False
+                else (self.thumb._bytes()),
+                b"\x15\xc4\xb5\x1c",
+                struct.pack("<i", len(self.stickers)),
+                b"".join(x._bytes() for x in self.stickers),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -140,14 +183,22 @@ class CreateStickerSetRequest(TLRequest):
             _x = reader.tgread_object()
             _stickers.append(_x)
 
-        return cls(user_id=_user_id, title=_title, short_name=_short_name, stickers=_stickers, masks=_masks, animated=_animated, thumb=_thumb)
+        return cls(
+            user_id=_user_id,
+            title=_title,
+            short_name=_short_name,
+            stickers=_stickers,
+            masks=_masks,
+            animated=_animated,
+            thumb=_thumb,
+        )
 
 
 class RemoveStickerFromSetRequest(TLRequest):
-    CONSTRUCTOR_ID = 0xf7760f51
-    SUBCLASS_OF_ID = 0x9b704a5a
+    CONSTRUCTOR_ID = 0xF7760F51
+    SUBCLASS_OF_ID = 0x9B704A5A
 
-    def __init__(self, sticker: 'TypeInputDocument'):
+    def __init__(self, sticker: "TypeInputDocument"):
         """
         :returns messages.StickerSet: Instance of StickerSet.
         """
@@ -158,15 +209,19 @@ class RemoveStickerFromSetRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'RemoveStickerFromSetRequest',
-            'sticker': self.sticker.to_dict() if isinstance(self.sticker, TLObject) else self.sticker
+            "_": "RemoveStickerFromSetRequest",
+            "sticker": self.sticker.to_dict()
+            if isinstance(self.sticker, TLObject)
+            else self.sticker,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'Q\x0fv\xf7',
-            self.sticker._bytes(),
-        ))
+        return b"".join(
+            (
+                b"Q\x0fv\xf7",
+                self.sticker._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
@@ -175,10 +230,10 @@ class RemoveStickerFromSetRequest(TLRequest):
 
 
 class SetStickerSetThumbRequest(TLRequest):
-    CONSTRUCTOR_ID = 0x9a364e30
-    SUBCLASS_OF_ID = 0x9b704a5a
+    CONSTRUCTOR_ID = 0x9A364E30
+    SUBCLASS_OF_ID = 0x9B704A5A
 
-    def __init__(self, stickerset: 'TypeInputStickerSet', thumb: 'TypeInputDocument'):
+    def __init__(self, stickerset: "TypeInputStickerSet", thumb: "TypeInputDocument"):
         """
         :returns messages.StickerSet: Instance of StickerSet.
         """
@@ -190,21 +245,26 @@ class SetStickerSetThumbRequest(TLRequest):
 
     def to_dict(self):
         return {
-            '_': 'SetStickerSetThumbRequest',
-            'stickerset': self.stickerset.to_dict() if isinstance(self.stickerset, TLObject) else self.stickerset,
-            'thumb': self.thumb.to_dict() if isinstance(self.thumb, TLObject) else self.thumb
+            "_": "SetStickerSetThumbRequest",
+            "stickerset": self.stickerset.to_dict()
+            if isinstance(self.stickerset, TLObject)
+            else self.stickerset,
+            "thumb": self.thumb.to_dict()
+            if isinstance(self.thumb, TLObject)
+            else self.thumb,
         }
 
     def _bytes(self):
-        return b''.join((
-            b'0N6\x9a',
-            self.stickerset._bytes(),
-            self.thumb._bytes(),
-        ))
+        return b"".join(
+            (
+                b"0N6\x9a",
+                self.stickerset._bytes(),
+                self.thumb._bytes(),
+            )
+        )
 
     @classmethod
     def from_reader(cls, reader):
         _stickerset = reader.tgread_object()
         _thumb = reader.tgread_object()
         return cls(stickerset=_stickerset, thumb=_thumb)
-
